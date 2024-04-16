@@ -2,6 +2,10 @@
 
 Library for building Web applications
 
+## Installation
+
+Coming soon...
+
 ## Usage
 
 ```typescript
