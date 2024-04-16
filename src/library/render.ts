@@ -12,6 +12,10 @@ export const render = (virtualElement: VirtualElement): Element | Text => {
   const element = document.createElement(virtualElement.name);
 
   Object.entries(virtualElement.attributes).forEach(([attributeName, attributeValue]) => {
+    if (attributeValue === undefined || attributeValue === null) {
+      return;
+    }
+
     if (attributeName.startsWith("on") && typeof attributeValue === "function") {
       element.addEventListener(attributeName.slice(2), event => attributeValue(event));
       return;
