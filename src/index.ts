@@ -1,8 +1,8 @@
 import { application } from "./library/application";
-import { button } from "./library/components/button";
-import { div } from "./library/components/div";
-import { input } from "./library/components/input";
-import { p } from "./library/components/p";
+import { button } from "./library/elements/button";
+import { div } from "./library/elements/div";
+import { input } from "./library/elements/input";
+import { p } from "./library/elements/p";
 
 const rootElement = document.getElementById("root");
 
