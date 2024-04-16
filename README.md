@@ -73,3 +73,7 @@ setInterval(() => {
   });
 }, 5000);
 ```
+
+## License
+
+See [`LICENSE`](./LICENSE).
