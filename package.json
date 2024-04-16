@@ -5,6 +5,7 @@
     "build": "rollup --config rollup.config.ts --configPlugin typescript --environment NODE_ENV:production"
   },
   "devDependencies": {
+    "@rollup/plugin-strip": "3.0.4",
     "@rollup/plugin-terser": "0.4.4",
     "@rollup/plugin-typescript": "11.1.6",
     "@types/node": "20.12.7",
