@@ -35,6 +35,49 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
       return;
     }
 
+    Object.entries(oldVirtualElement.attributes).forEach(([oldVirtualElementAttributeName, oldVirtualElementAttributeValue]) => {
+      const newVirtualElementAttributeValue = newVirtualElement.attributes[oldVirtualElementAttributeName];
+
+      if (newVirtualElementAttributeValue === undefined || newVirtualElementAttributeValue === null) {
+        if (oldVirtualElementAttributeName.startsWith("on") && typeof oldVirtualElementAttributeValue === "function") {
+          element.removeEventListener(oldVirtualElementAttributeName.slice(2), oldVirtualElementAttributeValue);
+          return;
+        }
+
+        element.removeAttribute(oldVirtualElementAttributeName);
+        return;
+      }
+
+      if (newVirtualElementAttributeValue !== oldVirtualElementAttributeValue) {
+        if (oldVirtualElementAttributeName.startsWith("on") && typeof newVirtualElementAttributeValue === "function" && typeof oldVirtualElementAttributeValue === "function") {
+          const eventName = oldVirtualElementAttributeName.slice(2);
+
+          element.removeEventListener(eventName, oldVirtualElementAttributeValue);
+          element.addEventListener(eventName, newVirtualElementAttributeValue);
+
+          return;
+        }
+
+        element.setAttribute(oldVirtualElementAttributeName, String(newVirtualElementAttributeValue));
+      }
+    });
+
+    Object.entries(newVirtualElement.attributes).forEach(([newVirtualElementAttributeName, newVirtualElementAttributeValue]) => {
+      const oldVirtualElementAttributeValue = oldVirtualElement.attributes[newVirtualElementAttributeName];
+
+      if (oldVirtualElementAttributeValue !== undefined && oldVirtualElementAttributeValue !== null || newVirtualElementAttributeValue === null || newVirtualElementAttributeValue === undefined) {
+        return;
+      }
+
+      if (newVirtualElementAttributeName.startsWith("on") && typeof newVirtualElementAttributeValue === "function") {
+        element.addEventListener(newVirtualElementAttributeName.slice(2), newVirtualElementAttributeValue);
+
+        return;
+      }
+
+      element.setAttribute(newVirtualElementAttributeName, String(newVirtualElementAttributeValue));
+    });
+
     oldVirtualElement.children.forEach((oldVirtualElementChild, oldVirtualElementChildIndex) => {
       const newVirtualElementChild = newVirtualElement.children[oldVirtualElementChildIndex];
       const elementChild = element.childNodes.item(oldVirtualElementChildIndex);
