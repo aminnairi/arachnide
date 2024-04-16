@@ -5,7 +5,7 @@ export type VirtualStringElement = string;
  * Or it can be a function in case of an event listener
  */
 type VirtualObjectElementAttributes = {
-  [Key in string]: string | ((event: Event) => void)
+  [Key in string]: undefined | null | string | ((event: Event) => void)
 }
 
 export type VirtualObjectElement = {
@@ -48,6 +48,7 @@ export type ApplicationOptions<State, EventName> = {
 
 export * from "./application";
 export * from "./createPatch";
+export * from "./style";
 export * from "./element";
 export * from "./elements/a";
 export * from "./elements/abbr";
