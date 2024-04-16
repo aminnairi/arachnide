@@ -22,7 +22,7 @@ if (!root) {
 const { emit } = application<ApplicationState, ApplicationEvent>({
   root,
   state: 0,
-  on: ({ state, event }) => {
+  update: ({ state, event }) => {
     if (event.type === "INCREMENT") {
       return state + 1;
     }
