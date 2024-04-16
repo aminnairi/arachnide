@@ -1,7 +1,13 @@
 import { VirtualElement } from ".";
 import { render } from "./render";
 
+/**
+ * Create a function that will update the DOM tree based on the differences between two virtual elements
+ */
 export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement: VirtualElement) => {
+  /**
+   * This is the function that will be used to patch any DOM tree element
+   */
   return (element: Element) => {
     if (oldVirtualElement === null) {
       element.replaceWith(render(newVirtualElement));
