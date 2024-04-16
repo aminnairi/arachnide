@@ -1,6 +1,7 @@
 {
   "type": "module",
   "scripts": {
+    "lint": "tsc --noEmit --project tsconfig.json",
     "dev": "rollup --config rollup.config.ts --configPlugin typescript --environment NODE_ENV:development --watch",
     "build": "rollup --config rollup.config.ts --configPlugin typescript --environment NODE_ENV:production"
   },
