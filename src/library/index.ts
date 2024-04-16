@@ -39,7 +39,7 @@ export type UpdateOptions<ApplicationEvent, State> = {
 
 export type Update<ApplicationEvent, State> = (options: UpdateOptions<ApplicationEvent, State>) => State
 
-export type CreateApplicationOptions<State, EventName> = {
+export type ApplicationOptions<State, EventName> = {
   view: View<State, EventName>,
   root: Element,
   state: State,

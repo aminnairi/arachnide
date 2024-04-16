@@ -1,11 +1,11 @@
-import { ApplicationEvent, CreateApplicationOptions, VirtualElement } from ".";
+import { ApplicationEvent, ApplicationOptions, VirtualElement } from ".";
 import { createPatch } from "./createPatch";
 import { render } from "./render";
 
 /**
  * Create an application that has a state, can emit events and renders the view each time the state is updated
  */
-export const application = <State, GenericEvent extends ApplicationEvent>({ view, root, state, update }: CreateApplicationOptions<State, GenericEvent>) => {
+export const application = <State, GenericEvent extends ApplicationEvent>({ view, root, state, update }: ApplicationOptions<State, GenericEvent>) => {
   /**
    * Stores the old virtual element, that way we can compare it to the next virtual element each time the state is updated in order to update the DOM exactly where needed, instead of recreating the whole DOM tree again
    */
