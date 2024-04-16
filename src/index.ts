@@ -1,4 +1,4 @@
-import { application, button, div, input, p } from "./library";
+import { application, style, button, div, input, p } from "./library";
 
 const rootElement = document.getElementById("root");
 
@@ -110,7 +110,11 @@ application<MyApplicationState, MyApplicationEvent>({
           children: ["Reset"]
         }),
         p({
-          attributes: {},
+          attributes: {
+            style: style({
+              "color": state.counter < 0 ? "red" : undefined
+            })
+          },
           children: [String(state.counter)]
         })
       ]
