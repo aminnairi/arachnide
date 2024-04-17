@@ -1,7 +1,7 @@
 import { VirtualElement } from ".";
 
 export const render = (virtualElement: VirtualElement): Element | Text => {
-  if (virtualElement === null) {
+  if (virtualElement === null || virtualElement === undefined) {
     return document.createTextNode("");
   }
 
