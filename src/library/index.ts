@@ -1,8 +1,9 @@
 export type VirtualStringElement = string;
 
 /**
- * An attribute can either be some scalar value (string, boolean, number, ...) that will be parsed as string
- * Or it can be a function in case of an event listener
+ * An attribute can either be some scalar value (string, boolean, number, ...)
+ * that will be parsed as string Or it can be a function in case of an event
+ * listener
  */
 type VirtualObjectElementAttributes = {
   [Key in string]: undefined | null | string | ((event: Event) => void)

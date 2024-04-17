@@ -2,7 +2,8 @@ import { VirtualElement } from ".";
 import { render } from "./render";
 
 /**
- * Create a function that will update the DOM tree based on the differences between two virtual elements
+ * Create a function that will update the DOM tree based on the differences
+ * between two virtual elements
  */
 export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement: VirtualElement) => {
   /**
