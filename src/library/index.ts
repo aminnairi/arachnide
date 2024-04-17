@@ -17,7 +17,9 @@ export type VirtualObjectElement = {
 
 export type VirtualNullElement = null;
 
-export type VirtualElement = VirtualStringElement | VirtualObjectElement | VirtualNullElement;
+export type VirtualElementUndefined = undefined;
+
+export type VirtualElement = VirtualStringElement | VirtualObjectElement | VirtualNullElement | VirtualElementUndefined;
 
 export type ApplicationEvent = {
   type: string,
