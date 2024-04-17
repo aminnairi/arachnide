@@ -46,6 +46,7 @@ export type ApplicationOptions<State, EventName> = {
   update: Update<EventName, State>
 }
 
+export * from "./css";
 export * from "./application";
 export * from "./createPatch";
 export * from "./style";
