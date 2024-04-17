@@ -3,7 +3,7 @@ import typescript from "@rollup/plugin-typescript";
 import terser from "@rollup/plugin-terser";
 import strip from "@rollup/plugin-strip";
 
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env["NODE_ENV"] === "production";
 
 export default defineConfig({
   input: "src/index.ts",
