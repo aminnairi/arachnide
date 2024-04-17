@@ -26,7 +26,19 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
    * keep the code consistent instead of having some event with a payload and
    * some without
    */
-  const emit = ({ type, payload }: GenericEvent) => {
+  const emit = (detail: GenericEvent) => {
+    /**
+     * We allow the event to be null for simple applications, so we need to
+     * check for that branch
+     */
+    if (detail === null) {
+      /**
+       * We simply don't dispatch any even in case the detail of the event is
+       * null since this is a possible value
+       */
+      return;
+    }
+
     /**
      * We use the window.dispatchEvent to dispatch a custom event that we later
      * catch in the below listener. Inside this custom even, we simply send the
@@ -34,10 +46,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
      * this data later in the listener
      */
     window.dispatchEvent(new CustomEvent(emitIdentifier, {
-      detail: {
-        type,
-        payload
-      }
+      detail
     }));
   };
 
