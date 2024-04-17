@@ -21,7 +21,7 @@ export type VirtualElementUndefined = undefined;
 
 export type VirtualElement = VirtualStringElement | VirtualObjectElement | VirtualNullElement | VirtualElementUndefined;
 
-export type ApplicationEvent = {
+export type ApplicationEvent = null | {
   type: string,
   payload: unknown
 }
