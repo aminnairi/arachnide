@@ -1,4 +1,4 @@
-import { application, classes, style, button, div, input, p } from "./library";
+import { application, classes, styles, button, div, input, p } from "./library";
 
 const rootElement = document.getElementById("root");
 
@@ -111,7 +111,7 @@ application<MyApplicationState, MyApplicationEvent>({
         }),
         p({
           attributes: {
-            style: style({
+            style: styles({
               "color": state.counter < 0 ? "red" : undefined
             }),
             class: classes({
