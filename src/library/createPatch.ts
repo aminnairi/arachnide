@@ -10,7 +10,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
    * This is the function that will be used to patch any DOM tree element
    */
   return (element: Element) => {
-    if (oldVirtualElement === null) {
+    if (oldVirtualElement === null || oldVirtualElement === undefined) {
       element.replaceWith(render(newVirtualElement));
       return;
     }
@@ -26,7 +26,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
       return;
     }
 
-    if (newVirtualElement === null || typeof newVirtualElement === "string") {
+    if (newVirtualElement === null || newVirtualElement === undefined || typeof newVirtualElement === "string") {
       element.replaceWith(render(newVirtualElement));
       return;
     }
