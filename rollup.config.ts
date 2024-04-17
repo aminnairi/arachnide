@@ -14,6 +14,7 @@ export default defineConfig({
   ],
   output: {
     file: "dist/index.js",
-    format: "esm"
+    format: "esm",
+    sourcemap: true
   }
 });
