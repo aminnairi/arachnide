@@ -1,4 +1,4 @@
-import { application, style, button, div, input, p } from "./library";
+import { application, classes, style, button, div, input, p } from "./library";
 
 const rootElement = document.getElementById("root");
 
@@ -113,6 +113,9 @@ application<MyApplicationState, MyApplicationEvent>({
           attributes: {
             style: style({
               "color": state.counter < 0 ? "red" : undefined
+            }),
+            class: classes({
+              "bold": state.counter < 0
             })
           },
           children: [String(state.counter)]
