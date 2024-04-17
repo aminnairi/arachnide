@@ -9,5 +9,4 @@
 - Lifecycle methods (beforeLoad, afterLoad, etc...)
 - Adapters for the event emitter, router, DOM operations (for SSR, mobile)
 - Persistence adapter for the state (localstorage, session, indexeddb?)
-- Stricter TSConfig
 - Linting
