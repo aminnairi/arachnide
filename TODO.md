@@ -1,0 +1,13 @@
+- Live example
+- File organization to separate the package from the example
+- Baked-in the router
+- Css utility functions (px, deg, etc...)
+- API Documentation
+- More comments
+- NPM package
+- Figure out animations?
+- Lifecycle methods (beforeLoad, afterLoad, etc...)
+- Adapters for the event emitter, router, DOM operations (for SSR, mobile)
+- Persistence adapter for the state (localstorage, session, indexeddb?)
+- Stricter TSConfig
+- Linting
