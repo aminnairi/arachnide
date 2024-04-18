@@ -112,10 +112,10 @@ application<MyApplicationState, MyApplicationEvent>({
         p({
           attributes: {
             style: styles({
-              "color": state.counter < 0 ? "red" : undefined
+              "color": state.counter < 0 ? "red" : state.counter > 0 ? "green" : undefined
             }),
             class: classes({
-              "bold": state.counter < 0
+              "bold": state.counter !== 0
             })
           },
           children: [String(state.counter)]
