@@ -181,22 +181,67 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
       }
     });
 
+    /**
+     * Once we handled all attributes that needs to be either updated or
+     * removed, we need to deal with attributes that needs to be added and for
+     * that we need to loop through the attributes of the new virtual element
+     * instead of the old one
+     */
     Object.entries(newVirtualElement.attributes).forEach(([newVirtualElementAttributeName, newVirtualElementAttributeValue]) => {
+      /**
+       * Same thing as before, but instead we need to grab the value of the old
+       * attribute so that we can compare these two and know if we need to add
+       * this one or not
+       */
       const oldVirtualElementAttributeValue = oldVirtualElement.attributes[newVirtualElementAttributeName];
 
+      /**
+       * Since we can encounter attributes that we already dealt with
+       * previously, we simply ensure that the old virtual element's attribute
+       * is not null or undefined because if this is the case, this means that
+       * we have an attribute that was not defined in the old virtual element
+       * and maybe defined on the new virtual element, meaning that this is a
+       * new attribute that we need to add
+       */
       if (oldVirtualElementAttributeValue !== undefined && oldVirtualElementAttributeValue !== null || newVirtualElementAttributeValue === null || newVirtualElementAttributeValue === undefined) {
         return;
       }
 
+      /**
+       * Now that we know for sure that we are here with a new attribute to
+       * render, we check to see if this attribute is an event listener because
+       * if this is the case, we need to use the "addEventListener" method to
+       * add this event listener instead of just adding the attribute as-is
+       */
       if (newVirtualElementAttributeName.startsWith("on") && typeof newVirtualElementAttributeValue === "function") {
+        /**
+         * If the name of the attribute starts with "on", this means that we
+         * have an event listner like "oninput" and we handle it properly in
+         * here
+         */
         element.addEventListener(newVirtualElementAttributeName.slice(2), newVirtualElementAttributeValue);
 
+        /**
+         * We can simply issue an early return as from here the attribute has
+         * already been added and there is no need to add the attribute as text
+         * in the DOM
+         */
         return;
       }
 
+      /**
+       * We can now add the attribute to the DOM element if this is not an
+       * event listener as it is simpler to do using the "setAttribute" method
+       */
       element.setAttribute(newVirtualElementAttributeName, String(newVirtualElementAttributeValue));
     });
 
+    /**
+     * Once we have dealt with attributes, we need to update the children so we
+     * loop through all of the children that are common between the old and the
+     * new virtual element, meaning all children that have been modified or
+     * deleted
+     */
     oldVirtualElement.children.forEach((oldVirtualElementChild, oldVirtualElementChildIndex) => {
       const newVirtualElementChild = newVirtualElement.children[oldVirtualElementChildIndex];
       const elementChild = element.childNodes.item(oldVirtualElementChildIndex);
@@ -205,5 +250,16 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
 
       patch(elementChild as Element);
     });
+
+    /**
+     * Next up, we need to figure out a clever way to deal with all of the
+     * children that have been added, meaning those who are reference in the
+     * new virtual element but not on the old virtual element, this is
+     * something that has not been done yet, also, as this can be a potentially
+     * destructive and non-efficient way of dealing with arrays of children, we
+     * should allow the user to add a key in order to prevent unecessary
+     * re-renders for some of the children and we should account for that case
+     * (the key has changed) in here
+     */
   }
 };
