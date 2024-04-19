@@ -1,4 +1,4 @@
-import { VirtualElement } from "./types";
+import { RenderedElement, VirtualElement } from "./types";
 import { render } from "./render";
 
 /**
@@ -9,28 +9,75 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
   /**
    * This is the function that will be used to patch any DOM tree element
    */
-  return (element: Element) => {
+  return (element: RenderedElement) => {
+    if (oldVirtualElement === null || oldVirtualElement === undefined) {
+      if (newVirtualElement === null || newVirtualElement === undefined) {
+        return;
+      }
+
+      if (element === null) {
+        return;
+      }
+
+      const newElement = render(newVirtualElement);
+
+      if (newElement === null) {
+        return;
+      }
+
+
+      element.appendChild(newElement);
+
+      return;
+    }
+
     /**
      * if the old virtual element is null, undefined or a string, this means
      * that we can simply compare the old and new virtual elements using a
      * simple comparison
      */
-    if (oldVirtualElement === null || oldVirtualElement === undefined || typeof oldVirtualElement === "string" || typeof oldVirtualElement === "number" || typeof oldVirtualElement === "boolean") {
+    if (typeof oldVirtualElement === "string" || typeof oldVirtualElement === "number" || typeof oldVirtualElement === "boolean") {
       /**
        * If the new virtual element is different from the old virtual element
        */
-      if (!Object.is(oldVirtualElement, newVirtualElement)) {
-        /**
+      if (Object.is(oldVirtualElement, newVirtualElement)) {
+        return;
+      }
+
+      if (element === null) {
+        return;
+      }
+
+      const newElement = render(newVirtualElement);
+
+      if (newElement === null) {
+        return;
+      }
+
+      /**
          * This means that we need to change it in the current DOM, otherwise
          * we do nothing as it means they are identical
          */
-        element.replaceWith(render(newVirtualElement));
-      }
+      element.replaceWith(newElement);
 
       /**
        * We can stop here since null, undefined or a string does not have
        * attributes nor children
        */
+      return;
+    }
+
+    if (newVirtualElement === null || newVirtualElement === undefined) {
+      if (oldVirtualElement === null || oldVirtualElement === undefined) {
+        return;
+      }
+
+      if (element === null) {
+        return;
+      }
+
+      element.remove();
+
       return;
     }
 
@@ -40,17 +87,29 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * new virtual elements are objects, which will simplify the process of
      * diffing those two
      */
-    if (newVirtualElement === null || newVirtualElement === undefined || typeof newVirtualElement === "string" || typeof newVirtualElement === "number" || typeof newVirtualElement === "boolean") {
+    if (typeof newVirtualElement === "string" || typeof newVirtualElement === "number" || typeof newVirtualElement === "boolean") {
       /**
        * If the new virtual element is different from the old virtual element
        */
-      if (!Object.is(oldVirtualElement, newVirtualElement)) {
-        /**
-         * This means that we need to change it in the current DOM, otherwise
-         * we do nothing as it means they are identical
-         */
-        element.replaceWith(render(newVirtualElement));
+      if (Object.is(oldVirtualElement, newVirtualElement)) {
+        return;
       }
+
+      if (element === null) {
+        return;
+      }
+
+      const newElement = render(newVirtualElement);
+
+      if (newElement === null) {
+        return;
+      }
+
+      /**
+       * This means that we need to change it in the current DOM, otherwise
+       * we do nothing as it means they are identical
+       */
+      element.replaceWith(newElement);
 
       /**
        * We can stop here since null, undefined or a string does not have
@@ -65,13 +124,23 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * we can start to compare the names of those two elements
      */
     if (oldVirtualElement.name !== newVirtualElement.name) {
+      if (element === null) {
+        return;
+      }
+
+      const newElement = render(newVirtualElement);
+
+      if (newElement === null) {
+        return;
+      }
+
       /**
        * If the two names are different, this means that for this particular
        * node, the element needs to change and we don't need to do a diff on
        * the attribute since the old element will be completely replaced by the
        * new one
        */
-      element.replaceWith(render(newVirtualElement));
+      element.replaceWith(newElement);
 
       /**
        * Here we can simply return since, again, we don't need to do a diffing
@@ -97,39 +166,9 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
        * is considered being removed from the DOM element
        */
       if (newVirtualElementAttributeValue === undefined || newVirtualElementAttributeValue === null) {
-        /**
-         * Since an attribute can either be a simple attribute or an event
-         * listener, we need to first check what type of attribute this is
-         */
-        if (oldVirtualElementAttributeName.startsWith("on") && typeof oldVirtualElementAttributeValue === "function") {
-          /**
-           * If this is an event listener attribute, meaning that its name
-           * starts with the "on" word like "onclick", we call the
-           * "removeEventListener" method on the DOM element in order to remove
-           * the old listener from the element, that way we prevent any further
-           * listening to an event that is no longer needed
-           */
-          element.removeEventListener(oldVirtualElementAttributeName.slice(2), oldVirtualElementAttributeValue);
+        // @ts-ignore
+        element[oldVirtualElementAttributeName] = null;
 
-          /**
-           * From there, we can simply return and go for the next attribute
-           * since an event listener is not at the same time a simple attribute
-           */
-          return;
-        }
-
-        /**
-         * If this is not an event listener, we simply call the
-         * "removeAttribute" method from the DOM element in order to remove the
-         * attribute
-         */
-        element.removeAttribute(oldVirtualElementAttributeName);
-
-        /**
-         * Same logic here as for the listener, since we don't need to go any
-         * further, we can issue an early return in order to simplify the
-         * branching logic and complexity
-         */
         return;
       }
 
@@ -139,46 +178,12 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
        * attribute that may have changed and we need to be sure of that in this
        * condition
        */
-      if (newVirtualElementAttributeValue !== oldVirtualElementAttributeValue) {
-        /**
-         * If we know that the two attributes are different in their value, we
-         * need to first check what type of attribute we have here, whether
-         * this is an event listener or a simple attribute
-         */
-        if (oldVirtualElementAttributeName.startsWith("on") && typeof newVirtualElementAttributeValue === "function" && typeof oldVirtualElementAttributeValue === "function") {
-          /**
-           * If we know for sure that the attribute we are dealing with in here
-           * is a event listener
-           */
-          const eventName = oldVirtualElementAttributeName.slice(2);
-
-          /**
-           * We need to first remove the old event listener from the DOM
-           * element
-           */
-          element.removeEventListener(eventName, oldVirtualElementAttributeValue);
-
-          /**
-           * Then, we need to attach the new event listener to the same DOM
-           * element
-           */
-          element.addEventListener(eventName, newVirtualElementAttributeValue);
-
-          /**
-           * Since an event listener cannot be at the same time a simple
-           * attribute, we can safely issue an early return in here to go to
-           * the next attribute to check
-           */
-          return;
-        }
-
-        /**
-         * If the attribute to update is a simple attribute, the work is even
-         * simpler and we simply need to call the "setAttribute" method on the
-         * DOM element to patch
-         */
-        element.setAttribute(oldVirtualElementAttributeName, String(newVirtualElementAttributeValue));
+      if (newVirtualElementAttributeValue === oldVirtualElementAttributeValue) {
+        return
       }
+
+      // @ts-ignore
+      element[oldVirtualElementAttributeName] = newVirtualElementAttributeValue;
     });
 
     /**
@@ -207,33 +212,9 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         return;
       }
 
-      /**
-       * Now that we know for sure that we are here with a new attribute to
-       * render, we check to see if this attribute is an event listener because
-       * if this is the case, we need to use the "addEventListener" method to
-       * add this event listener instead of just adding the attribute as-is
-       */
-      if (newVirtualElementAttributeName.startsWith("on") && typeof newVirtualElementAttributeValue === "function") {
-        /**
-         * If the name of the attribute starts with "on", this means that we
-         * have an event listner like "oninput" and we handle it properly in
-         * here
-         */
-        element.addEventListener(newVirtualElementAttributeName.slice(2), newVirtualElementAttributeValue);
-
-        /**
-         * We can simply issue an early return as from here the attribute has
-         * already been added and there is no need to add the attribute as text
-         * in the DOM
-         */
-        return;
-      }
-
-      /**
-       * We can now add the attribute to the DOM element if this is not an
-       * event listener as it is simpler to do using the "setAttribute" method
-       */
-      element.setAttribute(newVirtualElementAttributeName, String(newVirtualElementAttributeValue));
+      // temporary solution to see if this can simplify the setting of attributes
+      // @ts-ignore
+      element[newVirtualElementAttributeName] = newVirtualElementAttributeValue;
     });
 
     /**
@@ -243,12 +224,16 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * deleted
      */
     oldVirtualElement.children.forEach((oldVirtualElementChild, oldVirtualElementChildIndex) => {
+      if (element === null) {
+        return;
+      }
+
       const newVirtualElementChild = newVirtualElement.children[oldVirtualElementChildIndex];
-      const elementChild = element.childNodes.item(oldVirtualElementChildIndex);
+      const elementChild = element.childNodes[oldVirtualElementChildIndex] as RenderedElement;
 
       const patch = createPatch(oldVirtualElementChild, newVirtualElementChild);
 
-      patch(elementChild as Element);
+      patch(elementChild);
     });
 
     /**
@@ -261,5 +246,10 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * re-renders for some of the children and we should account for that case
      * (the key has changed) in here
      */
+    newVirtualElement.children.slice(oldVirtualElement.children.length).forEach(newVirtualElementChild => {
+      const patch = createPatch(null, newVirtualElementChild);
+
+      patch(element);
+    });
   }
 };

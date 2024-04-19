@@ -1,9 +1,9 @@
-import { VirtualElement } from "./types";
+import { RenderedElement, VirtualElement } from "./types";
 
 /**
  * Turn a virtual element into a real DOM element
  */
-export const render = (virtualElement: VirtualElement): Element | Text => {
+export const render = (virtualElement: VirtualElement): RenderedElement => {
   /**
    * If the virtual element does not imply anything visually interesting to
    * render
@@ -14,7 +14,7 @@ export const render = (virtualElement: VirtualElement): Element | Text => {
      * fragment, more research are needed in order to know more about this
      * element and to decide if this is a more suitable element to use
      */
-    return document.createTextNode("");
+    return null;
   }
 
   /**
@@ -62,41 +62,12 @@ export const render = (virtualElement: VirtualElement): Element | Text => {
     }
 
     /**
-     * If the attribute starts with "on" like "onclick", this means that this
-     * is an event and we should treat the value as an event listener instead
-     * of a plain attribute string
-     */
-    if (attributeName.startsWith("on") && typeof attributeValue === "function") {
-      /**
-       * We add the event to the element using the "addEventListener" method,
-       * and we passthrough the computed event to the listener. We could have
-       * simplified and reunited this algorithm along with the algorihm
-       * responsible for adding an attribute easily, but we might run into
-       * trouble when it comes to patching the element since patching oftens
-       * means updating/deleting an attribute, or an event in this case, and I
-       * really don't know if this is possible to remove an event listener from
-       * an element if it has been attached using element.onclick = listener,
-       * or maybe removing the element from the DOM and garbage collecting it
-       * might as well remove the listener and all of this is useless, I'm not
-       * confident enough to answer this question and I might resort to asking
-       * help to the community here
-       */
-      element.addEventListener(attributeName.slice(2), event => attributeValue(event));
-
-      /**
-       * We early return in here as we use the fail-fast methodology in order
-       * to simplify the writing of conditions and not fall into the
-       * if-else-if-else hell
-       */
-      return;
-    }
-
-    /**
      * If the attribute is not an event, this means this is a simple attribute
      * so we might attach it to the element simply by calling the
      * "setAttribute" method
      */
-    element.setAttribute(attributeName, String(attributeValue));
+    // @ts-ignore
+    element[attributeName] = attributeValue;
   });
 
   /**
@@ -104,12 +75,17 @@ export const render = (virtualElement: VirtualElement): Element | Text => {
    * can loop through all of the children and repeat the same process again,
    */
   virtualElement.children.forEach(child => {
+    const childElement = render(child);
+
+    if (childElement === null) {
+      return;
+    }
     /**
      * But since we don't want to rewrite all of the above, and we certainly
      * don't know how many times we need to do this, we use a recursive algorithm
      * in order to call the render function again on all of the children
      */
-    element.appendChild(render(child));
+    element.appendChild(childElement);
   });
 
   /**

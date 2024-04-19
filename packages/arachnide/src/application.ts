@@ -116,13 +116,15 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
    */
   oldVirtualElement = virtualElement;
 
-  /**
-   * We append a child to the root element that is passed as argument, we may
-   * check if this root element is empty or not, maybe there are cases where it
-   * needs to be filled but I'm not really sure as it seems weird to render a
-   * JavaScript application to an already filled DOM tree, we'll see
-   */
-  root.appendChild(element);
+  if (element !== null) {
+   /**
+    * We append a child to the root element that is passed as argument, we may
+    * check if this root element is empty or not, maybe there are cases where it
+    * needs to be filled but I'm not really sure as it seems weird to render a
+    * JavaScript application to an already filled DOM tree, we'll see
+    */
+    root.appendChild(element);
+  }
 
   /**
    * We return the emit helper as it can be useful to trigger side effects

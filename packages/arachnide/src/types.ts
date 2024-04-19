@@ -1,3 +1,5 @@
+export type RenderedElement = Element | Text | null;
+
 /**
  * A attribute can be a string, a number, a boolean, the null keyword or the
  * undefined keyword, in summary all scalar data types available in JavaScript
