@@ -17,20 +17,26 @@ docker compose up -d
 docker compose exec node npm install
 ```
 
-## Watch server
+## Library development
 
 ```bash
-docker compose exec node npm run dev
+docker compose exec node npm -w arachnide run dev
 ```
 
-## Build
+## Example development server
 
 ```bash
-docker compose exec node npm run build
+docker compose exec node npm -w example run dev
 ```
 
-## Linting
+## Library Linting
 
 ```bash
-docker compose exec node npm run lint
+docker compose exec node npm -w arachnide run lint
+```
+
+## Library build
+
+```bash
+docker compose exec node npm -w arachnide run build
 ```
