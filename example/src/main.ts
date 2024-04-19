@@ -1,4 +1,4 @@
-import { application, div, input, button, ul, li, span } from "arachnide";
+import { application, div, input, button, ul, li, span, form } from "arachnide";
 
 const root = document.getElementById("root");
 
@@ -62,31 +62,41 @@ application<AppState, AppEvent>({
     return div({
       attributes: {},
       children: [
-        input({
+        form({
           attributes: {
-            type: "text",
-            value: state.grocery,
-            oninput: event => {
-              if (event.target instanceof HTMLInputElement) {
+            onsubmit: (event) => {
+              if (event instanceof SubmitEvent) {
+                event.preventDefault();
                 emit({
-                  type: "SET_GROCERY",
-                  payload: event.target.value
-                });
+                  type: "ADD_GROCERY",
+                  payload: null
+                })
               }
             }
           },
-          children: []
-        }),
-        button({
-          attributes: {
-            onclick: () => {
-              emit({
-                type: "ADD_GROCERY",
-                payload: null
-              })
-            }
-          },
-          children: ["Add grocery"]
+          children: [
+            input({
+              attributes: {
+                type: "text",
+                value: state.grocery,
+                oninput: event => {
+                  if (event.target instanceof HTMLInputElement) {
+                    emit({
+                      type: "SET_GROCERY",
+                      payload: event.target.value
+                    });
+                  }
+                }
+              },
+              children: []
+            }),
+            button({
+              attributes: {
+                type: "submit"
+              },
+              children: ["Add grocery"]
+            }),
+          ]
         }),
         ul({
           attributes: {},
