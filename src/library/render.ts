@@ -28,6 +28,10 @@ export const render = (virtualElement: VirtualElement): Element | Text => {
     return document.createTextNode(virtualElement);
   }
 
+  if (typeof virtualElement === "boolean" || typeof virtualElement === "number") {
+    return document.createTextNode(String(virtualElement));
+  }
+
   /**
    * If we reach this part of the script, this means that the element is
    * neither a string, null or undefined so it must be an object hopefully if
