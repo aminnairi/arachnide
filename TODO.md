@@ -1,10 +1,13 @@
 - Live example
-- Baked-in the router
-- Css utility functions (px, deg, etc...)
-- API Documentation
-- NPM package
+- Package for the router
+- Package for the CSS utilities (@arachnide/css)
+- Package for the HTML utilities (@arachnide/html)
+- Package for the local storage persistence (@arachnide/local-storage)
+- Package for the session storage persistence (@arachnide/local-storage)
+- Add ESLint for TypeScript & good practice linting as well as code formatting (no prettier)
+- Documentation for the whole API
+- Publish the NPM package
 - Figure out animations?
-- Lifecycle methods (beforeLoad, afterLoad, etc...)
+- Lifecycle methods (beforeLoad, afterLoad, etc...) for @arachnide/core
 - Adapters for the event emitter, router, DOM operations (for SSR, mobile)
-- Persistence adapter for the state (localstorage, session, indexeddb?)
-- Linting
+- Add badges (NPM, License, bundle size, ...)
