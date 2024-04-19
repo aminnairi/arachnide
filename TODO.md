@@ -1,9 +1,7 @@
 - Live example
-- File organization to separate the package from the example
 - Baked-in the router
 - Css utility functions (px, deg, etc...)
 - API Documentation
-- More comments
 - NPM package
 - Figure out animations?
 - Lifecycle methods (beforeLoad, afterLoad, etc...)
