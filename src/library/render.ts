@@ -1,4 +1,4 @@
-import { VirtualElement } from ".";
+import { VirtualElement } from "./types";
 
 /**
  * Turn a virtual element into a real DOM element

@@ -1,4 +1,4 @@
-import { VirtualObjectElement } from ".";
+import { VirtualObjectElement } from "./types";
 
 /**
  * Create a new virtual element based on a tag name, attributes and children.

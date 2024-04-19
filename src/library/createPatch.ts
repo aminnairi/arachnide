@@ -1,4 +1,4 @@
-import { VirtualElement } from ".";
+import { VirtualElement } from "./types";
 import { render } from "./render";
 
 /**
@@ -15,7 +15,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * that we can simply compare the old and new virtual elements using a
      * simple comparison
      */
-    if (oldVirtualElement === null || oldVirtualElement === undefined || typeof oldVirtualElement === "string") {
+    if (oldVirtualElement === null || oldVirtualElement === undefined || typeof oldVirtualElement === "string" || typeof oldVirtualElement === "number" || typeof oldVirtualElement === "boolean") {
       /**
        * If the new virtual element is different from the old virtual element
        */
@@ -40,7 +40,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * new virtual elements are objects, which will simplify the process of
      * diffing those two
      */
-    if (newVirtualElement === null || newVirtualElement === undefined || typeof newVirtualElement === "string") {
+    if (newVirtualElement === null || newVirtualElement === undefined || typeof newVirtualElement === "string" || typeof newVirtualElement === "number" || typeof newVirtualElement === "boolean") {
       /**
        * If the new virtual element is different from the old virtual element
        */

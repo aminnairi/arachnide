@@ -1,4 +1,4 @@
-import { ApplicationEvent, ApplicationOptions, VirtualElement } from ".";
+import { ApplicationEvent, ApplicationOptions, VirtualElement } from "./types";
 import { createPatch } from "./createPatch";
 import { render } from "./render";
 
