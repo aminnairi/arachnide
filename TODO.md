@@ -1,16 +1,21 @@
 - Live example in the docs folder and a GitHub Pages
+- CSS Library for beautifying the live example
 - Package for the router
 - Package for the CSS utilities (@arachnide/css)
 - Package for the HTML utilities (@arachnide/html)
 - Package for Event listeners utilities (@arachnide/events)
 - Package for the local storage persistence (@arachnide/local-storage)
 - Package for the session storage persistence (@arachnide/local-storage)
-- Support for SVG elements, attributes & events
+- Support for SVG elements, attributes & events (@arachnide/svg)
 - Add ESLint for TypeScript & good practice linting as well as code formatting (no prettier)
 - Documentation for the whole API
+- Add a way to get a reference to a DOM element
 - Publish the NPM package
 - Figure out animations?
 - Lifecycle methods (beforeLoad, afterLoad, etc...) for @arachnide/core
 - Adapters for the event emitter, router, DOM operations (for SSR, mobile)
 - Add badges (NPM, License, bundle size, ...)
 - Find a solution to prevent event listeners rebind on each render (useCallback?)
+- Find a solution to load asynchronous elements
+- Create a cool logo
+- Add a solution to be able to key elements for optimization purpose and figure out what we need to do with keyed elements
