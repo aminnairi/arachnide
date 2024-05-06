@@ -15,6 +15,8 @@ type AppEvent
   = { type: "SET_GROCERY", payload: string }
   | { type: "ADD_GROCERY", payload: null }
   | { type: "REMOVE_GROCERY", payload: number }
+  | { type: "MOVE_GROCERY_UP", payload: number }
+  | { type: "MOVE_GROCERY_DOWN", payload: number }
 
 application<AppState, AppEvent>({
   state: {
@@ -47,8 +49,51 @@ application<AppState, AppEvent>({
     if (event.type === "REMOVE_GROCERY") {
       return {
         ...state,
-        groceries: state.groceries.filter((_, index) => {
-          return index !== event.payload;
+        groceries: state.groceries.filter((_, groceryIndex) => {
+          return groceryIndex !== event.payload;
+        })
+      };
+    }
+
+    if (event.type === "MOVE_GROCERY_UP") {
+      if (event.payload === 0) {
+        return state;
+      }
+
+      return {
+        ...state,
+        groceries: state.groceries.map((grocery, groceryIndex) => {
+          if (event.payload === groceryIndex) {
+            return state.groceries[event.payload - 1];
+          }
+
+          if (event.payload - 1 === groceryIndex) {
+            return state.groceries[event.payload];
+          }
+
+          return grocery;
+
+        })
+      };
+    }
+
+    if (event.type === "MOVE_GROCERY_DOWN") {
+      if (event.payload === state.groceries.length - 1) {
+        return state;
+      }
+
+      return {
+        ...state,
+        groceries: state.groceries.map((grocery, groceryIndex) => {
+          if (event.payload === groceryIndex) {
+            return state.groceries[event.payload + 1];
+          }
+
+          if (event.payload + 1 === groceryIndex) {
+            return state.groceries[event.payload];
+          }
+
+          return grocery;
         })
       };
     }
@@ -57,8 +102,6 @@ application<AppState, AppEvent>({
   },
   root,
   view: ({ state, emit }) => {
-    console.log({ state });
-
     return div({
       attributes: {},
       children: [
@@ -118,6 +161,28 @@ application<AppState, AppEvent>({
                     }
                   },
                   children: ["Remove"]
+                }),
+                button({
+                  attributes: {
+                    onclick: () => {
+                      emit({
+                        type: "MOVE_GROCERY_UP",
+                        payload: index
+                      })
+                    }
+                  },
+                  children: ["Up"]
+                }),
+                button({
+                  attributes: {
+                    onclick: () => {
+                      emit({
+                        type: "MOVE_GROCERY_DOWN",
+                        payload: index
+                      })
+                    }
+                  },
+                  children: ["Down"]
                 })
               ]
             })
@@ -126,4 +191,4 @@ application<AppState, AppEvent>({
       ]
     });
   }
-})
+});
