@@ -23,7 +23,8 @@ interface ApplicationState {
 }
 
 type ApplicationEvent
-  = { type: "SET_USERS", payload: Array<User> }
+  = { type: "SET_FETCHING", payload: null }
+  | { type: "SET_USERS", payload: Array<User> }
   | { type: "SET_LOADING", payload: boolean }
   | { type: "SET_ERROR", payload: string | null }
 
@@ -35,6 +36,14 @@ application<ApplicationState, ApplicationEvent>({
     users: []
   },
   update: ({ state, event }) => {
+    if (event.type === "SET_FETCHING") {
+      return {
+        ...state,
+        error: null,
+        loading: true
+      };
+    }
+
     if (event.type === "SET_USERS") {
       return {
         ...state,
@@ -62,12 +71,7 @@ application<ApplicationState, ApplicationEvent>({
     const fetchUsers = async () => {
       try {
         emit({
-          type: "SET_LOADING",
-          payload: true
-        });
-
-        emit({
-          type: "SET_ERROR",
+          type: "SET_FETCHING",
           payload: null
         });
 
