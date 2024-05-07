@@ -9,22 +9,78 @@ Coming soon...
 ## Usage
 
 ```typescript
-import { application, p } from "arachnide";
+import { application } from "@arachnide/core";
+import { div, button, span } from "@arachnide/html";
 
 const root = document.getElementById("root");
 
 if (!root) {
-    throw new Error("Root element not found");
+  throw new Error("Root element not found");
 }
 
-application<null, null>({
+interface ApplicationState {
+  counter: number
+}
+
+type ApplicationEvent
+  = { type: "INCREMENT", payload: null }
+  | { type: "DECREMENT", payload: null }
+
+application<ApplicationState, ApplicationEvent>({
   root,
-  state: null,
-  update: ({ state }) => state,
-  view: () => p({
-    attributes: {},
-    children: ["Hello, world!"]
-  })
+  state: {
+    counter: 15
+  },
+  update: ({ state, event }) => {
+    if (event.type === "INCREMENT") {
+      return {
+        ...state,
+        counter: state.counter + 1
+      };
+    }
+
+    if (event.type === "DECREMENT") {
+      return {
+        ...state,
+        counter: state.counter - 1
+      };
+    }
+
+    return state;
+  },
+  view: ({ state, emit }) => {
+    return div({
+      attributes: {},
+      children: [
+        button({
+          attributes: {
+            onclick: () => {
+              emit({
+                type: "DECREMENT",
+                payload: null
+              });
+            }
+          },
+          children: ["Decrement"]
+        }),
+        span({
+          attributes: {},
+          children: [state.counter]
+        }),
+        button({
+          attributes: {
+            onclick: () => {
+              emit({
+                type: "INCREMENT",
+                payload: null
+              });
+            }
+          },
+          children: ["Increment"]
+        }),
+      ]
+    });
+  }
 });
 ```
 
