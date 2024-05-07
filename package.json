@@ -1,7 +1,10 @@
 {
   "private": true,
   "workspaces": [
-    "packages/arachnide",
+    "packages/arachnide/core",
+    "packages/arachnide/css",
+    "packages/arachnide/html",
+    "packages/arachnide/event",
     "example"
   ]
 }

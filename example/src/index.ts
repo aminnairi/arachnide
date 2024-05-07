@@ -1,4 +1,6 @@
-import { application, button, div, h1, p, table, tbody, td, tr } from "arachnide";
+import { application } from "@arachnide/core";
+import { button, div, h1, input, p, table, tbody, td, tr } from "@arachnide/html";
+import { oninput } from "@arachnide/event";
 import { z } from "zod";
 
 const root = document.getElementById("root");
@@ -160,6 +162,13 @@ application<ApplicationState, ApplicationEvent>({
             onclick: fetchUsers
           },
           children: ["Refresh"]
+        }),
+        input({
+          attributes: {
+            oninput: oninput((value) => {
+              console.log(value);
+            })
+          }
         }),
         table({
           attributes: {},
