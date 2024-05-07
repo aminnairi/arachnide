@@ -20,3 +20,5 @@
 - Create a cool logo
 - Add a solution to be able to key elements for optimization purpose and figure out what we need to do with keyed elements
 - Add a solution to create a state that does not involve visual re-render (react ref like?)
+- Use JavaScript DOM styles instead of HTML styles
+- Use JavaScript classList instead of HTML classes
