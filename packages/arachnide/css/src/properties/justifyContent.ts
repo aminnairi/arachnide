@@ -29,5 +29,5 @@ export type JustifyContent
   | JustifyContentGlobal
 
 export const justifyContent = (value: JustifyContent) => {
-  return `justify-content: ${value}`;
+  return value;
 };

@@ -52,5 +52,5 @@ export type Display
   | DisplayGlobal
 
 export const display = (value: Display) => {
-  return `display: ${value}`;
+  return value;
 };

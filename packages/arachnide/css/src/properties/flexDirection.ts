@@ -8,5 +8,5 @@ export type FlexDirection
   | "unset"
 
 export const flexDirection = (value: FlexDirection) => {
-  return `flex-direction: ${value}`; 
+  return value;
 };
