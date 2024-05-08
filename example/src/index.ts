@@ -38,14 +38,23 @@ application<ApplicationState, ApplicationEvent>({
     return state;
   },
   views: {
-    "/arachnide/users": ({ go }) => {
-      return button({
-        attributes: {
-          onclick: () => {
-            go("/arachnide", {})
-          }
-        },
-        children: ["Go back"]
+    "/arachnide/users": ({ state, go }) => {
+      return div({
+        attributes: {},
+        children: [
+          span({
+            attributes: {},
+            children: [`Hint: counter was previously ${state.counter}`]
+          }),
+          button({
+            attributes: {
+              onclick: () => {
+                go("/arachnide", {})
+              }
+            },
+            children: ["Go back"]
+          })
+        ]
       });
     },
     "/arachnide": ({ state, emit, go }) => {
