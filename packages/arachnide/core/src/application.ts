@@ -6,7 +6,7 @@ import { render } from "./render";
  * Create an application that has a state, can emit events and renders the view
  * each time the state is updated
  */
-export const application = <State, GenericEvent extends ApplicationEvent>({ view, root, state, update }: ApplicationOptions<State, GenericEvent>) => {
+export const application = <State, GenericEvent extends ApplicationEvent>({ views, root, state, update }: ApplicationOptions<State, GenericEvent>) => {
   /**
    * Stores the old virtual element, that way we can compare it to the next
    * virtual element each time the state is updated in order to update the DOM
@@ -50,6 +50,31 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
     }));
   };
 
+  const go = (path: string, parameters: Record<string, unknown>) => {
+    window.history.pushState(null, path, Object.entries(parameters).reduce((previousPath, [parameterName, parameterValue]) => {
+      return previousPath.replaceAll(`:${parameterName}`, String(parameterValue));
+    }, path));
+
+    window.dispatchEvent(new CustomEvent("popstate"));
+  };
+
+  window.addEventListener("popstate", () => {
+
+    const view = views[window.location.pathname];
+
+    const newVirtualElement = view ? view({
+      state,
+      emit,
+      go
+    }) : null;
+
+    const patch = createPatch(oldVirtualElement, newVirtualElement);
+
+    oldVirtualElement = newVirtualElement;
+
+    patch(root.firstChild as Element);
+  });
+
   /**
    * The listener that will listen to the custom event that we are sending
    * whenever we need to trigger a state update
@@ -64,6 +89,12 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
       state
     });
 
+    const view = views[window.location.pathname];
+
+    if (!view) {
+      return;
+    }
+
     /**
      * Now that we have the state, we can derive the view since it depends on
      * the state, we also pass the emit function to allow the user to send new
@@ -71,7 +102,8 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
      */
     const newVirtualElement = view({
       state,
-      emit
+      emit,
+      go
     });
 
     /**
@@ -96,14 +128,17 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
     patch(root.firstChild as Element);
   });
 
+  const view = views[window.location.pathname];
+
   /**
    * We get the first iteration of the virtual element from the view function
    * that is derived from the state
    */
-  const virtualElement = view({
+  const virtualElement = view ? view({
     state,
-    emit
-  });
+    emit,
+    go
+  }) : null;
 
   /**
    * we render the DOM tree from the virtual element
@@ -117,12 +152,12 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
   oldVirtualElement = virtualElement;
 
   if (element !== null) {
-   /**
-    * We append a child to the root element that is passed as argument, we may
-    * check if this root element is empty or not, maybe there are cases where it
-    * needs to be filled but I'm not really sure as it seems weird to render a
-    * JavaScript application to an already filled DOM tree, we'll see
-    */
+    /**
+     * We append a child to the root element that is passed as argument, we may
+     * check if this root element is empty or not, maybe there are cases where it
+     * needs to be filled but I'm not really sure as it seems weird to render a
+     * JavaScript application to an already filled DOM tree, we'll see
+     */
     root.appendChild(element);
   }
 
@@ -133,6 +168,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
    * this application
    */
   return {
-    emit
+    emit,
+    go
   };
 };
