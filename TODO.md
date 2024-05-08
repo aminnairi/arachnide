@@ -22,3 +22,4 @@
 - Add a solution to create a state that does not involve visual re-render (react ref like?)
 - Use JavaScript DOM styles instead of HTML styles
 - Use JavaScript classList instead of HTML classes
+- Add support for base urls
