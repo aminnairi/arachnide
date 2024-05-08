@@ -100,7 +100,8 @@ export type ViewOptions<State, ApplicationEvent> = {
    * this function should not change and its reference will remain stable
    * accross renders
    */
-  emit: Emitter<ApplicationEvent>
+  emit: Emitter<ApplicationEvent>,
+  go: Go
 }
 
 /**
@@ -138,6 +139,8 @@ export type UpdateOptions<ApplicationEvent, State> = {
  */
 export type Update<ApplicationEvent, State> = (options: UpdateOptions<ApplicationEvent, State>) => State
 
+export type Go = (path: string, parameters: Record<string, unknown>) => void;
+
 /**
  * this is the list of options that you are allowed to pass to the application
  * function and that is responsible for connecting your state, your view and
@@ -152,7 +155,7 @@ export type ApplicationOptions<State, EventName> = {
    * inforamtions along with the event emitter function allowing you to update
    * the state of your application
    */
-  view: View<State, EventName>,
+  views: Record<string, View<State, EventName>>,
   /**
    * This is the HTML element that needs to be available in your HTML document
    * in order to inject and update your application view, make sure to pass an
