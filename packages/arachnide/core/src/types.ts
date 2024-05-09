@@ -101,7 +101,8 @@ export type ViewOptions<State, ApplicationEvent> = {
    * accross renders
    */
   emit: Emitter<ApplicationEvent>,
-  go: Go
+  go: Go,
+  parameters: Record<string, unknown>
 }
 
 /**
