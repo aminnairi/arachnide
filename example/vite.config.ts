@@ -3,7 +3,8 @@ import { defineConfig } from "vite";
 export default defineConfig({
   base: "/arachnide",
   build: {
-    outDir: "../docs"
+    outDir: "../docs",
+    emptyOutDir: true
   },
   server: {
     port: 8000,
