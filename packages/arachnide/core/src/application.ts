@@ -1,7 +1,7 @@
 import { ApplicationEvent, ApplicationOptions, VirtualElement } from "./types";
 import { createPatch } from "./createPatch";
 import { render } from "./render";
-import { removeTrailingLeadingSlashes } from "./removeTrailingLeadingSlashes";
+import { findViewFromPath } from "./findViewFromPath";
 
 /**
  * Create an application that has a state, can emit events and renders the view
@@ -60,11 +60,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
   };
 
   window.addEventListener("popstate", () => {
-    const foundView = Object.entries(views).find(([view]) => {
-      return removeTrailingLeadingSlashes(view) === removeTrailingLeadingSlashes(window.location.pathname);
-    });
-
-    const view = foundView ? foundView[1] : () => null
+    const view = findViewFromPath(window.location.pathname, views);
 
     const newVirtualElement = view({
       state,
@@ -93,11 +89,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
       state
     });
 
-    const foundView = Object.entries(views).find(([view]) => {
-      return removeTrailingLeadingSlashes(view) === removeTrailingLeadingSlashes(window.location.pathname);
-    });
-
-    const view = foundView ? foundView[1] : () => null;
+    const view = findViewFromPath(window.location.pathname, views);
 
     /**
      * Now that we have the state, we can derive the view since it depends on
@@ -132,11 +124,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
     patch(root.firstChild as Element);
   });
 
-  const foundView = Object.entries(views).find(([view]) => {
-    return removeTrailingLeadingSlashes(view) === removeTrailingLeadingSlashes(window.location.pathname);
-  });
-
-  const view = foundView ? foundView[1] : () => null;
+  const view = findViewFromPath(window.location.pathname, views);
 
   /**
    * We get the first iteration of the virtual element from the view function
