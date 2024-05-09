@@ -1,29 +1,27 @@
-- Live example in the docs folder and a GitHub Pages
+- Add a way to get a reference to a DOM element
+- Lifecycle methods (beforeLoad, afterLoad, etc...) for @arachnide/core
+- Find a solution to prevent event listeners rebind on each render (useCallback?)
+- Add a solution to create a state that does not involve visual re-render (react ref like?)
+- Add support for base urls in the router
+- Find a way to type the parameters
+- Ensure the parameters are cleaned in view routes definition (no inconsistent spaces)
 - CSS Library for beautifying the live example
-- Package for the router
-- Package for the CSS utilities (@arachnide/css)
-- Package for the HTML utilities (@arachnide/html)
-- Package for Event listeners utilities (@arachnide/events)
-- Package for the local storage persistence (@arachnide/local-storage)
-- Package for the session storage persistence (@arachnide/local-storage)
-- Support for SVG elements, attributes & events (@arachnide/svg)
+- Documentation for @arachnide/css
+- Documentation for @arachnide/html
+- Documentation for @arachnide/event
+- More events for @arachnide/event
+- Use a function for initializing the state in @arachnide/core
+- Support for SVG elements, attributes & events in @arachnide/core 
+- External library for easing the use of SVG elements (@arachnide/svg)
 - Add ESLint for TypeScript & good practice linting as well as code formatting (no prettier)
 - Documentation for the whole API
-- Add a way to get a reference to a DOM element
 - Publish the NPM package
 - Figure out animations?
-- Lifecycle methods (beforeLoad, afterLoad, etc...) for @arachnide/core
 - Adapters for the event emitter, router, DOM operations (for SSR, mobile)
 - Add badges (NPM, License, bundle size, ...)
-- Find a solution to prevent event listeners rebind on each render (useCallback?)
 - Find a solution to load asynchronous elements
 - Create a cool logo
 - Add a solution to be able to key elements for optimization purpose and figure out what we need to do with keyed elements
-- Add a solution to create a state that does not involve visual re-render (react ref like?)
 - Use JavaScript DOM styles instead of HTML styles
 - Use JavaScript classList instead of HTML classes
-- Add support for base urls
-- Add a 404 page for the live example to enable SPA-like behavior in GitHub page
-- Find a way to type the parameters
-- Ensure the parameters are cleaned (no inconsistent spaces)
 - Find a way to automate the generation of the 404 page for GitHub Pages
