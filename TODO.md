@@ -26,3 +26,4 @@
 - Add a 404 page for the live example to enable SPA-like behavior in GitHub page
 - Find a way to type the parameters
 - Ensure the parameters are cleaned (no inconsistent spaces)
+- Find a way to automate the generation of the 404 page for GitHub Pages
