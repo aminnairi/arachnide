@@ -1,4 +1,4 @@
-import { RenderedElement, VirtualElement } from "./types";
+import { VirtualElement } from "./types";
 import { render } from "./render";
 
 /**
@@ -9,7 +9,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
   /**
    * This is the function that will be used to patch any DOM tree element
    */
-  return (element: RenderedElement) => {
+  return (element: Element | ChildNode) => {
     if (oldVirtualElement === null || oldVirtualElement === undefined) {
       if (newVirtualElement === null || newVirtualElement === undefined) {
         return;
@@ -223,17 +223,25 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * new virtual element, meaning all children that have been modified or
      * deleted
      */
-    oldVirtualElement.children.forEach((oldVirtualElementChild, oldVirtualElementChildIndex) => {
+    const updates = oldVirtualElement.children.map((oldVirtualElementChild, oldVirtualElementChildIndex) => {
       if (element === null) {
-        return;
+        return () => {};
       }
 
       const newVirtualElementChild = newVirtualElement.children[oldVirtualElementChildIndex];
-      const elementChild = element.childNodes[oldVirtualElementChildIndex] as RenderedElement;
+      const elementChild = element.childNodes[oldVirtualElementChildIndex];
 
       const patch = createPatch(oldVirtualElementChild, newVirtualElementChild);
 
-      patch(elementChild);
+      if (elementChild === undefined) {
+        throw new Error("Invalid DOM node found. Has the DOM been manually updated?");
+      }
+
+      return () => patch(elementChild);
+    });
+
+    updates.forEach(update => {
+      update();
     });
 
     /**
@@ -246,10 +254,14 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * re-renders for some of the children and we should account for that case
      * (the key has changed) in here
      */
-    newVirtualElement.children.slice(oldVirtualElement.children.length).forEach(newVirtualElementChild => {
+    const additions = newVirtualElement.children.slice(oldVirtualElement.children.length).map(newVirtualElementChild => {
       const patch = createPatch(null, newVirtualElementChild);
 
-      patch(element);
+      return () => patch(element);
+    });
+
+    additions.forEach(addition => {
+      addition();
     });
   }
 };
