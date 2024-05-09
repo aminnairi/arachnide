@@ -6,8 +6,8 @@ Library for building Web applications
 
 - Build web application in JavaScript without directly manipulating the DOM yourself
 - Handle and share state between elements without using an external Library
-- Easily add routing without having to install an external dependency
-- Lots of helpers html, css and events
+- Easily add routing without having to install anything more
+- Lots of helpers for adding html, css and events to your Web applications
 - Functional style to keep things simple and expressive
 
 ## Installation
