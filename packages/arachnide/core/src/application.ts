@@ -2,6 +2,7 @@ import { ApplicationEvent, ApplicationOptions, VirtualElement } from "./types";
 import { createPatch } from "./createPatch";
 import { render } from "./render";
 import { findViewFromPath } from "./findViewFromPath";
+import { getViewParameters } from "./getViewParameters";
 
 /**
  * Create an application that has a state, can emit events and renders the view
@@ -60,12 +61,14 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
   };
 
   window.addEventListener("popstate", () => {
-    const view = findViewFromPath(window.location.pathname, views);
+    const [viewPath, view] = findViewFromPath(window.location.pathname, views);
+    const parameters = getViewParameters(viewPath, window.location.pathname);
 
     const newVirtualElement = view({
       state,
       emit,
-      go
+      go,
+      parameters
     });
 
     const patch = createPatch(oldVirtualElement, newVirtualElement);
@@ -89,7 +92,8 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
       state
     });
 
-    const view = findViewFromPath(window.location.pathname, views);
+    const [viewPath, view] = findViewFromPath(window.location.pathname, views);
+    const parameters = getViewParameters(viewPath, window.location.pathname);
 
     /**
      * Now that we have the state, we can derive the view since it depends on
@@ -99,7 +103,8 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
     const newVirtualElement = view({
       state,
       emit,
-      go
+      go,
+      parameters
     });
 
     /**
@@ -124,7 +129,8 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
     patch(root.firstChild as Element);
   });
 
-  const view = findViewFromPath(window.location.pathname, views);
+  const [viewPath, view] = findViewFromPath(window.location.pathname, views);
+  const parameters = getViewParameters(viewPath, window.location.pathname);
 
   /**
    * We get the first iteration of the virtual element from the view function
@@ -133,7 +139,8 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
   const virtualElement = view({
     state,
     emit,
-    go
+    go,
+    parameters
   });
 
   /**
