@@ -26,15 +26,7 @@ if (!root) {
   throw new Error("Root element not found");
 }
 
-interface ApplicationState {
-  counter: number
-}
-
-type ApplicationEvent
-  = { type: "INCREMENT", payload: null }
-  | { type: "DECREMENT", payload: null }
-
-application<ApplicationState, ApplicationEvent>({
+application({
   root,
   state: {
     counter: 15
