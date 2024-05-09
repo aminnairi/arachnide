@@ -38,7 +38,7 @@ application<ApplicationState, ApplicationEvent>({
     return state;
   },
   views: {
-    "/arachnide/users": ({ state, go }) => {
+    "/arachnide/info": ({ state, go }) => {
       return div({
         attributes: {},
         children: [
@@ -64,10 +64,10 @@ application<ApplicationState, ApplicationEvent>({
           button({
             attributes: {
               onclick: () => {
-                go("/arachnide/users", {})
+                go("/arachnide/info", {})
               }
             },
-            children: ["Go to users"]
+            children: ["Go to info"]
           }),
           button({
             attributes: {
