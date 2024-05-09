@@ -5,7 +5,7 @@ export const removeTrailingLeadingSlashes = (text: string): string => {
     return text;
   }
 
-  const output = match.at(0);
+  const output = match.at(1);
 
   return output ?? text;
 };
