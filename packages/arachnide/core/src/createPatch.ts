@@ -223,9 +223,9 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * new virtual element, meaning all children that have been modified or
      * deleted
      */
-    const updates = oldVirtualElement.children.map((oldVirtualElementChild, oldVirtualElementChildIndex) => {
+    oldVirtualElement.children.forEach((oldVirtualElementChild, oldVirtualElementChildIndex) => {
       if (element === null) {
-        return () => {};
+        throw new Error("Invalid DOM node found. Has the DOM been manually updated?");
       }
 
       const newVirtualElementChild = newVirtualElement.children[oldVirtualElementChildIndex];
@@ -237,11 +237,9 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         throw new Error("Invalid DOM node found. Has the DOM been manually updated?");
       }
 
-      return () => patch(elementChild);
-    });
-
-    updates.forEach(update => {
-      update();
+      window.queueMicrotask(() => {
+        patch(elementChild);
+      });
     });
 
     /**
@@ -254,14 +252,12 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * re-renders for some of the children and we should account for that case
      * (the key has changed) in here
      */
-    const additions = newVirtualElement.children.slice(oldVirtualElement.children.length).map(newVirtualElementChild => {
+    newVirtualElement.children.slice(oldVirtualElement.children.length).forEach(newVirtualElementChild => {
       const patch = createPatch(null, newVirtualElementChild);
 
-      return () => patch(element);
-    });
-
-    additions.forEach(addition => {
-      addition();
+      window.queueMicrotask(() => {
+        patch(element);
+      });
     });
   }
 };
