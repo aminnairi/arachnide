@@ -24,3 +24,5 @@
 - Use JavaScript classList instead of HTML classes
 - Add support for base urls
 - Add a 404 page for the live example to enable SPA-like behavior in GitHub page
+- Find a way to type the parameters
+- Ensure the parameters are cleaned (no inconsistent spaces)
