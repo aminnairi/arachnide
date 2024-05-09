@@ -1,6 +1,7 @@
 import { ApplicationEvent, ApplicationOptions, VirtualElement } from "./types";
 import { createPatch } from "./createPatch";
 import { render } from "./render";
+import { removeTrailingLeadingSlashes } from "./removeTrailingLeadingSlashes";
 
 /**
  * Create an application that has a state, can emit events and renders the view
@@ -59,14 +60,17 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
   };
 
   window.addEventListener("popstate", () => {
+    const foundView = Object.entries(views).find(([view]) => {
+      return removeTrailingLeadingSlashes(view) === removeTrailingLeadingSlashes(window.location.pathname);
+    });
 
-    const view = views[window.location.pathname];
+    const view = foundView ? foundView[1] : () => null
 
-    const newVirtualElement = view ? view({
+    const newVirtualElement = view({
       state,
       emit,
       go
-    }) : null;
+    });
 
     const patch = createPatch(oldVirtualElement, newVirtualElement);
 
@@ -89,11 +93,11 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
       state
     });
 
-    const view = views[window.location.pathname];
+    const foundView = Object.entries(views).find(([view]) => {
+      return removeTrailingLeadingSlashes(view) === removeTrailingLeadingSlashes(window.location.pathname);
+    });
 
-    if (!view) {
-      return;
-    }
+    const view = foundView ? foundView[1] : () => null;
 
     /**
      * Now that we have the state, we can derive the view since it depends on
@@ -128,17 +132,21 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
     patch(root.firstChild as Element);
   });
 
-  const view = views[window.location.pathname];
+  const foundView = Object.entries(views).find(([view]) => {
+    return removeTrailingLeadingSlashes(view) === removeTrailingLeadingSlashes(window.location.pathname);
+  });
+
+  const view = foundView ? foundView[1] : () => null;
 
   /**
    * We get the first iteration of the virtual element from the view function
    * that is derived from the state
    */
-  const virtualElement = view ? view({
+  const virtualElement = view({
     state,
     emit,
     go
-  }) : null;
+  });
 
   /**
    * we render the DOM tree from the virtual element
