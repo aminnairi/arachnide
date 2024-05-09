@@ -23,3 +23,4 @@
 - Use JavaScript DOM styles instead of HTML styles
 - Use JavaScript classList instead of HTML classes
 - Add support for base urls
+- Add a 404 page for the live example to enable SPA-like behavior in GitHub page
