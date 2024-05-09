@@ -1,5 +1,5 @@
 import { application } from "@arachnide/core";
-import { div, button, span } from "@arachnide/html";
+import { div, button, span, p } from "@arachnide/html";
 
 const root = document.getElementById("root");
 
@@ -72,6 +72,14 @@ application<ApplicationState, ApplicationEvent>({
           button({
             attributes: {
               onclick: () => {
+                go("/arachnide/greetings/yourself", {})
+              }
+            },
+            children: ["Go to greetings"]
+          }),
+          button({
+            attributes: {
+              onclick: () => {
                 emit({
                   type: "DECREMENT",
                   payload: null
@@ -95,6 +103,25 @@ application<ApplicationState, ApplicationEvent>({
             },
             children: ["Increment"]
           }),
+        ]
+      });
+    },
+    "/arachnide/greetings/:name": ({ parameters, go }) => {
+      return div({
+        attributes: {},
+        children: [
+          button({
+            attributes: {
+              onclick: () => {
+                go("/arachnide", {});
+              }
+            },
+            children: ["Go back home"]
+          }),
+          p({
+            attributes: {},
+            children: [`Welcome, ${parameters.name}`]
+          })
         ]
       });
     }
