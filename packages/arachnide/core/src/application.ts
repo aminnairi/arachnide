@@ -20,7 +20,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
    * Create a unique identifier for the event used when emitting event, so that
    * we are sure we don't clash with an existing standard event
    */
-  const emitIdentifier = window.crypto.randomUUID();
+  const emitIdentifier = "arachnide:emit";
 
   /**
    * Emit an event based on a type and eventually a payload. It is recommended
