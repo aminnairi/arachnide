@@ -26,3 +26,6 @@
 - Use JavaScript classList instead of HTML classes
 - Find a way to automate the generation of the 404 page for GitHub Pages
 - Support URL query parameters in the go to route function
+- Create a function to ensure a virtual element is object, null, undefined, number or string
+- Handle DOMReferences for the createPatch function
+- Enhance the generic type for the VirtualObjectElement to account for the DOMReference type and for the helper functions in html
