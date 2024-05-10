@@ -6,3 +6,5 @@ export * from "./findViewFromPath";
 export * from "./getViewParameters"
 export * from "./removeTrailingLeadingSlashes";
 export * from "./render";
+export * from "./createDOMReference";
+export * from "./isDOMReference"
