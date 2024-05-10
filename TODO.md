@@ -25,3 +25,4 @@
 - Use JavaScript DOM styles instead of HTML styles
 - Use JavaScript classList instead of HTML classes
 - Find a way to automate the generation of the 404 page for GitHub Pages
+- Support URL query parameters in the go to route function
