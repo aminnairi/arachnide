@@ -50,3 +50,9 @@ docker compose exec node npm -w @arachnide/core run lint
 ```bash
 docker compose exec node npm -ws run build
 ```
+
+## Live example preview
+
+```bash
+docker compose exec node npm -w example run preview
+```
