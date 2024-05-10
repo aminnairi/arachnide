@@ -1,3 +1,4 @@
+import { isDOMReference } from "./isDOMReference";
 import { RenderedElement, VirtualElement } from "./types";
 
 /**
@@ -87,6 +88,10 @@ export const render = (virtualElement: VirtualElement): RenderedElement => {
      */
     element.appendChild(childElement);
   });
+
+  if (isDOMReference(virtualElement.reference)) {
+    virtualElement.reference.target = element;
+  }
 
   /**
    * Now that everything has been done for this particular virtual element, we
