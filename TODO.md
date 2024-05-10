@@ -29,3 +29,5 @@
 - Create a function to ensure a virtual element is object, null, undefined, number or string
 - Handle DOMReferences for the createPatch function
 - Enhance the generic type for the VirtualObjectElement to account for the DOMReference type and for the helper functions in html
+- Create the focus & blur functions to allow focusing/bluring a DOMReference with the html package
+- Add a manifest.json file for the live example to allow installing it as an app
