@@ -1,3 +1,7 @@
+export type DOMReference<GenericElement extends Element> = {
+  target: null | GenericElement
+};
+
 export type RenderedElement = Element | Text | null;
 
 /**
@@ -44,7 +48,8 @@ export type VirtualObjectElement = {
    * Childrens for the tag to create if applicable, for instance for a "ul" tag
    * that will have "li" children
    */
-  children: Array<VirtualElement>
+  children: Array<VirtualElement>,
+  reference?: DOMReference<Element> | undefined
 }
 
 /**
