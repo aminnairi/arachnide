@@ -64,7 +64,6 @@ application<ApplicationState, ApplicationEvent>({
   views: {
     "/arachnide": ({ state, emit, go }) => {
       return div({
-        attributes: {},
         children: [
           button({
             attributes: {
@@ -75,7 +74,6 @@ application<ApplicationState, ApplicationEvent>({
             children: ["Go to summary"]
           }),
           p({
-            attributes: {},
             children: ["Get a summary of all of the below informations"]
           }),
           button({
@@ -121,7 +119,6 @@ application<ApplicationState, ApplicationEvent>({
             }
           }),
           ul({
-            attributes: {},
             children: Array.from(Array(state.counter)).map((_, index) => {
               return li({
                 attributes: {},
@@ -134,14 +131,11 @@ application<ApplicationState, ApplicationEvent>({
     },
     "/arachnide/summary": ({ state, go }) => {
       return div({
-        attributes: {},
         children: [
           p({
-            attributes: {},
             children: [`Counter is currently at ${state.counter}`]
           }),
           p({
-            attributes: {},
             children: [`Steps is currently at ${state.steps}`]
           }),
           button({
