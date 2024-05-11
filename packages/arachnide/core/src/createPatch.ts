@@ -70,9 +70,9 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
       }
 
       /**
-         * This means that we need to change it in the current DOM, otherwise
-         * we do nothing as it means they are identical
-         */
+       * This means that we need to change it in the current DOM, otherwise
+       * we do nothing as it means they are identical
+       */
       element.replaceWith(newElement);
 
       /**
