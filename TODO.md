@@ -1,4 +1,3 @@
-- Add a way to get a reference to a DOM element
 - Lifecycle methods (beforeLoad, afterLoad, etc...) for @arachnide/core
 - Find a solution to prevent event listeners rebind on each render (useCallback?)
 - Add a solution to create a state that does not involve visual re-render (react ref like?)
@@ -26,9 +25,7 @@
 - Use JavaScript classList instead of HTML classes
 - Find a way to automate the generation of the 404 page for GitHub Pages
 - Support URL query parameters in the go to route function
-- Create a function to ensure a virtual element is object, null, undefined, number or string
-- Handle DOMReferences for the createPatch function
-- Enhance the generic type for the VirtualObjectElement to account for the DOMReference type and for the helper functions in html
 - Create the focus & blur functions to allow focusing/bluring a DOMReference with the html package
 - Add a manifest.json file for the live example to allow installing it as an app
 - Make core element & html element allow not providing the attributes or children
+- Find a way to handle not found routes
