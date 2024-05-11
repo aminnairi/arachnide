@@ -1,9 +1,10 @@
 import { VirtualObjectElement } from "@arachnide/core";
 
-export const q = ({ attributes, children }: Omit<VirtualObjectElement, "name">): VirtualObjectElement => {
+export const q = ({ attributes, children, reference }: Omit<VirtualObjectElement, "name">): VirtualObjectElement => {
   return {
     name: "q",
     attributes,
-    children
+    children,
+    reference
   };
 };
