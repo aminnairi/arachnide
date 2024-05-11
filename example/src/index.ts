@@ -1,5 +1,6 @@
 import { application } from "@arachnide/core";
-import { div, button, span, p } from "@arachnide/html";
+import { ul, li, div, button, input, label, p } from "@arachnide/html";
+import { oninput } from "@arachnide/event";
 
 const root = document.getElementById("root");
 
@@ -7,56 +8,56 @@ if (!root) {
   throw new Error("Root element not found");
 }
 
-interface ApplicationState {
-  counter: number
+type ApplicationState = {
+  counter: number,
+  steps: number
 }
 
-type ApplicationEvent
+type ApplicationEvent 
   = { type: "INCREMENT", payload: null }
   | { type: "DECREMENT", payload: null }
+  | { type: "SET_STEPS", payload: number }
 
 application<ApplicationState, ApplicationEvent>({
   root,
   state: {
-    counter: 15
+    counter: 10,
+    steps: 10
   },
   update: ({ state, event }) => {
     if (event.type === "INCREMENT") {
       return {
         ...state,
-        counter: state.counter + 1
+        counter: state.counter + state.steps
       };
     }
 
     if (event.type === "DECREMENT") {
+      const newCounter = state.counter - state.steps;
+
+      if (newCounter < 0) {
+        return {
+          ...state,
+          counter: 0
+        };
+      }
+
       return {
         ...state,
-        counter: state.counter - 1
+        counter: state.counter - state.steps
+      };
+    }
+
+    if (event.type === "SET_STEPS") {
+      return {
+        ...state,
+        steps: event.payload
       };
     }
 
     return state;
   },
   views: {
-    "/arachnide/info": ({ state, go }) => {
-      return div({
-        attributes: {},
-        children: [
-          span({
-            attributes: {},
-            children: [`Hint: counter was previously ${state.counter}`]
-          }),
-          button({
-            attributes: {
-              onclick: () => {
-                go("/arachnide", {})
-              }
-            },
-            children: ["Go back"]
-          })
-        ]
-      });
-    },
     "/arachnide": ({ state, emit, go }) => {
       return div({
         attributes: {},
@@ -64,33 +65,14 @@ application<ApplicationState, ApplicationEvent>({
           button({
             attributes: {
               onclick: () => {
-                go("/arachnide/info", {})
+                go("/arachnide/summary", {});
               }
             },
-            children: ["Go to info"]
+            children: ["Go to summary"]
           }),
-          button({
-            attributes: {
-              onclick: () => {
-                go("/arachnide/greetings/yourself", {})
-              }
-            },
-            children: ["Go to greetings"]
-          }),
-          button({
-            attributes: {
-              onclick: () => {
-                emit({
-                  type: "DECREMENT",
-                  payload: null
-                });
-              }
-            },
-            children: ["Decrement"]
-          }),
-          span({
+          p({
             attributes: {},
-            children: [state.counter]
+            children: ["Get a summary of all of the below informations"]
           }),
           button({
             attributes: {
@@ -103,13 +85,61 @@ application<ApplicationState, ApplicationEvent>({
             },
             children: ["Increment"]
           }),
+          button({
+            attributes: {
+              onclick: () => {
+                emit({
+                  type: "DECREMENT",
+                  payload: null
+                });
+              }
+            },
+            children: ["Decrement"]
+          }),
+          label({
+            attributes: {
+              for: "steps"
+            },
+            children: [" Steps "]
+          }),
+          input({
+            attributes: {
+              id: "steps",
+              step: 10,
+              type: "number",
+              value: state.steps,
+              oninput: oninput((value) => {
+                emit({
+                  type: "SET_STEPS",
+                  payload: Number(value) || 100
+                });
+              })
+            }
+          }),
+          ul({
+            attributes: {},
+            children: Array.from(Array(state.counter)).map((_, index) => {
+              return li({
+                attributes: {},
+                children: [`Index #${index}`]
+              });
+            })
+          })
         ]
       });
     },
-    "/arachnide/greetings/:name": ({ parameters, go }) => {
+    "/arachnide/summary": ({ state, go }) => {
       return div({
         attributes: {},
         children: [
+          p({
+            attributes: {},
+            children: [`Counter is currently at ${state.counter}`]
+          }),
+          p({
+            attributes: {},
+            children: [`Steps is currently at ${state.steps}`]
+          }),
           button({
             attributes: {
               onclick: () => {
@@ -117,10 +147,6 @@ application<ApplicationState, ApplicationEvent>({
               }
             },
             children: ["Go back home"]
-          }),
-          p({
-            attributes: {},
-            children: [`Welcome, ${parameters.name}`]
           })
         ]
       });
