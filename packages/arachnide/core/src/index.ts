@@ -8,3 +8,9 @@ export * from "./removeTrailingLeadingSlashes";
 export * from "./render";
 export * from "./createDOMReference";
 export * from "./isDOMReference"
+export * from "./isElement";
+export * from "./isVirtualStringElement";
+export * from "./isVirtualNumberElement";
+export * from "./isVirtualBooleanElement";
+export * from "./isVirtualNullElement";
+export * from "./isVirtualUndefinedElement";
