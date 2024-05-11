@@ -1,5 +1,13 @@
 import { VirtualElement } from "./types";
 import { render } from "./render";
+import { isVirtualStringElement } from "./isVirtualStringElement";
+import { isVirtualNumberElement } from "./isVirtualNumberElement";
+import { isVirtualBooleanElement } from "./isVirtualBooleanElement";
+import { isVirtualNullElement } from "./isVirtualNullElement";
+import { isVirtualUndefinedElement } from "./isVirtualUndefinedElement";
+import { isElement } from "./isElement";
+import { isVirtualObjectElement } from "./isVirtualObjectElement";
+import { isDOMReference } from "./isDOMReference";
 
 /**
  * Create a function that will update the DOM tree based on the differences
@@ -10,8 +18,8 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
    * This is the function that will be used to patch any DOM tree element
    */
   return (element: Element | ChildNode) => {
-    if (oldVirtualElement === null || oldVirtualElement === undefined) {
-      if (newVirtualElement === null || newVirtualElement === undefined) {
+    if (isVirtualNullElement(oldVirtualElement) || isVirtualUndefinedElement(oldVirtualElement)) {
+      if (isVirtualNullElement(newVirtualElement) || isVirtualUndefinedElement(newVirtualElement)) {
         return;
       }
 
@@ -25,6 +33,9 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         return;
       }
 
+      if (isElement(newElement) && isVirtualObjectElement(newVirtualElement) && isDOMReference(newVirtualElement.reference)) {
+        newVirtualElement.reference.target = newElement;
+      }
 
       element.appendChild(newElement);
 
@@ -36,7 +47,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * that we can simply compare the old and new virtual elements using a
      * simple comparison
      */
-    if (typeof oldVirtualElement === "string" || typeof oldVirtualElement === "number" || typeof oldVirtualElement === "boolean") {
+    if (isVirtualStringElement(oldVirtualElement) || isVirtualNumberElement(oldVirtualElement) || isVirtualBooleanElement(oldVirtualElement)) {
       /**
        * If the new virtual element is different from the old virtual element
        */
@@ -54,6 +65,10 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         return;
       }
 
+      if (isVirtualObjectElement(newVirtualElement) && isDOMReference(newVirtualElement.reference) && isElement(newElement)) {
+        newVirtualElement.reference.target = newElement;
+      }
+
       /**
          * This means that we need to change it in the current DOM, otherwise
          * we do nothing as it means they are identical
@@ -67,8 +82,8 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
       return;
     }
 
-    if (newVirtualElement === null || newVirtualElement === undefined) {
-      if (oldVirtualElement === null || oldVirtualElement === undefined) {
+    if (isVirtualNullElement(newVirtualElement) || isVirtualUndefinedElement(newVirtualElement)) {
+      if (isVirtualNullElement(oldVirtualElement) || isVirtualUndefinedElement(oldVirtualElement)) {
         return;
       }
 
@@ -87,7 +102,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * new virtual elements are objects, which will simplify the process of
      * diffing those two
      */
-    if (typeof newVirtualElement === "string" || typeof newVirtualElement === "number" || typeof newVirtualElement === "boolean") {
+    if (isVirtualStringElement(newVirtualElement) || isVirtualNumberElement(newVirtualElement) || isVirtualBooleanElement(newVirtualElement)) {
       /**
        * If the new virtual element is different from the old virtual element
        */
@@ -103,6 +118,10 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
 
       if (newElement === null) {
         return;
+      }
+
+      if (isVirtualObjectElement(newVirtualElement) && isDOMReference(newVirtualElement.reference) && isElement(newElement)) {
+        newVirtualElement.reference.target = newElement;
       }
 
       /**
