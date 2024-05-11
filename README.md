@@ -67,7 +67,6 @@ application({
   views: {
     "/": ({ state, emit }) => {
       return div({
-        attributes: {},
         children: [
           button({
             attributes: {
@@ -81,7 +80,6 @@ application({
             children: ["Decrement"]
           }),
           span({
-            attributes: {},
             children: [state.counter]
           }),
           button({
@@ -94,7 +92,7 @@ application({
               }
             },
             children: ["Increment"]
-          }),
+          })
         ]
       });
     }
