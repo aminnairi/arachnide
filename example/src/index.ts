@@ -2,6 +2,10 @@ import { application } from "@arachnide/core";
 import { ul, li, div, button, input, label, p } from "@arachnide/html";
 import { oninput } from "@arachnide/event";
 
+window.addEventListener("error", (event) => {
+  alert(`Error: ${event.message}`);
+});
+
 const root = document.getElementById("root");
 
 if (!root) {
