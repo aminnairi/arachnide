@@ -164,6 +164,8 @@ Unfortunately, I've not been interested enough to know more about how Fibers rea
 
 So why not contributing to the React project instead? Well, I'm really not that smart, at all. I don't really think I have the skills to withstand the complexity of the source-code of React, plus I now have my own view of what a JavaScript framework should look like in its design and that's why I've finally, after many years, decided to create my own.
 
+[Official website](https://react.dev/) for the React documentation.
+
 ### Vue.js
 
 Although Vue.js might be the farthest in design from what you can expect from Arachnide, I've actually worked with Vue.js for a long time, and to your surprise, it has been my first JavaScript framework ever back in the time when I worked with Laravel and later on added some JavaScript goodies with Vue.js.
@@ -178,9 +180,11 @@ With maturity and experience, and some sneak peaks at the source-code, I can def
 
 As you probably guessed, there is not so much inspiration about the way Vue.js works that has inspired Arachnide, although I try to follow this moto of trying to make something as simple as possible to use, without sacrificing on developer experience and simplicity of writing the internal source-code.
 
+You can learn more about Vue.js at their [official website](https://vuejs.org/).
+
 ### Others that I probably forget
 
-In my carreer and experience, I've tackled with so many frameworks such as Solid.js, Svelte, Angular, and I am curious by nature, I love exploring new ideas, new paradigms, new ideas in order to forge my own.
+In my carreer and experience, I've tackled with so many frameworks such as [Solid.js](https://www.solidjs.com/), [Svelte](https://svelte.dev/), [Angular](https://angular.io/), and I am curious by nature, I love exploring new ideas, new paradigms, new ideas in order to forge my own.
 
 This also leads me to tell you about the JavaScript framework war, a war that does not really exist really simply because there is no competition between frameworks, they all have they quirks, their killer features and there are so many framework simply because there isn't one way to think through a problem.
 
