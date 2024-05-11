@@ -28,3 +28,4 @@
 - Create the focus & blur functions to allow focusing/bluring a DOMReference with the html package
 - Add a manifest.json file for the live example to allow installing it as an app
 - Find a way to handle not found routes
+- Make the go function more explicit about its parameters
