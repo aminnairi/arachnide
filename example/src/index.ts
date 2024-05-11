@@ -1,5 +1,6 @@
 import { application } from "@arachnide/core";
-import { ul, li, div, button, input, label, p } from "@arachnide/html";
+import { ul, li, div, button, input, label, p, h1 } from "@arachnide/html";
+import { styles } from "@arachnide/css";
 import { oninput } from "@arachnide/event";
 
 window.addEventListener("error", (event) => {
@@ -64,9 +65,27 @@ application<ApplicationState, ApplicationEvent>({
   views: {
     "/arachnide": ({ state, emit, go }) => {
       return div({
+        attributes: {
+          className: "container"
+        },
         children: [
+          h1({
+            attributes: {
+              className: "center",
+              style: styles({
+                "text-align": "center"
+              })
+            },
+            children: ["Home"]
+          }),
           button({
             attributes: {
+              style: styles({
+                display: "block",
+                "margin-left": "auto",
+                "margin-right": "auto",
+                "margin-bottom": "30px"
+              }),
               onclick: () => {
                 go("/arachnide/summary", {});
               }
@@ -74,29 +93,43 @@ application<ApplicationState, ApplicationEvent>({
             children: ["Go to summary"]
           }),
           p({
+            attributes: {
+              style: styles({
+                "text-align": "center"
+              })
+            },
             children: ["Get a summary of all of the below informations"]
           }),
-          button({
+          div({
             attributes: {
-              onclick: () => {
-                emit({
-                  type: "INCREMENT",
-                  payload: null
-                });
-              }
+              className: "grid"
             },
-            children: ["Increment"]
-          }),
-          button({
-            attributes: {
-              onclick: () => {
-                emit({
-                  type: "DECREMENT",
-                  payload: null
-                });
-              }
-            },
-            children: ["Decrement"]
+            children: [
+              button({
+                attributes: {
+                  className: "outline",
+                  onclick: () => {
+                    emit({
+                      type: "INCREMENT",
+                      payload: null
+                    });
+                  }
+                },
+                children: ["Increment"]
+              }),
+              button({
+                attributes: {
+                  className: "outline",
+                  onclick: () => {
+                    emit({
+                      type: "DECREMENT",
+                      payload: null
+                    });
+                  }
+                },
+                children: ["Decrement"]
+              }),
+            ]
           }),
           label({
             attributes: {
@@ -131,15 +164,40 @@ application<ApplicationState, ApplicationEvent>({
     },
     "/arachnide/summary": ({ state, go }) => {
       return div({
+        attributes: {
+          className: "container"
+        },
         children: [
+          h1({
+            attributes: {
+              style: styles({
+                "text-align": "center"
+              })
+            },
+            children: ["Summary"]
+          }),
           p({
+            attributes: {
+              style: styles({
+                "text-align": "center"
+              })
+            },
             children: [`Counter is currently at ${state.counter}`]
           }),
           p({
+            attributes: {
+              style: styles({
+                "text-align": "center"
+              })
+            },
             children: [`Steps is currently at ${state.steps}`]
           }),
           button({
             attributes: {
+              style: styles({
+                display: "block",
+                margin: "0 auto"
+              }),
               onclick: () => {
                 go("/arachnide", {});
               }
