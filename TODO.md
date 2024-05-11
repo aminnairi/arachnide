@@ -27,5 +27,4 @@
 - Support URL query parameters in the go to route function
 - Create the focus & blur functions to allow focusing/bluring a DOMReference with the html package
 - Add a manifest.json file for the live example to allow installing it as an app
-- Make core element & html element allow not providing the attributes or children
 - Find a way to handle not found routes
