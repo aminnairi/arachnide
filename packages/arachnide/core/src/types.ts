@@ -43,12 +43,12 @@ export type VirtualObjectElement = {
    * The attributes in the form of an object for the tag to create, like
    * "class", "for" or "onclick" for event listeners
    */
-  attributes: VirtualObjectElementAttributes,
+  attributes?: VirtualObjectElementAttributes | undefined,
   /**
    * Childrens for the tag to create if applicable, for instance for a "ul" tag
    * that will have "li" children
    */
-  children: Array<VirtualElement>,
+  children?: Array<VirtualElement> | undefined,
   reference?: DOMReference<Element> | undefined
 }
 

@@ -5,6 +5,11 @@ import { VirtualObjectElement } from "./types";
  * This function is mostly used whenever this library does not expose a
  * function equivalent to a wanted HTML element
  */
-export const element = (virtualObjectElement: VirtualObjectElement): VirtualObjectElement => {
-  return virtualObjectElement;
+export const element = ({ name, attributes = {}, children = [], reference = undefined }: VirtualObjectElement): VirtualObjectElement => {
+  return {
+    name,
+    attributes,
+    children,
+    reference
+  };
 };
