@@ -24,7 +24,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
       }
 
       if (element === null) {
-        return;
+        throw new Error("Invalid DOM node found. Has the DOM been manually updated?");
       }
 
       const newElement = render(newVirtualElement);
@@ -56,7 +56,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
       }
 
       if (element === null) {
-        return;
+        throw new Error("Invalid DOM node found. Has the DOM been manually updated?");
       }
 
       const newElement = render(newVirtualElement);
@@ -88,7 +88,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
       }
 
       if (element === null) {
-        return;
+        throw new Error("Invalid DOM node found. Has the DOM been manually updated?");
       }
 
       element.remove();
@@ -111,7 +111,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
       }
 
       if (element === null) {
-        return;
+        throw new Error("Invalid DOM node found. Has the DOM been manually updated?");
       }
 
       const newElement = render(newVirtualElement);
@@ -144,7 +144,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      */
     if (oldVirtualElement.name !== newVirtualElement.name) {
       if (element === null) {
-        return;
+        throw new Error("Invalid DOM node found. Has the DOM been manually updated?");
       }
 
       const newElement = render(newVirtualElement);
