@@ -75,12 +75,14 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
   window.addEventListener("popstate", () => {
     const [viewPath, view] = findViewFromPath(window.location.pathname, views);
     const parameters = getViewParameters(viewPath, window.location.pathname);
+    const searchParameters = Object.fromEntries(new URLSearchParams(window.location.search));
 
     const newVirtualElement = view({
       state,
       emit,
       go,
-      parameters
+      parameters,
+      searchParameters
     });
 
     const patch = createPatch(oldVirtualElement, newVirtualElement);
@@ -106,6 +108,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
 
     const [viewPath, view] = findViewFromPath(window.location.pathname, views);
     const parameters = getViewParameters(viewPath, window.location.pathname);
+    const searchParameters = Object.fromEntries(new URLSearchParams(window.location.search));
 
     /**
      * Now that we have the state, we can derive the view since it depends on
@@ -116,7 +119,8 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
       state,
       emit,
       go,
-      parameters
+      parameters,
+      searchParameters
     });
 
     /**
@@ -143,6 +147,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
 
   const [viewPath, view] = findViewFromPath(window.location.pathname, views);
   const parameters = getViewParameters(viewPath, window.location.pathname);
+  const searchParameters = Object.fromEntries(new URLSearchParams(window.location.search));
 
   /**
    * We get the first iteration of the virtual element from the view function
@@ -152,7 +157,8 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
     state,
     emit,
     go,
-    parameters
+    parameters,
+    searchParameters
   });
 
   /**
