@@ -8,7 +8,9 @@ import { getViewParameters } from "./getViewParameters";
  * Create an application that has a state, can emit events and renders the view
  * each time the state is updated
  */
-export const application = <State, GenericEvent extends ApplicationEvent>({ views, root, state, update }: ApplicationOptions<State, GenericEvent>) => {
+export const application = <State, GenericEvent extends ApplicationEvent>({ views, root, state: getState, update }: ApplicationOptions<State, GenericEvent>) => {
+  let state = getState();
+
   /**
    * Stores the old virtual element, that way we can compare it to the next
    * virtual element each time the state is updated in order to update the DOM

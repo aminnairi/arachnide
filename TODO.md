@@ -9,7 +9,6 @@
 - Documentation for @arachnide/html
 - Documentation for @arachnide/event
 - More events for @arachnide/event
-- Use a function for initializing the state in @arachnide/core
 - Support for SVG elements, attributes & events in @arachnide/core 
 - External library for easing the use of SVG elements (@arachnide/svg)
 - Add ESLint for TypeScript & good practice linting as well as code formatting (no prettier)
@@ -24,7 +23,6 @@
 - Use JavaScript DOM styles instead of HTML styles
 - Use JavaScript classList instead of HTML classes
 - Find a way to automate the generation of the 404 page for GitHub Pages
-- Support URL query parameters in the go to route function
 - Create the focus & blur functions to allow focusing/bluring a DOMReference with the html package
 - Add a manifest.json file for the live example to allow installing it as an app
 - Find a way to handle not found routes

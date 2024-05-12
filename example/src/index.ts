@@ -25,10 +25,10 @@ type ApplicationEvent
 
 application<ApplicationState, ApplicationEvent>({
   root,
-  state: {
+  state: () => ({
     counter: 10,
     steps: 10
-  },
+  }),
   update: ({ state, event }) => {
     if (event.type === "INCREMENT") {
       return {

@@ -1,7 +1,7 @@
-import { View } from "./types";
+import { ApplicationEvent, View } from "./types";
 import { removeTrailingLeadingSlashes } from "./removeTrailingLeadingSlashes";
 
-export const findViewFromPath = <ApplicationState, ApplicationEvent>(path: string, views: Record<string, View<ApplicationState, ApplicationEvent>>): [string, View<ApplicationState, ApplicationEvent>] => {
+export const findViewFromPath = <GenericState, GenericEvent extends ApplicationEvent>(path: string, views: Record<string, View<GenericState, GenericEvent>>): [string, View<GenericState, GenericEvent>] => {
   const viewsEntries = Object.entries(views);
 
   const foundViewEntry = viewsEntries.find(([viewPath]) => {

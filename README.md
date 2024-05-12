@@ -44,9 +44,9 @@ if (!root) {
 
 application({
   root,
-  state: {
+  state: () => ({
     counter: 15
-  },
+  }),
   update: ({ state, event }) => {
     if (event.type === "INCREMENT") {
       return {

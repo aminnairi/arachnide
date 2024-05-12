@@ -1,3 +1,5 @@
+export type ApplicationState<GenericState> = () => GenericState;
+
 export type DOMReference<GenericElement extends Element> = {
   target: null | GenericElement
 };
@@ -88,24 +90,24 @@ export type ApplicationEvent
  * A function which is responsible for sending events through the application
  * view
  */
-export type Emitter<ApplicationEvent> = (options: ApplicationEvent) => void;
+export type Emitter<GenericEvent extends ApplicationEvent> = (options: GenericEvent) => void;
 
 /**
  * The options that can be gathered from the view function
  */
-export type ViewOptions<State, ApplicationEvent> = {
+export type ViewOptions<GenericState, GenericEvent extends ApplicationEvent> = {
   /**
    * This is the state of the application, and it will be updated each time an
    * event has been sent, meaning the view function will be called again if
    * this is the case
    */
-  state: State,
+  state: GenericState,
   /**
    * The emitter function that can be used to send events through the view,
    * this function should not change and its reference will remain stable
    * accross renders
    */
-  emit: Emitter<ApplicationEvent>,
+  emit: Emitter<GenericEvent>,
   go: Go,
   parameters: Record<string, unknown>,
   searchParameters: Record<string, string>
@@ -118,33 +120,33 @@ export type ViewOptions<State, ApplicationEvent> = {
  * we need to run this function again in order to get the new virtual DOM and
  * compute the changes that needs to be made to the real DOM
  */
-export type View<State, ApplicationEvent> = (options: ViewOptions<State, ApplicationEvent>) => VirtualElement
+export type View<GenericState, GenericEvent extends ApplicationEvent> = (options: ViewOptions<GenericState, GenericEvent>) => VirtualElement
 
 /**
  * The options that can be gathered from the update function, which is the
  * function responsible for updating your state following your own algorithms,
  * and each time an event is triggered, this function is re-executed
  */
-export type UpdateOptions<ApplicationEvent, State> = {
+export type UpdateOptions<GenericEvent, GenericState> = {
   /**
    * Each time the emitter is called, you pass an event, and this is the event
    * that you receive in the update function, allowing you to compute the next
    * state based on the event emitted
    */
-  event: ApplicationEvent,
+  event: GenericEvent,
   /**
    * Besides receiving the event being triggered by the emitter, you also get
    * the previous state, so that you can compute the next state in a functional
    * fashion, without being reliant on a global state variable
    */
-  state: State
+  state: GenericState
 }
 
 /**
  * The update function allow you to update the state of your application each
  * time an event is triggered
  */
-export type Update<ApplicationEvent, State> = (options: UpdateOptions<ApplicationEvent, State>) => State
+export type Update<GenericEvent, GenericState> = (options: UpdateOptions<GenericEvent, GenericState>) => GenericState
 
 export type GoOptions = {
   path: string,
@@ -161,14 +163,14 @@ export type Go = (options: GoOptions) => void;
  * arguments if you are using TypeScript in order to properly type the state
  * and the events that your application can send
  */
-export type ApplicationOptions<State, EventName> = {
+export type ApplicationOptions<GenericState, GenericEvent extends ApplicationEvent> = {
   /**
    * This is the function that is responsible for displaying a graphical
    * interface, and you can also grab the state to display useful and dynamic
    * inforamtions along with the event emitter function allowing you to update
    * the state of your application
    */
-  views: Record<string, View<State, EventName>>,
+  views: Record<string, View<GenericState, GenericEvent>>,
   /**
    * This is the HTML element that needs to be available in your HTML document
    * in order to inject and update your application view, make sure to pass an
@@ -182,11 +184,11 @@ export type ApplicationOptions<State, EventName> = {
    * necessarily need a visual representation in your app or that are not
    * tightly coupled to your visual logic
    */
-  state: State,
+  state: ApplicationState<GenericState>,
   /**
    * This is the function that will allow you to react to updates made by the
    * users of your application, you can add your business logic following a
    * change in the state based on an event triggered
    */
-  update: Update<EventName, State>
+  update: Update<GenericEvent, GenericState>
 }
