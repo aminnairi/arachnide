@@ -32,3 +32,5 @@
 - Rename the `application` function to `startApplication`
 - Add a support & a package for mathml components
 - Rename `emit` to `update`
+- Rename `payload` to `data` in the events
+- Rename `type` to `name` in the events
