@@ -1,4 +1,4 @@
-import { ApplicationEvent, ApplicationOptions, VirtualElement } from "./types";
+import { ApplicationEvent, ApplicationOptions, Go, VirtualElement } from "./types";
 import { createPatch } from "./createPatch";
 import { render } from "./render";
 import { findViewFromPath } from "./findViewFromPath";
@@ -52,11 +52,21 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
     }));
   };
 
-  const go = (path: string, parameters: Record<string, unknown>) => {
-    window.history.pushState(null, path, Object.entries(parameters).reduce((previousPath, [parameterName, parameterValue]) => {
+  const go: Go = (options) => {
+    const targetPath = Object.entries(options.parameters).reduce((previousPath, [parameterName, parameterValue]) => {
       return previousPath.replaceAll(`:${parameterName}`, String(parameterValue));
-    }, path));
+    }, options.path);
 
+    const searchParameters = new URLSearchParams(Object.entries(options.parameters).map(([searchParameterKey, searchParameterValue]) => {
+      return [
+        searchParameterKey,
+        String(searchParameterValue)
+      ];
+    }));
+
+    const targetPathWithQuery = searchParameters.size === 0 ? targetPath : `${targetPath}?${searchParameters.toString()}`;
+
+    window.history.pushState(null, targetPathWithQuery, targetPathWithQuery);
     window.dispatchEvent(new CustomEvent("popstate"));
   };
 

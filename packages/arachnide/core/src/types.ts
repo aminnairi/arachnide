@@ -145,7 +145,13 @@ export type UpdateOptions<ApplicationEvent, State> = {
  */
 export type Update<ApplicationEvent, State> = (options: UpdateOptions<ApplicationEvent, State>) => State
 
-export type Go = (path: string, parameters: Record<string, unknown>) => void;
+export type GoOptions = {
+  path: string,
+  parameters: Record<string, unknown>,
+  searchParameters: Record<string, unknown>
+}
+
+export type Go = (options: GoOptions) => void;
 
 /**
  * this is the list of options that you are allowed to pass to the application
