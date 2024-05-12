@@ -57,7 +57,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
       return previousPath.replaceAll(`:${parameterName}`, String(parameterValue));
     }, options.path);
 
-    const searchParameters = new URLSearchParams(Object.entries(options.parameters).map(([searchParameterKey, searchParameterValue]) => {
+    const searchParameters = new URLSearchParams(Object.entries(options.searchParameters).map(([searchParameterKey, searchParameterValue]) => {
       return [
         searchParameterKey,
         String(searchParameterValue)
@@ -65,6 +65,8 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
     }));
 
     const targetPathWithQuery = searchParameters.size === 0 ? targetPath : `${targetPath}?${searchParameters.toString()}`;
+
+    console.log({ targetPathWithQuery });
 
     window.history.pushState(null, targetPathWithQuery, targetPathWithQuery);
     window.dispatchEvent(new CustomEvent("popstate"));
