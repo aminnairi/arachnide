@@ -94,11 +94,25 @@ application({
 
 ## Features
 
-- Build web application in JavaScript without directly manipulating the DOM yourself
-- Handle and share state between elements without using an external Library
-- Easily add routing without having to install anything more
-- Lots of helpers for adding html, css and events to your Web applications
-- Functional style to keep things simple and expressive
+### Written in TypeScript
+
+This library has been written entirely in TypeScript, allowing you to prevent most of the common mistakes we make when using an external library and to help you get the most of your text editor for hints on how to use the library. We also recommend using VSCode to leverage its Intellisense through the usage of TypeScript in your source-code.
+
+### Functional programming
+
+Functional programming is a set of concepts that allow you to code in a way that promotes immutability of data structure and purity of functions in order to minimize side-effects. Side-effects are every actions that are performed outside of the scope of a context, in this case, the JavaScript language, and that can alter the outer context like updating an HTML document, sending an HTTP request, etc... This library relies on these concepts to offer the best developer experience possible and to prevents most of the mistake that we might do when creating Web applications using the Web API DOM. Write only what you expect your UI to be, instead of writing how to create the UI.
+
+### Built-in State
+
+Arachnide shines best when creating Web applications that manipulate states. If you intend on doing so, you can rely on its built-in state management. Create your state directly when creating a new Arachnide application. Share this state throughout the component hierarchy in a functional way to pass down your state to all of your elements. Whenever you update your state, it will simply share this new state to all of your components defined in your pages. Hence, getting a reactive application that gets its UI updated whenever updating your state.
+
+### Built-in router
+
+Many websites relies on a Web server to request for the next page, making the whole page reload in order to send and receive the next page's informations. Others Web application relies on client-side routing thanks to the Web API History in order to manipulate the pages directly from the browser. This has the benefit to prevent the network overhead that the user might face when changing page, hence enhancing the user-experience on your Web application. Arachnide relies on this Web API in order to provide the ability for your users to change page and its built-in to the library. You simply define what elements you want for a given route, and it handle the rest.
+
+### Expressive API and source-code
+
+The goal of this library is to allow you to create Web applications. But not only that, it has also been made so that you can use this as a learning tool to know more about the internals of a JavaScript framework thanks to a declarative source-code. Emphasis has been made to name variables and function in a certain way that speaks to human more than a machine, and loads of comments have been added in order to help you understand the code easily. The API has of course been written in such a way that allow you to easily go back to an Arachnide application and update your application without having to think about its API too much or having to go back to the documentation often.
 
 ## Prior art & Inspiration
 
