@@ -2,14 +2,6 @@
 
 Library for building Web applications
 
-## Features
-
-- Build web application in JavaScript without directly manipulating the DOM yourself
-- Handle and share state between elements without using an external Library
-- Easily add routing without having to install anything more
-- Lots of helpers for adding html, css and events to your Web applications
-- Functional style to keep things simple and expressive
-
 ## Installation
 
 Coming soon...
@@ -99,6 +91,14 @@ application({
   }
 });
 ```
+
+## Features
+
+- Build web application in JavaScript without directly manipulating the DOM yourself
+- Handle and share state between elements without using an external Library
+- Easily add routing without having to install anything more
+- Lots of helpers for adding html, css and events to your Web applications
+- Functional style to keep things simple and expressive
 
 ## Prior art & Inspiration
 
