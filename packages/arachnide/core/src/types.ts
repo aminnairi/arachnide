@@ -107,7 +107,8 @@ export type ViewOptions<State, ApplicationEvent> = {
    */
   emit: Emitter<ApplicationEvent>,
   go: Go,
-  parameters: Record<string, unknown>
+  parameters: Record<string, unknown>,
+  searchParameters: Record<string, string>
 }
 
 /**
