@@ -28,3 +28,4 @@
 - Find a way to handle not found routes
 - Rename views to pages
 - Rename the go function to changePage instead
+- Use content instead of children and allow passing a plain element besides an array of element?
