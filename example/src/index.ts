@@ -18,7 +18,7 @@ type ApplicationState = {
   steps: number
 }
 
-type ApplicationEvent 
+type ApplicationEvent
   = { type: "INCREMENT", payload: null }
   | { type: "DECREMENT", payload: null }
   | { type: "SET_STEPS", payload: number }
@@ -87,7 +87,11 @@ application<ApplicationState, ApplicationEvent>({
                 "margin-bottom": "30px"
               }),
               onclick: () => {
-                go("/arachnide/summary", {});
+                go({
+                  path: "/arachnide/summary",
+                  parameters: {},
+                  searchParameters: {}
+                });
               }
             },
             children: ["Go to summary"]
@@ -199,7 +203,11 @@ application<ApplicationState, ApplicationEvent>({
                 margin: "0 auto"
               }),
               onclick: () => {
-                go("/arachnide", {});
+                go({
+                  path: "/arachnide",
+                  parameters: {},
+                  searchParameters: {}
+                });
               }
             },
             children: ["Go back home"]
