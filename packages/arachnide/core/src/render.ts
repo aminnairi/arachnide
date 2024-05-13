@@ -74,7 +74,7 @@ export const render = (virtualElement: VirtualElement): RenderedElement => {
    * Once we created the element and attached all the attributes necessary, we
    * can loop through all of the children and repeat the same process again,
    */
-  virtualElement.children.forEach(child => {
+  virtualElement.content.forEach(child => {
     const childElement = render(child);
 
     if (childElement === null) {

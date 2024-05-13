@@ -1,10 +1,10 @@
 import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
 
-export const div = ({ attributes, children, reference }: Omit<CreateElementOptions<HTMLDivElement>, "name">): VirtualObjectElement => {
+export const div = ({ attributes, content, reference }: Omit<CreateElementOptions<HTMLDivElement>, "name">): VirtualObjectElement => {
   return element({
     name: "div",
     attributes,
-    children,
+    content,
     reference
   });
 };

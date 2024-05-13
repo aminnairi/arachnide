@@ -1,10 +1,10 @@
 import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
 
-export const ul = ({ attributes, children, reference }: Omit<CreateElementOptions<HTMLUListElement>, "name">): VirtualObjectElement => {
+export const ul = ({ attributes, content, reference }: Omit<CreateElementOptions<HTMLUListElement>, "name">): VirtualObjectElement => {
   return element({
     name: "ul",
     attributes,
-    children,
+    content,
     reference
   });
 };

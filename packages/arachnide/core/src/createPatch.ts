@@ -241,12 +241,12 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * new virtual element, meaning all children that have been modified or
      * deleted
      */
-    oldVirtualElement.children.forEach((oldVirtualElementChild, oldVirtualElementChildIndex) => {
+    oldVirtualElement.content.forEach((oldVirtualElementChild, oldVirtualElementChildIndex) => {
       if (element === null) {
         throw new Error("Invalid DOM node found. Has the DOM been manually updated?");
       }
 
-      const newVirtualElementChild = newVirtualElement.children[oldVirtualElementChildIndex];
+      const newVirtualElementChild = newVirtualElement.content[oldVirtualElementChildIndex];
       const elementChild = element.childNodes[oldVirtualElementChildIndex];
 
       const patch = createPatch(oldVirtualElementChild, newVirtualElementChild);
@@ -270,7 +270,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * re-renders for some of the children and we should account for that case
      * (the key has changed) in here
      */
-    newVirtualElement.children.slice((oldVirtualElement?.children ?? []).length).forEach(newVirtualElementChild => {
+    newVirtualElement.content.slice((oldVirtualElement?.content ?? []).length).forEach(newVirtualElementChild => {
       const patch = createPatch(null, newVirtualElementChild);
 
       window.queueMicrotask(() => {

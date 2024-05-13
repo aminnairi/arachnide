@@ -1,10 +1,10 @@
 import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
 
-export const address = ({ attributes, children, reference }: Omit<CreateElementOptions<HTMLElement>, "name">): VirtualObjectElement => {
+export const address = ({ attributes, content, reference }: Omit<CreateElementOptions<HTMLElement>, "name">): VirtualObjectElement => {
   return element({
     name: "address",
     attributes,
-    children,
+    content,
     reference
   });
 };

@@ -15,7 +15,6 @@
 - Documentation for the whole API
 - Publish the NPM package
 - Figure out animations?
-- Adapters for the event emitter, router, DOM operations (for SSR, mobile)
 - Add badges (NPM, License, bundle size, ...)
 - Find a solution to load asynchronous elements
 - Create a cool logo
@@ -28,7 +27,4 @@
 - Find a way to handle not found routes
 - Rename views to pages
 - Rename the go function to changePage instead
-- Use content instead of children and allow passing a plain element besides an array of element?
-- Rename the `application` function to `startApplication`
 - Add a support & a package for mathml components
-- Make the types monomorphic in the developer code, but polymorphic in the userland code

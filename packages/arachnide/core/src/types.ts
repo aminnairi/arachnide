@@ -50,7 +50,7 @@ export type VirtualObjectElement = {
    * Childrens for the tag to create if applicable, for instance for a "ul" tag
    * that will have "li" children
    */
-  children: Array<VirtualElement>,
+  content: Array<VirtualElement>,
   reference: DOMReference<Element>
 }
 
