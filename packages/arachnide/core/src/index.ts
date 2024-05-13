@@ -1,5 +1,5 @@
 export * from "./types";
-export * from "./application";
+export * from "./startApplication";
 export * from "./createPatch";
 export * from "./element";
 export * from "./findViewFromPath";

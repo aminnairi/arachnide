@@ -1,4 +1,4 @@
-import { application } from "@arachnide/core";
+import { startApplication } from "@arachnide/core";
 import { ul, li, div, button, input, label, p, h1 } from "@arachnide/html";
 import { styles } from "@arachnide/css";
 import { oninput } from "@arachnide/event";
@@ -23,13 +23,13 @@ type ApplicationEvent
   | { name: "DECREMENT" }
   | { name: "SET_STEPS", data: number }
 
-application<ApplicationState, ApplicationEvent>({
+startApplication<ApplicationState, ApplicationEvent>({
   root,
-  state: () => ({
+  initialState: () => ({
     counter: 10,
     steps: 10
   }),
-  update: ({ state, event }) => {
+  onUpdate: ({ state, event }) => {
     if (event.name === "INCREMENT") {
       return {
         ...state,

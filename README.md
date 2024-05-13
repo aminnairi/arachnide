@@ -25,7 +25,7 @@ Coming soon...
 ```
 
 ```typescript
-import { application } from "@arachnide/core";
+import { startApplication } from "@arachnide/core";
 import { div, button, span } from "@arachnide/html";
 
 const root = document.getElementById("root");
@@ -34,12 +34,12 @@ if (!root) {
   throw new Error("Root element not found");
 }
 
-application({
+startApplication({
   root,
-  state: () => ({
+  initialState: () => ({
     counter: 15
   }),
-  update: ({ state, event }) => {
+  onUpdate: ({ state, event }) => {
     if (event.name === "INCREMENT") {
       return {
         ...state,

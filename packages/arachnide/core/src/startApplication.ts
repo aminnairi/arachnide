@@ -1,4 +1,4 @@
-import { ApplicationEvent, ApplicationOptions, Go, VirtualElement } from "./types";
+import { ApplicationEvent, StartApplicationOptions, Go, VirtualElement } from "./types";
 import { createPatch } from "./createPatch";
 import { render } from "./render";
 import { findViewFromPath } from "./findViewFromPath";
@@ -8,8 +8,8 @@ import { getViewParameters } from "./getViewParameters";
  * Create an application that has a state, can emit events and renders the view
  * each time the state is updated
  */
-export const application = <State, GenericEvent extends ApplicationEvent>({ views, root, state: getState, update: getNewState }: ApplicationOptions<State, GenericEvent>) => {
-  let state = getState();
+export const startApplication = <State, GenericEvent extends ApplicationEvent>({ views, root, initialState, onUpdate }: StartApplicationOptions<State, GenericEvent>) => {
+  let state = initialState();
 
   /**
    * Stores the old virtual element, that way we can compare it to the next
@@ -80,7 +80,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
     const searchParameters = Object.fromEntries(new URLSearchParams(window.location.search));
 
     const newVirtualElement = view({
-      state,
+      state: state,
       update,
       go,
       parameters,
@@ -103,7 +103,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
      * We store the new state that is derived from the update function defined
      * in the application
      */
-    state = getNewState({
+    state = onUpdate({
       event: detail,
       state
     });
@@ -118,7 +118,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
      * events even though it should remain the same function from the start
      */
     const newVirtualElement = view({
-      state,
+      state: state,
       update,
       go,
       parameters,
@@ -156,7 +156,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
    * that is derived from the state
    */
   const virtualElement = view({
-    state,
+    state: state,
     update,
     go,
     parameters,

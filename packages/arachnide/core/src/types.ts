@@ -132,7 +132,7 @@ export type View<GenericState, GenericEvent extends ApplicationEvent> = (options
  * function responsible for updating your state following your own algorithms,
  * and each time an event is triggered, this function is re-executed
  */
-export type UpdateOptions<GenericEvent, GenericState> = {
+export type OnUpdateOptions<GenericEvent, GenericState> = {
   /**
    * Each time the emitter is called, you pass an event, and this is the event
    * that you receive in the update function, allowing you to compute the next
@@ -151,7 +151,7 @@ export type UpdateOptions<GenericEvent, GenericState> = {
  * The update function allow you to update the state of your application each
  * time an event is triggered
  */
-export type Update<GenericEvent, GenericState> = (options: UpdateOptions<GenericEvent, GenericState>) => GenericState
+export type OnUpdate<GenericEvent, GenericState> = (options: OnUpdateOptions<GenericEvent, GenericState>) => GenericState
 
 export type GoOptions = {
   path: string,
@@ -168,7 +168,7 @@ export type Go = (options: GoOptions) => void;
  * arguments if you are using TypeScript in order to properly type the state
  * and the events that your application can send
  */
-export type ApplicationOptions<GenericState, GenericEvent extends ApplicationEvent> = {
+export type StartApplicationOptions<GenericState, GenericEvent extends ApplicationEvent> = {
   /**
    * This is the function that is responsible for displaying a graphical
    * interface, and you can also grab the state to display useful and dynamic
@@ -189,11 +189,11 @@ export type ApplicationOptions<GenericState, GenericEvent extends ApplicationEve
    * necessarily need a visual representation in your app or that are not
    * tightly coupled to your visual logic
    */
-  state: ApplicationState<GenericState>,
+  initialState: ApplicationState<GenericState>,
   /**
    * This is the function that will allow you to react to updates made by the
    * users of your application, you can add your business logic following a
    * change in the state based on an event triggered
    */
-  update: Update<GenericEvent, GenericState>
+  onUpdate: OnUpdate<GenericEvent, GenericState>
 }
