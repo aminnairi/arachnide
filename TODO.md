@@ -22,7 +22,6 @@
 - Use JavaScript DOM styles instead of HTML styles
 - Use JavaScript classList instead of HTML classes
 - Find a way to automate the generation of the 404 page for GitHub Pages
-- Create the focus & blur functions to allow focusing/bluring a DOMReference with the html package
 - Add a manifest.json file for the live example to allow installing it as an app
 - Find a way to handle not found routes
 - Rename views to pages

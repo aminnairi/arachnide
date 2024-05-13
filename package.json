@@ -4,6 +4,7 @@
     "packages/arachnide/core",
     "packages/arachnide/css",
     "packages/arachnide/html",
+    "packages/arachnide/dom",
     "packages/arachnide/event",
     "example"
   ]
