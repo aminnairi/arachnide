@@ -57,13 +57,13 @@ application({
     return state;
   },
   views: {
-    "/": ({ state, emit }) => {
+    "/": ({ state, update }) => {
       return div({
         children: [
           button({
             attributes: {
               onclick: () => {
-                emit({ name: "DECREMENT" });
+                update({ name: "DECREMENT" });
               }
             },
             children: ["Decrement"]
@@ -74,7 +74,7 @@ application({
           button({
             attributes: {
               onclick: () => {
-                emit({ name: "INCREMENT" });
+                update({ name: "INCREMENT" });
               }
             },
             children: ["Increment"]

@@ -31,6 +31,3 @@
 - Use content instead of children and allow passing a plain element besides an array of element?
 - Rename the `application` function to `startApplication`
 - Add a support & a package for mathml components
-- Rename `emit` to `update`
-- Rename `payload` to `data` in the events
-- Rename `type` to `name` in the events

@@ -8,7 +8,7 @@ import { getViewParameters } from "./getViewParameters";
  * Create an application that has a state, can emit events and renders the view
  * each time the state is updated
  */
-export const application = <State, GenericEvent extends ApplicationEvent>({ views, root, state: getState, update }: ApplicationOptions<State, GenericEvent>) => {
+export const application = <State, GenericEvent extends ApplicationEvent>({ views, root, state: getState, update: getNewState }: ApplicationOptions<State, GenericEvent>) => {
   let state = getState();
 
   /**
@@ -22,7 +22,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
    * Create a unique identifier for the event used when emitting event, so that
    * we are sure we don't clash with an existing standard event
    */
-  const emitIdentifier = "arachnide:emit";
+  const updateIdentifier = "arachnide:update";
 
   /**
    * Emit an event based on a type and eventually a payload. It is recommended
@@ -30,7 +30,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
    * keep the code consistent instead of having some event with a payload and
    * some without
    */
-  const emit = (detail: GenericEvent) => {
+  const update = (detail: GenericEvent) => {
     /**
      * We allow the event to be null for simple applications, so we need to
      * check for that branch
@@ -49,7 +49,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
      * type and payload that is passed to the function so that we can retrieve
      * this data later in the listener
      */
-    window.dispatchEvent(new CustomEvent(emitIdentifier, {
+    window.dispatchEvent(new CustomEvent(updateIdentifier, {
       detail
     }));
   };
@@ -81,7 +81,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
 
     const newVirtualElement = view({
       state,
-      emit,
+      update,
       go,
       parameters,
       searchParameters
@@ -98,12 +98,12 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
    * The listener that will listen to the custom event that we are sending
    * whenever we need to trigger a state update
    */
-  window.addEventListener(emitIdentifier, ({ detail }: CustomEventInit) => {
+  window.addEventListener(updateIdentifier, ({ detail }: CustomEventInit) => {
     /**
      * We store the new state that is derived from the update function defined
      * in the application
      */
-    state = update({
+    state = getNewState({
       event: detail,
       state
     });
@@ -119,7 +119,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
      */
     const newVirtualElement = view({
       state,
-      emit,
+      update,
       go,
       parameters,
       searchParameters
@@ -157,7 +157,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
    */
   const virtualElement = view({
     state,
-    emit,
+    update,
     go,
     parameters,
     searchParameters
@@ -191,7 +191,7 @@ export const application = <State, GenericEvent extends ApplicationEvent>({ view
    * this application
    */
   return {
-    emit,
+    update,
     go
   };
 };

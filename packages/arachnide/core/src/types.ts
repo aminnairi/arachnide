@@ -95,7 +95,7 @@ export type ApplicationEvent
  * A function which is responsible for sending events through the application
  * view
  */
-export type Emitter<GenericEvent extends ApplicationEvent> = (options: GenericEvent) => void;
+export type Update<GenericEvent extends ApplicationEvent> = (options: GenericEvent) => void;
 
 /**
  * The options that can be gathered from the view function
@@ -112,7 +112,7 @@ export type ViewOptions<GenericState, GenericEvent extends ApplicationEvent> = {
    * this function should not change and its reference will remain stable
    * accross renders
    */
-  emit: Emitter<GenericEvent>,
+  update: Update<GenericEvent>,
   go: Go,
   parameters: Record<string, unknown>,
   searchParameters: Record<string, string>
