@@ -66,7 +66,7 @@ startApplication({
                 update({ name: "DECREMENT" });
               }
             },
-            children: ["Decrement"]
+            children: "Decrement"
           }),
           span({
             children: [state.counter]
@@ -77,7 +77,7 @@ startApplication({
                 update({ name: "INCREMENT" });
               }
             },
-            children: ["Increment"]
+            children: "Increment"
           })
         ]
       });
