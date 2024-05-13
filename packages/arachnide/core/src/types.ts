@@ -1,3 +1,7 @@
+export type WhenCreatedCallback = () => void;
+
+export type WhenDestroyedCallback = () => void;
+
 export type ApplicationState<GenericState> = () => GenericState;
 
 export type DOMReference<GenericElement extends Element> = {
@@ -51,7 +55,9 @@ export type VirtualObjectElement = {
    * that will have "li" children
    */
   content: Array<VirtualElement>,
-  reference: DOMReference<Element>
+  reference: DOMReference<Element>,
+  whenCreated: WhenCreatedCallback,
+  whenDestroyed: WhenDestroyedCallback
 }
 
 /**

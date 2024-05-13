@@ -90,6 +90,8 @@ export const render = (virtualElement: VirtualElement): RenderedElement => {
 
   virtualElement.reference.target = element;
 
+  virtualElement.whenCreated();
+
   /**
    * Now that everything has been done for this particular virtual element, we
    * can return it to the caller that will do the side-effect of appending this

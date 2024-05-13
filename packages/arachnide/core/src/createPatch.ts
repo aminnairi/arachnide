@@ -32,11 +32,15 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         return;
       }
 
-      if (isElement(newElement) && isVirtualObjectElement(newVirtualElement)) {
-        newVirtualElement.reference.target = newElement;
-      }
-
       element.appendChild(newElement);
+
+      if (isVirtualObjectElement(newVirtualElement)) {
+        newVirtualElement.whenCreated();
+
+        if (isElement(newElement) && isVirtualObjectElement(newVirtualElement)) {
+          newVirtualElement.reference.target = newElement;
+        }
+      }
 
       return;
     }
@@ -64,15 +68,19 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         return;
       }
 
-      if (isVirtualObjectElement(newVirtualElement) && isElement(newElement)) {
-        newVirtualElement.reference.target = newElement;
-      }
-
       /**
        * This means that we need to change it in the current DOM, otherwise
        * we do nothing as it means they are identical
        */
       element.replaceWith(newElement);
+
+      if (isVirtualObjectElement(newVirtualElement)) {
+        newVirtualElement.whenCreated();
+
+        if (isElement(newElement)) {
+          newVirtualElement.reference.target = newElement;
+        }
+      }
 
       /**
        * We can stop here since null, undefined or a string does not have
@@ -91,6 +99,8 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
       }
 
       element.remove();
+
+      oldVirtualElement.whenDestroyed();
 
       return;
     }
@@ -119,15 +129,15 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         return;
       }
 
-      if (isVirtualObjectElement(newVirtualElement) && isElement(newElement)) {
-        newVirtualElement.reference.target = newElement;
-      }
-
       /**
        * This means that we need to change it in the current DOM, otherwise
        * we do nothing as it means they are identical
        */
       element.replaceWith(newElement);
+
+      if (isVirtualObjectElement(oldVirtualElement)) {
+        oldVirtualElement.whenDestroyed();
+      }
 
       /**
        * We can stop here since null, undefined or a string does not have
@@ -159,6 +169,14 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
        * new one
        */
       element.replaceWith(newElement);
+
+      if (isElement(newElement)) {
+        newVirtualElement.reference.target = newElement;
+      }
+
+      oldVirtualElement.whenDestroyed();
+
+      newVirtualElement.whenCreated();
 
       /**
        * Here we can simply return since, again, we don't need to do a diffing
