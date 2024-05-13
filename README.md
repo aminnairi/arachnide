@@ -40,14 +40,14 @@ application({
     counter: 15
   }),
   update: ({ state, event }) => {
-    if (event.type === "INCREMENT") {
+    if (event.name === "INCREMENT") {
       return {
         ...state,
         counter: state.counter + 1
       };
     }
 
-    if (event.type === "DECREMENT") {
+    if (event.name === "DECREMENT") {
       return {
         ...state,
         counter: state.counter - 1
@@ -63,10 +63,7 @@ application({
           button({
             attributes: {
               onclick: () => {
-                emit({
-                  type: "DECREMENT",
-                  payload: null
-                });
+                emit({ name: "DECREMENT" });
               }
             },
             children: ["Decrement"]
@@ -77,10 +74,7 @@ application({
           button({
             attributes: {
               onclick: () => {
-                emit({
-                  type: "INCREMENT",
-                  payload: null
-                });
+                emit({ name: "INCREMENT" });
               }
             },
             children: ["Increment"]

@@ -68,23 +68,28 @@ export type VirtualElement
 /**
  * An application does not necessarily emit events, so it can be nullable
  */
-export type ApplicationWithoutEvent = null;
+export type NoEvent = null;
 
 /**
  * An application that can emit events must abide to this type in order to send
  * ones
  */
-export type ApplicationWithEvent = {
-  type: string,
-  payload: unknown
+export type EventWithData = {
+  name: string,
+  data: unknown
+}
+
+export type EventWithoutData = {
+  name: string
 }
 
 /**
  * The available types for an event
  */
 export type ApplicationEvent 
-  = ApplicationWithoutEvent
-  | ApplicationWithEvent
+  = NoEvent
+  | EventWithData
+  | EventWithoutData
 
 /**
  * A function which is responsible for sending events through the application

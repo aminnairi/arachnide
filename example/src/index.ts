@@ -19,9 +19,9 @@ type ApplicationState = {
 }
 
 type ApplicationEvent
-  = { type: "INCREMENT", payload: null }
-  | { type: "DECREMENT", payload: null }
-  | { type: "SET_STEPS", payload: number }
+  = { name: "INCREMENT" }
+  | { name: "DECREMENT" }
+  | { name: "SET_STEPS", data: number }
 
 application<ApplicationState, ApplicationEvent>({
   root,
@@ -30,14 +30,14 @@ application<ApplicationState, ApplicationEvent>({
     steps: 10
   }),
   update: ({ state, event }) => {
-    if (event.type === "INCREMENT") {
+    if (event.name === "INCREMENT") {
       return {
         ...state,
         counter: state.counter + state.steps
       };
     }
 
-    if (event.type === "DECREMENT") {
+    if (event.name === "DECREMENT") {
       const newCounter = state.counter - state.steps;
 
       if (newCounter < 0) {
@@ -53,10 +53,10 @@ application<ApplicationState, ApplicationEvent>({
       };
     }
 
-    if (event.type === "SET_STEPS") {
+    if (event.name === "SET_STEPS") {
       return {
         ...state,
-        steps: event.payload
+        steps: event.data
       };
     }
 
@@ -113,10 +113,7 @@ application<ApplicationState, ApplicationEvent>({
                 attributes: {
                   className: "outline",
                   onclick: () => {
-                    emit({
-                      type: "INCREMENT",
-                      payload: null
-                    });
+                    emit({ name: "INCREMENT" });
                   }
                 },
                 children: ["Increment"]
@@ -125,10 +122,7 @@ application<ApplicationState, ApplicationEvent>({
                 attributes: {
                   className: "outline",
                   onclick: () => {
-                    emit({
-                      type: "DECREMENT",
-                      payload: null
-                    });
+                    emit({ name: "DECREMENT" });
                   }
                 },
                 children: ["Decrement"]
@@ -149,8 +143,8 @@ application<ApplicationState, ApplicationEvent>({
               value: state.steps,
               oninput: oninput((value) => {
                 emit({
-                  type: "SET_STEPS",
-                  payload: Number(value) || 100
+                  name: "SET_STEPS",
+                  data: Number(value) || 100
                 });
               })
             }
