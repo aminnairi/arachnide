@@ -27,3 +27,4 @@
 - Rename views to pages
 - Rename the go function to changePage instead
 - Add a support & a package for mathml components
+- Update should take the old state as argument
