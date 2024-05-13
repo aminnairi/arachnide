@@ -59,17 +59,17 @@ startApplication({
   views: {
     "/": ({ state, update }) => {
       return div({
-        children: [
+        content: [
           button({
             attributes: {
               onclick: () => {
                 update({ name: "DECREMENT" });
               }
             },
-            children: "Decrement"
+            content: "Decrement"
           }),
           span({
-            children: [state.counter]
+            content: [state.counter]
           }),
           button({
             attributes: {
@@ -77,7 +77,7 @@ startApplication({
                 update({ name: "INCREMENT" });
               }
             },
-            children: "Increment"
+            content: "Increment"
           })
         ]
       });
