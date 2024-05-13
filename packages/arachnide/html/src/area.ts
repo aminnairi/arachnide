@@ -1,10 +1,9 @@
-import { VirtualObjectElement } from "@arachnide/core";
+import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
 
-export const area = ({ attributes, reference }: Omit<VirtualObjectElement, "name" | "children">): VirtualObjectElement => {
-  return {
+export const area = ({ attributes, reference }: Omit<CreateElementOptions<HTMLAreaElement>, "name" | "children">): VirtualObjectElement => {
+  return element({
     name: "area",
     attributes,
-    children: [],
     reference
-  };
+  });
 };

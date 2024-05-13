@@ -76,7 +76,7 @@ startApplication<ApplicationState, ApplicationEvent>({
                 "text-align": "center"
               })
             },
-            children: ["Home"]
+            children: "Home"
           }),
           button({
             attributes: {
@@ -94,7 +94,7 @@ startApplication<ApplicationState, ApplicationEvent>({
                 });
               }
             },
-            children: ["Go to summary"]
+            children: "Go to summary"
           }),
           p({
             attributes: {
@@ -102,7 +102,7 @@ startApplication<ApplicationState, ApplicationEvent>({
                 "text-align": "center"
               })
             },
-            children: ["Get a summary of all of the below informations"]
+            children: "Get a summary of all of the below informations"
           }),
           div({
             attributes: {
@@ -116,7 +116,7 @@ startApplication<ApplicationState, ApplicationEvent>({
                     update({ name: "INCREMENT" });
                   }
                 },
-                children: ["Increment"]
+                children: "Increment"
               }),
               button({
                 attributes: {
@@ -125,7 +125,7 @@ startApplication<ApplicationState, ApplicationEvent>({
                     update({ name: "DECREMENT" });
                   }
                 },
-                children: ["Decrement"]
+                children: "Decrement"
               }),
             ]
           }),
@@ -133,7 +133,7 @@ startApplication<ApplicationState, ApplicationEvent>({
             attributes: {
               for: "steps"
             },
-            children: [" Steps "]
+            children: " Steps "
           }),
           input({
             attributes: {
@@ -153,7 +153,7 @@ startApplication<ApplicationState, ApplicationEvent>({
             children: Array.from(Array(state.counter)).map((_, index) => {
               return li({
                 attributes: {},
-                children: [`Index #${index}`]
+                children: `Index #${index}`
               });
             })
           })
@@ -172,7 +172,7 @@ startApplication<ApplicationState, ApplicationEvent>({
                 "text-align": "center"
               })
             },
-            children: ["Summary"]
+            children: "Summary"
           }),
           p({
             attributes: {
@@ -180,7 +180,7 @@ startApplication<ApplicationState, ApplicationEvent>({
                 "text-align": "center"
               })
             },
-            children: [`Counter is currently at ${state.counter}`]
+            children: `Counter is currently at ${state.counter}`
           }),
           p({
             attributes: {
@@ -188,7 +188,7 @@ startApplication<ApplicationState, ApplicationEvent>({
                 "text-align": "center"
               })
             },
-            children: [`Steps is currently at ${state.steps}`]
+            children: `Steps is currently at ${state.steps}`
           }),
           button({
             attributes: {
@@ -204,7 +204,7 @@ startApplication<ApplicationState, ApplicationEvent>({
                 });
               }
             },
-            children: ["Go back home"]
+            children: "Go back home"
           })
         ]
       });

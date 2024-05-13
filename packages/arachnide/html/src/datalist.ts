@@ -1,10 +1,10 @@
-import { VirtualObjectElement } from "@arachnide/core";
+import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
 
-export const datalist = ({ attributes, children, reference }: Omit<VirtualObjectElement, "name">): VirtualObjectElement => {
-  return {
+export const datalist = ({ attributes, children, reference }: Omit<CreateElementOptions<HTMLDataListElement>, "name">): VirtualObjectElement => {
+  return element({
     name: "datalist",
     attributes,
     children,
     reference
-  };
+  });
 };
