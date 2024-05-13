@@ -63,7 +63,7 @@ application<ApplicationState, ApplicationEvent>({
     return state;
   },
   views: {
-    "/arachnide": ({ state, emit, go }) => {
+    "/arachnide": ({ state, update, go }) => {
       return div({
         attributes: {
           className: "container"
@@ -113,7 +113,7 @@ application<ApplicationState, ApplicationEvent>({
                 attributes: {
                   className: "outline",
                   onclick: () => {
-                    emit({ name: "INCREMENT" });
+                    update({ name: "INCREMENT" });
                   }
                 },
                 children: ["Increment"]
@@ -122,7 +122,7 @@ application<ApplicationState, ApplicationEvent>({
                 attributes: {
                   className: "outline",
                   onclick: () => {
-                    emit({ name: "DECREMENT" });
+                    update({ name: "DECREMENT" });
                   }
                 },
                 children: ["Decrement"]
@@ -142,7 +142,7 @@ application<ApplicationState, ApplicationEvent>({
               type: "number",
               value: state.steps,
               oninput: oninput((value) => {
-                emit({
+                update({
                   name: "SET_STEPS",
                   data: Number(value) || 100
                 });
