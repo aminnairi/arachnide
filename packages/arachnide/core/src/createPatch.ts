@@ -7,7 +7,6 @@ import { isVirtualNullElement } from "./isVirtualNullElement";
 import { isVirtualUndefinedElement } from "./isVirtualUndefinedElement";
 import { isElement } from "./isElement";
 import { isVirtualObjectElement } from "./isVirtualObjectElement";
-import { isDOMReference } from "./isDOMReference";
 
 /**
  * Create a function that will update the DOM tree based on the differences
@@ -33,7 +32,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         return;
       }
 
-      if (isElement(newElement) && isVirtualObjectElement(newVirtualElement) && isDOMReference(newVirtualElement.reference)) {
+      if (isElement(newElement) && isVirtualObjectElement(newVirtualElement)) {
         newVirtualElement.reference.target = newElement;
       }
 
@@ -65,7 +64,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         return;
       }
 
-      if (isVirtualObjectElement(newVirtualElement) && isDOMReference(newVirtualElement.reference) && isElement(newElement)) {
+      if (isVirtualObjectElement(newVirtualElement) && isElement(newElement)) {
         newVirtualElement.reference.target = newElement;
       }
 
@@ -120,7 +119,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         return;
       }
 
-      if (isVirtualObjectElement(newVirtualElement) && isDOMReference(newVirtualElement.reference) && isElement(newElement)) {
+      if (isVirtualObjectElement(newVirtualElement) && isElement(newElement)) {
         newVirtualElement.reference.target = newElement;
       }
 
@@ -173,7 +172,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * Once we know for sure that the two elements are the same, this probably
      * means that their attributes have differences
      */
-    Object.entries(oldVirtualElement?.attributes ?? {}).forEach(([oldVirtualElementAttributeName, oldVirtualElementAttributeValue]) => {
+    Object.entries(oldVirtualElement.attributes).forEach(([oldVirtualElementAttributeName, oldVirtualElementAttributeValue]) => {
       /**
        * We first grab the attribute from the new virtual element based on the
        * name of the old attribute
@@ -211,13 +210,13 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * that we need to loop through the attributes of the new virtual element
      * instead of the old one
      */
-    Object.entries(newVirtualElement?.attributes ?? {}).forEach(([newVirtualElementAttributeName, newVirtualElementAttributeValue]) => {
+    Object.entries(newVirtualElement.attributes).forEach(([newVirtualElementAttributeName, newVirtualElementAttributeValue]) => {
       /**
        * Same thing as before, but instead we need to grab the value of the old
        * attribute so that we can compare these two and know if we need to add
        * this one or not
        */
-      const oldVirtualElementAttributeValue = (oldVirtualElement?.attributes ?? {})[newVirtualElementAttributeName];
+      const oldVirtualElementAttributeValue = oldVirtualElement.attributes[newVirtualElementAttributeName];
 
       /**
        * Since we can encounter attributes that we already dealt with
@@ -242,12 +241,12 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * new virtual element, meaning all children that have been modified or
      * deleted
      */
-    (oldVirtualElement?.children ?? []).forEach((oldVirtualElementChild, oldVirtualElementChildIndex) => {
+    oldVirtualElement.children.forEach((oldVirtualElementChild, oldVirtualElementChildIndex) => {
       if (element === null) {
         throw new Error("Invalid DOM node found. Has the DOM been manually updated?");
       }
 
-      const newVirtualElementChild = (newVirtualElement?.children ?? [])[oldVirtualElementChildIndex];
+      const newVirtualElementChild = newVirtualElement.children[oldVirtualElementChildIndex];
       const elementChild = element.childNodes[oldVirtualElementChildIndex];
 
       const patch = createPatch(oldVirtualElementChild, newVirtualElementChild);
@@ -271,7 +270,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * re-renders for some of the children and we should account for that case
      * (the key has changed) in here
      */
-    (newVirtualElement?.children ?? []).slice((oldVirtualElement?.children ?? []).length).forEach(newVirtualElementChild => {
+    newVirtualElement.children.slice((oldVirtualElement?.children ?? []).length).forEach(newVirtualElementChild => {
       const patch = createPatch(null, newVirtualElementChild);
 
       window.queueMicrotask(() => {

@@ -1,4 +1,3 @@
-import { isDOMReference } from "./isDOMReference";
 import { RenderedElement, VirtualElement } from "./types";
 
 /**
@@ -48,7 +47,7 @@ export const render = (virtualElement: VirtualElement): RenderedElement => {
    * something that can be looped so that we can grab the attribute name &
    * value for each properties/value
    */
-  Object.entries(virtualElement?.attributes ?? {}).forEach(([attributeName, attributeValue]) => {
+  Object.entries(virtualElement.attributes).forEach(([attributeName, attributeValue]) => {
     /**
      * If the attribute does not resolve to something visually interesting such
      * as null or undefined
@@ -75,7 +74,7 @@ export const render = (virtualElement: VirtualElement): RenderedElement => {
    * Once we created the element and attached all the attributes necessary, we
    * can loop through all of the children and repeat the same process again,
    */
-  (virtualElement?.children ?? []).forEach(child => {
+  virtualElement.children.forEach(child => {
     const childElement = render(child);
 
     if (childElement === null) {
@@ -89,9 +88,7 @@ export const render = (virtualElement: VirtualElement): RenderedElement => {
     element.appendChild(childElement);
   });
 
-  if (isDOMReference(virtualElement.reference)) {
-    virtualElement.reference.target = element;
-  }
+  virtualElement.reference.target = element;
 
   /**
    * Now that everything has been done for this particular virtual element, we

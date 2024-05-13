@@ -17,6 +17,6 @@ export const element = <GenericElement extends Element>({ name, attributes = {},
    name,
     attributes,
     children: Array.isArray(children) ? children : [children],
-    reference
+    reference: reference ?? { target: null }
   };
 };
