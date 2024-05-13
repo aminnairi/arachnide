@@ -69,7 +69,7 @@ startApplication({
             content: "Decrement"
           }),
           span({
-            content: [state.counter]
+            content: state.counter
           }),
           button({
             attributes: {
