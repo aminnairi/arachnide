@@ -7,6 +7,9 @@ const isProduction = process.env["NODE_ENV"] === "production";
 
 export default defineConfig({
   input: "src/index.ts",
+  external: [
+    "@arachnide/core"
+  ],
   plugins: [
     typescript(),
     isProduction && strip(),
