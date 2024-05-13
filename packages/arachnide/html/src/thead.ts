@@ -1,10 +1,8 @@
 import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
 
-export const thead = ({ attributes, content, reference }: Omit<CreateElementOptions<HTMLTableSectionElement>, "name">): VirtualObjectElement => {
+export const thead = (options: Omit<CreateElementOptions<HTMLTableSectionElement>, "name">): VirtualObjectElement => {
   return element({
-    name: "thead",
-    attributes,
-    content,
-    reference
+    ...options,
+    name: "thead"
   });
 };

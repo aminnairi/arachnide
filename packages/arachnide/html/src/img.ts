@@ -1,10 +1,9 @@
 import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
 
-export const img = ({ attributes, reference }: Omit<CreateElementOptions<HTMLImageElement>, "name" | "content">): VirtualObjectElement => {
+export const img = (options: Omit<CreateElementOptions<HTMLImageElement>, "name" | "content">): VirtualObjectElement => {
   return element({
+    ...options,
     name: "img",
-    attributes,
-    content: [],
-    reference
+    content: []
   });
 };

@@ -1,10 +1,8 @@
 import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
 
-export const h4 = ({ attributes, content, reference }: Omit<CreateElementOptions<HTMLHeadingElement>, "name">): VirtualObjectElement => {
+export const h4 = (options: Omit<CreateElementOptions<HTMLHeadingElement>, "name">): VirtualObjectElement => {
   return element({
-    name: "h4",
-    attributes,
-    content,
-    reference
+    ...options,
+    name: "h4"
   });
 };

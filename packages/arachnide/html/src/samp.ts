@@ -1,10 +1,8 @@
 import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
 
-export const samp = ({ attributes, content, reference }: Omit<CreateElementOptions<HTMLElement>, "name">): VirtualObjectElement => {
+export const samp = (options: Omit<CreateElementOptions<HTMLElement>, "name">): VirtualObjectElement => {
   return element({
-    name: "samp",
-    attributes,
-    content,
-    reference
+    ...options,
+    name: "samp"
   });
 };

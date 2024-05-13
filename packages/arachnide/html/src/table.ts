@@ -1,10 +1,8 @@
 import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
 
-export const table = ({ attributes, content, reference }: Omit<CreateElementOptions<HTMLTableElement>, "name">): VirtualObjectElement => {
+export const table = (options: Omit<CreateElementOptions<HTMLTableElement>, "name">): VirtualObjectElement => {
   return element({
-    name: "table",
-    attributes,
-    content,
-    reference
+    ...options,
+    name: "table"
   });
 };

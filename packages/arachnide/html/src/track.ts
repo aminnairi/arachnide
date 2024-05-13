@@ -1,10 +1,8 @@
 import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
 
-export const track = ({ attributes, content, reference }: Omit<CreateElementOptions<HTMLTrackElement>, "name">): VirtualObjectElement => {
+export const track = (options: Omit<CreateElementOptions<HTMLTrackElement>, "name">): VirtualObjectElement => {
   return element({
-    name: "track",
-    attributes,
-    content,
-    reference
+    ...options,
+    name: "track"
   });
 };
