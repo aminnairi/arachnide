@@ -28,7 +28,7 @@ export type VirtualObjectElementAttributeListener = (event: Event) => void
  * that will be parsed as string Or it can be a function in case of an event
  * listener
  */
-type VirtualObjectElementAttributes = {
+export type VirtualObjectElementAttributes = {
   [Key in string]: VirtualObjectElementAttributeValue | VirtualObjectElementAttributeListener
 }
 
