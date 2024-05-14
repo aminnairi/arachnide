@@ -120,8 +120,8 @@ export type ViewOptions<GenericState, GenericEvent extends ApplicationEvent> = {
    * this function should not change and its reference will remain stable
    * accross renders
    */
-  go: Go,
   update: Update<GenericState, GenericEvent>,
+  changePage: ChangePage,
   parameters: Record<string, unknown>,
   searchParameters: Record<string, string>
 }
@@ -161,13 +161,13 @@ export type OnUpdateOptions<GenericEvent, GenericState> = {
  */
 export type OnUpdate<GenericEvent, GenericState> = (options: OnUpdateOptions<GenericEvent, GenericState>) => GenericState
 
-export type GoOptions = {
+export type ChangePageOptions = {
   path: string,
   parameters: Record<string, unknown>,
   searchParameters: Record<string, unknown>
 }
 
-export type Go = (options: GoOptions) => void;
+export type ChangePage = (options: ChangePageOptions) => void;
 
 /**
  * this is the list of options that you are allowed to pass to the application

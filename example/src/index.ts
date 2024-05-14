@@ -63,7 +63,7 @@ startApplication<ApplicationState, ApplicationEvent>({
     return state;
   },
   views: {
-    "/arachnide": ({ state, update, go }) => {
+    "/arachnide": ({ state, update, changePage }) => {
       return div({
         attributes: {
           className: "container"
@@ -87,7 +87,7 @@ startApplication<ApplicationState, ApplicationEvent>({
                 "margin-bottom": "30px"
               }),
               onclick: () => {
-                go({
+                changePage({
                   path: "/arachnide/summary",
                   parameters: {},
                   searchParameters: {}
@@ -164,7 +164,7 @@ startApplication<ApplicationState, ApplicationEvent>({
         ]
       });
     },
-    "/arachnide/summary": ({ state, go }) => {
+    "/arachnide/summary": ({ state, changePage }) => {
       return div({
         attributes: {
           className: "container"
@@ -201,7 +201,7 @@ startApplication<ApplicationState, ApplicationEvent>({
                 margin: "0 auto"
               }),
               onclick: () => {
-                go({
+                changePage({
                   path: "/arachnide",
                   parameters: {},
                   searchParameters: {}

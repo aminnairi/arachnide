@@ -56,7 +56,7 @@ export const startApplication = <GenericState, GenericEvent extends ApplicationE
     }));
   };
 
-  const go: Go = (options) => {
+  const changePage: ChangePage = (options) => {
     const targetPath = Object.entries(options.parameters).reduce((previousPath, [parameterName, parameterValue]) => {
       return previousPath.replaceAll(`:${parameterName}`, String(parameterValue));
     }, options.path);
@@ -84,7 +84,7 @@ export const startApplication = <GenericState, GenericEvent extends ApplicationE
     const newVirtualElement = view({
       state: state,
       update,
-      go,
+      changePage: changePage,
       parameters,
       searchParameters
     });
@@ -122,7 +122,7 @@ export const startApplication = <GenericState, GenericEvent extends ApplicationE
     const newVirtualElement = view({
       state: state,
       update,
-      go,
+      changePage: changePage,
       parameters,
       searchParameters
     });
@@ -160,7 +160,7 @@ export const startApplication = <GenericState, GenericEvent extends ApplicationE
   const virtualElement = view({
     state: state,
     update,
-    go,
+    changePage: changePage,
     parameters,
     searchParameters
   });
@@ -194,6 +194,6 @@ export const startApplication = <GenericState, GenericEvent extends ApplicationE
    */
   return {
     update,
-    go
+    changePage
   };
 };
