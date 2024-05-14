@@ -1,4 +1,4 @@
-import { ApplicationEvent, StartApplicationOptions, Go, VirtualElement } from "./types";
+import { ApplicationEvent, StartApplicationOptions, ChangePage, VirtualElement, UpdateCallback } from "./types";
 import { createPatch } from "./createPatch";
 import { render } from "./render";
 import { findViewFromPath } from "./findViewFromPath";
@@ -8,7 +8,7 @@ import { getViewParameters } from "./getViewParameters";
  * Create an application that has a state, can emit events and renders the view
  * each time the state is updated
  */
-export const startApplication = <State, GenericEvent extends ApplicationEvent>({ views, root, initialState, onUpdate }: StartApplicationOptions<State, GenericEvent>) => {
+export const startApplication = <GenericState, GenericEvent extends ApplicationEvent>({ views, root, initialState, onUpdate }: StartApplicationOptions<GenericState, GenericEvent>) => {
   let state = initialState();
 
   /**
@@ -30,12 +30,14 @@ export const startApplication = <State, GenericEvent extends ApplicationEvent>({
    * keep the code consistent instead of having some event with a payload and
    * some without
    */
-  const update = (detail: GenericEvent) => {
+  const update = (callback: UpdateCallback<GenericState, GenericEvent>) => {
+    const event = callback(state);
+
     /**
      * We allow the event to be null for simple applications, so we need to
      * check for that branch
      */
-    if (detail === null) {
+    if (event === null) {
       /**
        * We simply don't dispatch any even in case the detail of the event is
        * null since this is a possible value
@@ -50,7 +52,7 @@ export const startApplication = <State, GenericEvent extends ApplicationEvent>({
      * this data later in the listener
      */
     window.dispatchEvent(new CustomEvent(updateIdentifier, {
-      detail
+      detail: event
     }));
   };
 

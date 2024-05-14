@@ -97,11 +97,13 @@ export type ApplicationEvent
   | EventWithData
   | EventWithoutData
 
+export type UpdateCallback<GenericState, GenericEvent extends ApplicationEvent> = (state: GenericState) => GenericEvent
+
 /**
  * A function which is responsible for sending events through the application
  * view
  */
-export type UpdateCallback<GenericEvent extends ApplicationEvent> = (options: GenericEvent) => void;
+export type Update<GenericState, GenericEvent extends ApplicationEvent> = (callback: UpdateCallback<GenericState, GenericEvent>) => void;
 
 /**
  * The options that can be gathered from the view function
@@ -118,8 +120,8 @@ export type ViewOptions<GenericState, GenericEvent extends ApplicationEvent> = {
    * this function should not change and its reference will remain stable
    * accross renders
    */
-  update: UpdateCallback<GenericEvent>,
   go: Go,
+  update: Update<GenericState, GenericEvent>,
   parameters: Record<string, unknown>,
   searchParameters: Record<string, string>
 }

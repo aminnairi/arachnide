@@ -13,12 +13,12 @@ if (!root) {
   throw new Error("Root element not found");
 }
 
-type ApplicationState = {
+export type ApplicationState = {
   counter: number,
   steps: number
 }
 
-type ApplicationEvent
+export type ApplicationEvent
   = { name: "INCREMENT" }
   | { name: "DECREMENT" }
   | { name: "SET_STEPS", data: number }
@@ -113,7 +113,9 @@ startApplication<ApplicationState, ApplicationEvent>({
                 attributes: {
                   className: "outline",
                   onclick: () => {
-                    update({ name: "INCREMENT" });
+                    update(() => ({
+                      name: "INCREMENT"
+                    }));
                   }
                 },
                 content: "Increment"
@@ -122,7 +124,9 @@ startApplication<ApplicationState, ApplicationEvent>({
                 attributes: {
                   className: "outline",
                   onclick: () => {
-                    update({ name: "DECREMENT" });
+                    update(() => ({
+                      name: "DECREMENT"
+                    }));
                   }
                 },
                 content: "Decrement"
@@ -142,10 +146,10 @@ startApplication<ApplicationState, ApplicationEvent>({
               type: "number",
               value: state.steps,
               oninput: oninput((value) => {
-                update({
+                update(() => ({
                   name: "SET_STEPS",
                   data: Number(value) || 100
-                });
+                }));
               })
             }
           }),
