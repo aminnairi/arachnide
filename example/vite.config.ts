@@ -8,7 +8,13 @@ export default defineConfig({
   base: "/arachnide",
   build: {
     outDir: "../docs",
-    emptyOutDir: true
+    emptyOutDir: true,
+    rollupOptions: {
+      input: [
+        "index.html",
+        "404.html"
+      ]
+    },
   },
   server: {
     port: 8000,
