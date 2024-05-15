@@ -16,7 +16,6 @@
 - Add a solution to be able to key elements for optimization purpose and figure out what we need to do with keyed elements
 - Use JavaScript DOM styles instead of HTML styles
 - Use JavaScript classList instead of HTML classes
-- Find a way to automate the generation of the 404 page for GitHub Pages
 - Add a manifest.json file for the live example to allow installing it as an app
 - Find a way to handle not found routes
 - Rename views to pages
@@ -32,3 +31,4 @@
 - Add support for the View Transition Web API
 - Add a section about the security, especially when using the attributes `textContent` and `innerHTML` with untrusted sources
 - Try to find vulnerabilities and document them
+- Lazy load the CSS stylesheet and use a preload link
