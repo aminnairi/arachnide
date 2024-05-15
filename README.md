@@ -57,7 +57,8 @@ startApplication<ApplicationState, ApplicationEvent>({
   initialState: () => ({
     counter: 0
   }),
-  // This is the function that is called whenever your client wants to change something on your app
+  // This is the function that is called whenever your client wants to change
+  // something on your app
   onUpdate: ({ state, event }) => {
     // Here we manage the event that is responsible for incrementing the
     // counter, it is great to be able to separate the event dispatched from
