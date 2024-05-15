@@ -2,31 +2,20 @@
 
 Library for building Web applications
 
-## Installation
-
-Coming soon...
-
 ## Usage
 
-```html
-<!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Arachnide Demo">
-    <title>Arachnide | Demo</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script src="./index.ts" type="module"></script>
-  </body>
-</html>
+*Note: the package is not yet published.*
+
+```bash
+npm create vite -- --template vanilla-ts my-first-arachnide-project
+cd my-first-arachnide-project
+npm install
+npm install --save --save-exact @arachnide/core @arachnide/html
 ```
 
 ```typescript
 import { startApplication } from "@arachnide/core";
-import { div, button, span } from "@arachnide/html";
+import { h1 } from "@arachnide/html";
 
 const root = document.getElementById("root");
 
@@ -37,49 +26,15 @@ if (!root) {
 startApplication({
   root,
   initialState: () => ({
-    counter: 15
+    title: "My First Arachnide Project!"
   }),
-  onUpdate: ({ state, event }) => {
-    if (event.name === "INCREMENT") {
-      return {
-        ...state,
-        counter: state.counter + 1
-      };
-    }
-
-    if (event.name === "DECREMENT") {
-      return {
-        ...state,
-        counter: state.counter - 1
-      };
-    }
-
+  onUpdate: ({ state }) => {
     return state;
   },
   views: {
-    "/": ({ state, update }) => {
-      return div({
-        content: [
-          button({
-            attributes: {
-              onclick: () => {
-                update({ name: "DECREMENT" });
-              }
-            },
-            content: "Decrement"
-          }),
-          span({
-            content: state.counter
-          }),
-          button({
-            attributes: {
-              onclick: () => {
-                update({ name: "INCREMENT" });
-              }
-            },
-            content: "Increment"
-          })
-        ]
+    "/": ({ state }) => {
+      return h1({
+        content: state.title
       });
     }
   }
