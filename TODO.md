@@ -30,3 +30,4 @@
 - Allow the state to either be a state or a state constructor function
 - Allow the state to be omitted
 - Allow the update function to be omitted
+- Put the example in the `packages` folder
