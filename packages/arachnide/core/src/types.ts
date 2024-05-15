@@ -101,22 +101,22 @@ export type UpdateCallback<GenericState, GenericEvent extends ApplicationEvent> 
 
 /**
  * A function which is responsible for sending events through the application
- * view
+ * page
  */
 export type Update<GenericState, GenericEvent extends ApplicationEvent> = (callback: UpdateCallback<GenericState, GenericEvent>) => void;
 
 /**
- * The options that can be gathered from the view function
+ * The options that can be gathered from the page function
  */
-export type ViewOptions<GenericState, GenericEvent extends ApplicationEvent> = {
+export type PageOptions<GenericState, GenericEvent extends ApplicationEvent> = {
   /**
    * This is the state of the application, and it will be updated each time an
-   * event has been sent, meaning the view function will be called again if
+   * event has been sent, meaning the page function will be called again if
    * this is the case
    */
   state: GenericState,
   /**
-   * The emitter function that can be used to send events through the view,
+   * The emitter function that can be used to send events through the page,
    * this function should not change and its reference will remain stable
    * accross renders
    */
@@ -133,7 +133,7 @@ export type ViewOptions<GenericState, GenericEvent extends ApplicationEvent> = {
  * we need to run this function again in order to get the new virtual DOM and
  * compute the changes that needs to be made to the real DOM
  */
-export type View<GenericState, GenericEvent extends ApplicationEvent> = (options: ViewOptions<GenericState, GenericEvent>) => VirtualElement
+export type Page<GenericState, GenericEvent extends ApplicationEvent> = (options: PageOptions<GenericState, GenericEvent>) => VirtualElement
 
 /**
  * The options that can be gathered from the update function, which is the
@@ -171,7 +171,7 @@ export type ChangePage = (options: ChangePageOptions) => void;
 
 /**
  * this is the list of options that you are allowed to pass to the application
- * function and that is responsible for connecting your state, your view and
+ * function and that is responsible for connecting your state, your page and
  * your update logic directly to your DOM, and you can also pass generic
  * arguments if you are using TypeScript in order to properly type the state
  * and the events that your application can send
@@ -183,10 +183,10 @@ export type StartApplicationOptions<GenericState, GenericEvent extends Applicati
    * inforamtions along with the event emitter function allowing you to update
    * the state of your application
    */
-  views: Record<string, View<GenericState, GenericEvent>>,
+  pages: Record<string, Page<GenericState, GenericEvent>>,
   /**
    * This is the HTML element that needs to be available in your HTML document
-   * in order to inject and update your application view, make sure to pass an
+   * in order to inject and update your application page, make sure to pass an
    * Element instance, and do not forget to add a runtime type check in order
    * to ensure that this element is available in the DOM
    */

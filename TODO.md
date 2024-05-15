@@ -18,7 +18,6 @@
 - Use JavaScript classList instead of HTML classes
 - Add a manifest.json file for the live example to allow installing it as an app
 - Find a way to handle not found routes
-- Rename views to pages
 - Rename the go function to changePage instead
 - Add a support & a package for mathml components
 - Allow the state to either be a state or a state constructor function

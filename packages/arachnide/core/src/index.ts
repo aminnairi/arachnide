@@ -2,8 +2,8 @@ export * from "./types";
 export * from "./startApplication";
 export * from "./createPatch";
 export * from "./element";
-export * from "./findViewFromPath";
-export * from "./getViewParameters"
+export * from "./findPageFromPath";
+export * from "./getPageParameters"
 export * from "./removeTrailingLeadingSlashes";
 export * from "./render";
 export * from "./createDOMReference";

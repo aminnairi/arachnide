@@ -62,7 +62,7 @@ startApplication<ApplicationState, ApplicationEvent>({
 
     return state;
   },
-  views: {
+  pages: {
     "/arachnide": ({ state, update, changePage }) => {
       return div({
         attributes: {

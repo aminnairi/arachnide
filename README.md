@@ -61,7 +61,7 @@ startApplication<ApplicationState, ApplicationEvent>({
     return state;
   },
   // Pages are first-class citizens in Arachnide!
-  views: {
+  pages: {
     // Pages have a route (with optional dynamic segments)
     // Pages must return a function (with lots of helpers to deconstruct)
     "/": ({ state, update }) => {

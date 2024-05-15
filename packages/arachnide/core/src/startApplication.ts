@@ -1,14 +1,14 @@
 import { ApplicationEvent, StartApplicationOptions, ChangePage, VirtualElement, UpdateCallback } from "./types";
 import { createPatch } from "./createPatch";
 import { render } from "./render";
-import { findViewFromPath } from "./findViewFromPath";
-import { getViewParameters } from "./getViewParameters";
+import { findPageFromPath } from "./findPageFromPath";
+import { getPageParameters } from "./getPageParameters";
 
 /**
- * Create an application that has a state, can emit events and renders the view
+ * Create an application that has a state, can emit events and renders the page
  * each time the state is updated
  */
-export const startApplication = <GenericState, GenericEvent extends ApplicationEvent>({ views, root, initialState, onUpdate }: StartApplicationOptions<GenericState, GenericEvent>) => {
+export const startApplication = <GenericState, GenericEvent extends ApplicationEvent>({ pages, root, initialState, onUpdate }: StartApplicationOptions<GenericState, GenericEvent>) => {
   let state = initialState();
 
   /**
@@ -77,11 +77,11 @@ export const startApplication = <GenericState, GenericEvent extends ApplicationE
   };
 
   window.addEventListener("popstate", () => {
-    const [viewPath, view] = findViewFromPath(window.location.pathname, views);
-    const parameters = getViewParameters(viewPath, window.location.pathname);
+    const [pagePath, page] = findPageFromPath(window.location.pathname, pages);
+    const parameters = getPageParameters(pagePath, window.location.pathname);
     const searchParameters = Object.fromEntries(new URLSearchParams(window.location.search));
 
-    const newVirtualElement = view({
+    const newVirtualElement = page({
       state: state,
       update,
       changePage: changePage,
@@ -110,16 +110,16 @@ export const startApplication = <GenericState, GenericEvent extends ApplicationE
       state
     });
 
-    const [viewPath, view] = findViewFromPath(window.location.pathname, views);
-    const parameters = getViewParameters(viewPath, window.location.pathname);
+    const [pagePath, page] = findPageFromPath(window.location.pathname, pages);
+    const parameters = getPageParameters(pagePath, window.location.pathname);
     const searchParameters = Object.fromEntries(new URLSearchParams(window.location.search));
 
     /**
-     * Now that we have the state, we can derive the view since it depends on
+     * Now that we have the state, we can derive the page since it depends on
      * the state, we also pass the emit function to allow the user to send new
      * events even though it should remain the same function from the start
      */
-    const newVirtualElement = view({
+    const newVirtualElement = page({
       state: state,
       update,
       changePage: changePage,
@@ -149,18 +149,18 @@ export const startApplication = <GenericState, GenericEvent extends ApplicationE
     patch(root.firstChild as Element);
   });
 
-  const [viewPath, view] = findViewFromPath(window.location.pathname, views);
-  const parameters = getViewParameters(viewPath, window.location.pathname);
+  const [pagePath, page] = findPageFromPath(window.location.pathname, pages);
+  const parameters = getPageParameters(pagePath, window.location.pathname);
   const searchParameters = Object.fromEntries(new URLSearchParams(window.location.search));
 
   /**
-   * We get the first iteration of the virtual element from the view function
+   * We get the first iteration of the virtual element from the page function
    * that is derived from the state
    */
-  const virtualElement = view({
-    state: state,
+  const virtualElement = page({
+    state,
     update,
-    changePage: changePage,
+    changePage,
     parameters,
     searchParameters
   });
