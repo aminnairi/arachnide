@@ -14,27 +14,99 @@ npm install --save --save-exact @arachnide/core @arachnide/html
 ```
 
 ```typescript
+// This contains the core of the library such as creating an application,
+// creating basic elements, etc...
 import { startApplication } from "@arachnide/core";
-import { h1 } from "@arachnide/html";
 
+// This contains helper functions that will provide a bunch of html elements in
+// the form of functions that will help you write less code to create your
+// pages
+import { button } from "@arachnide/html";
+
+// This is the HTML element that will receive all of the elements that you want
+// to create
 const root = document.getElementById("root");
 
 if (!root) {
+  // Simple fail-safe to prevent silly mistakes if the HTML code gets updated
   throw new Error("Root element not found");
 }
 
-startApplication({
+// Here we define the state of our application, you are not forced to use
+// TypeScript, although this is highly recommended for better type-safety and
+// developer-experience
+type ApplicationState = {
+  counter: number
+}
+
+// Here we define the events that can be sent from the "update" function below,
+// and you can of course use a union of events that might be sent as well even
+// though in this case this app is pretty simple
+type ApplicationEvent = {
+  name: "INCREMENT",
+  data: number
+}
+
+// This will start the application, which means listening for page change
+// events, updates to your applications and will re-render the application if
+// needed by applying the least amount of DOM operations as possible
+startApplication<ApplicationState, ApplicationEvent>({
   root,
+  // This is the initial state of your application, it will allow data
+  // structure to be dynamic and to be passed to your pages
   initialState: () => ({
-    title: "My First Arachnide Project!"
+    counter: 0
   }),
-  onUpdate: ({ state }) => {
+  // This is the function that is called whenever your client wants to change something on your app
+  onUpdate: ({ state, event }) => {
+    // Here we manage the event that is responsible for incrementing the
+    // counter, it is great to be able to separate the event dispatched from
+    // the event handling as it makes the code simpler to understand
+    if (event.name === "INCREMENT") {
+      // As you can see, you have to return a new state derived from the old
+      // one, this is because this framework emphasize on functional
+      // programming principles, and in this case immutability
+      return {
+        ...state,
+        counter: state.counter + event.data
+      };
+    }
+
+    // We have to retun something, in case the event is not recognized, though
+    // this is mostly useful if you are not using TypeScript in order to keep
+    // things consistent
     return state;
   },
+  // Pages are first-class citizens in Arachnide!
   views: {
-    "/": ({ state }) => {
-      return h1({
-        content: state.title
+    // The key is the path to the page, and you can have dynamic segments as
+    // well, the value is a function that will get the old state and an update
+    // function that will trigger the events that you allow for your app, but
+    // there is more useful things that you can destructure from this function!
+    "/": ({ state, update }) => {
+      // You can use all of the functions defined in @arachnide/html in order
+      // to create elements for your pages
+      return button({
+        // Often, these functions will accept some attributes, though this is
+        // optional, and all of the attributes that work in the DOM are valid
+        // attributes for this function as this is a direct mapping
+        attributes: {
+          // As you can see, the events are just like you would use them in
+          // JavaScript and the DOM Web API
+          onclick: () => {
+            // Here we trigger an event in order to tell Arachnide to update
+            // our state according to our "onUpdate" function, which will
+            // generate a new state, which will generate a new view
+            update(() => ({
+              name: "INCREMENT",
+              data: 1
+            }));
+          }
+        },
+        // Content can be a scalar type (string, number, etc...) as well as an
+        // array of these types, or even another html element from
+        // @arachnide/html
+        content: `Counter is at ${state.counter}`
       });
     }
   }
