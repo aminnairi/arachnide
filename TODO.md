@@ -1,10 +1,7 @@
-- Lifecycle methods (beforeLoad, afterLoad, etc...) for @arachnide/core
 - Find a solution to prevent event listeners rebind on each render (useCallback?)
 - Add a solution to create a state that does not involve visual re-render (react ref like?)
-- Add support for base urls in the router
 - Find a way to type the parameters
 - Ensure the parameters are cleaned in view routes definition (no inconsistent spaces)
-- CSS Library for beautifying the live example
 - Documentation for @arachnide/css
 - Documentation for @arachnide/html
 - Documentation for @arachnide/event
@@ -15,7 +12,6 @@
 - Documentation for the whole API
 - Publish the NPM package
 - Add badges (NPM, License, bundle size, ...)
-- Find a solution to load asynchronous elements
 - Create a cool logo
 - Add a solution to be able to key elements for optimization purpose and figure out what we need to do with keyed elements
 - Use JavaScript DOM styles instead of HTML styles
@@ -34,3 +30,5 @@
 - Figure out how to create batch updates
 - Figure out lazy loading of elements and if this is a good idea to implement in the framework or not (React suspense-like)
 - Add support for the View Transition Web API
+- Add a section about the security, especially when using the attributes `textContent` and `innerHTML` with untrusted sources
+- Try to find vulnerabilities and document them
