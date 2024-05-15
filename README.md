@@ -136,6 +136,10 @@ Many websites relies on a Web server to request for the next page, making the wh
 
 The goal of this library is to allow you to create Web applications. But not only that, it has also been made so that you can use this as a learning tool to know more about the internals of a JavaScript framework thanks to a declarative source-code. Emphasis has been made to name variables and function in a certain way that speaks to human more than a machine, and loads of comments have been added in order to help you understand the code easily. The API has of course been written in such a way that allow you to easily go back to an Arachnide application and update your application without having to think about its API too much or having to go back to the documentation often.
 
+### Easy testing
+
+As pages are functions, and pages always gets the same arguments, it's easy to test these since they are pure functions. You'll have to provide the arguments for these pages (the state, an update function, etc...) still, but since they are also pure functions, it's easy to mock and easy to run tests against. It is recommended to follow this mindset whenever creating component functions, by keeping things pure, you'll have a easier time debugging and testing them, which can greatly improve the confidence given to any app created using Arachnide!
+
 ## Prior art & Inspiration
 
 ### Hyperapp
