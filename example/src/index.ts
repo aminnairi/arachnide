@@ -135,7 +135,7 @@ startApplication<ApplicationState, ApplicationEvent>({
           }),
           label({
             attributes: {
-              for: "steps"
+              htmlFor: "steps"
             },
             content: " Steps "
           }),
