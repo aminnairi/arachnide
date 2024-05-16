@@ -31,3 +31,4 @@
 - Add a section about the security, especially when using the attributes `textContent` and `innerHTML` with untrusted sources
 - Try to find vulnerabilities and document them
 - Lazy load the CSS stylesheet and use a preload link
+- Rename DOMReference to simply Reference as it could be used for non-rendereable state updates as well
