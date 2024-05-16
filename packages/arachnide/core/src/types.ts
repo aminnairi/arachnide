@@ -1,13 +1,36 @@
+/**
+ * A function that will be called whenever an element is attached to the DOM
+ * tree.
+ */
 export type WhenCreatedCallback = () => void;
 
+/**
+ * A function thta will be called whenever an element is removed from the DOM
+ * tree.
+ */
 export type WhenDestroyedCallback = () => void;
 
+/**
+ * A function that will return a state that can then be used throughout all the
+ * pages.
+ */
 export type ApplicationState<GenericState> = () => GenericState;
 
+/**
+ * An object representing a stable reference to a value, useful for targeting
+ * DOM elements for instance or creating values that should not trigger a new
+ * render of the page.
+ */
 export type DOMReference<GenericElement extends Element> = {
+  /**
+   * The target value, which can be a DOM element.
+   */
   target: null | GenericElement
 };
 
+/**
+ * The result of a virtual element that is finally rendered, meaning attached to the DOM tree.
+ */
 export type RenderedElement = Element | Text | null;
 
 /**
@@ -45,18 +68,35 @@ export type VirtualObjectElement = {
    * The name of the tag to create, like "div" or "img"
    */
   name: string,
+
   /**
    * The attributes in the form of an object for the tag to create, like
    * "class", "for" or "onclick" for event listeners
    */
   attributes: VirtualObjectElementAttributes,
+
   /**
    * Childrens for the tag to create if applicable, for instance for a "ul" tag
    * that will have "li" children
    */
   content: Array<VirtualElement>,
+
+  /**
+   * A reference to a DOM element so that you can use Web API that are not
+   * supported with this framework
+   */
   reference: DOMReference<Element>,
+
+  /**
+   * A function that will be called whenever an element is attached to the DOM
+   * tree.
+   */
   whenCreated: WhenCreatedCallback,
+
+  /**
+   * A function thta will be called whenever an element is removed from the DOM
+   * tree.
+   */
   whenDestroyed: WhenDestroyedCallback
 }
 
@@ -81,11 +121,24 @@ export type NoEvent = null;
  * ones
  */
 export type EventWithData = {
+  /**
+   * The name of the event.
+   */
   name: string,
+
+  /**
+   * The data that is carried with this event.
+   */
   data: unknown
 }
 
+/**
+ * An event that does not carry any data within itself.
+ */
 export type EventWithoutData = {
+  /**
+   * The name of the event.
+   */
   name: string
 }
 
@@ -97,22 +150,25 @@ export type ApplicationEvent
   | EventWithData
   | EventWithoutData
 
+/**
+ * A callback that exposes the old state in order to trigger an event.
+ */
 export type UpdateCallback<GenericState, GenericEvent extends ApplicationEvent> = (state: GenericState) => GenericEvent
 
 /**
  * A function which is responsible for sending events through the application
- * page
+ * page.
  */
 export type Update<GenericState, GenericEvent extends ApplicationEvent> = (callback: UpdateCallback<GenericState, GenericEvent>) => void;
 
 /**
- * The options that can be gathered from the page function
+ * The options that can be gathered from the page function.
  */
 export type PageOptions<GenericState, GenericEvent extends ApplicationEvent> = {
   /**
    * This is the state of the application, and it will be updated each time an
    * event has been sent, meaning the page function will be called again if
-   * this is the case
+   * this is the case.
    */
   state: GenericState,
   /**
@@ -121,8 +177,21 @@ export type PageOptions<GenericState, GenericEvent extends ApplicationEvent> = {
    * accross renders
    */
   update: Update<GenericState, GenericEvent>,
+  /**
+   * A function that when called will change the current page.
+   */
   changePage: ChangePage,
+  /**
+   * The parameters that are computed from the URL, for instance with the URL
+   * "/users/123" and the path "/users/:user" the parameters will contain a
+   * property "user" with a value of 123.
+   */
   parameters: Record<string, unknown>,
+  /**
+   * Any search parameters that might be attached to the URL, for instance with
+   * the URL "/users?sort=date", the search parameters will contain a property
+   * "sort" with the value "date".
+   */
   searchParameters: Record<string, string>
 }
 
@@ -161,12 +230,34 @@ export type OnUpdateOptions<GenericEvent, GenericState> = {
  */
 export type OnUpdate<GenericEvent, GenericState> = (options: OnUpdateOptions<GenericEvent, GenericState>) => GenericState
 
+/**
+ * The options that might be passed through the "changePage" function.
+ */
 export type ChangePageOptions = {
+  /**
+   * The path of the page to change to, for instance "/users/:user" or
+   * "/articles/:article/comments/:comment".
+   */
   path: string,
+
+  /**
+   * The parameters that should be attached to the path. For instance with the
+   * path "/users/:user", it should be an object with a property "user" contain
+   * the value for this parameter.
+   */
   parameters: Record<string, unknown>,
+
+  /**
+   * Any search parameters that you might want to attach to the target page.
+   * For instance for a route like "/confirm?token=1a2b3c", this should be an
+   * object with a property "token" with a value of "1a2b3c".
+   */
   searchParameters: Record<string, unknown>
 }
 
+/**
+ * A function which, when called, will change the current page.
+ */
 export type ChangePage = (options: ChangePageOptions) => void;
 
 /**
@@ -184,6 +275,7 @@ export type StartApplicationOptions<GenericState, GenericEvent extends Applicati
    * the state of your application
    */
   pages: Record<string, Page<GenericState, GenericEvent>>,
+
   /**
    * This is the HTML element that needs to be available in your HTML document
    * in order to inject and update your application page, make sure to pass an
@@ -191,6 +283,7 @@ export type StartApplicationOptions<GenericState, GenericEvent extends Applicati
    * to ensure that this element is available in the DOM
    */
   root: Element,
+
   /**
    * This is the state of your application, which should define the visual
    * behavior of your app, try not to add states for things that do not
@@ -198,6 +291,7 @@ export type StartApplicationOptions<GenericState, GenericEvent extends Applicati
    * tightly coupled to your visual logic
    */
   initialState: ApplicationState<GenericState>,
+
   /**
    * This is the function that will allow you to react to updates made by the
    * users of your application, you can add your business logic following a
