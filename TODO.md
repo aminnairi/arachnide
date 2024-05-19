@@ -35,3 +35,6 @@
 - Create a `@arachnide/accessibility` package that enforces best practice for accessibility in the Web
 - Create a `VirtualNamedElement` in order to unite `VirtualHTMLElement`, `VirtualSVGElement`, etc...
 - Create a `isVirtualNamedElement` helper function
+- Find a solution to prevent using `@ts-ignore` in the source-code whenever possible
+- Create a `isVirtualSVGElement` helper
+- Create a `isVirtualMathMLElement` helper
