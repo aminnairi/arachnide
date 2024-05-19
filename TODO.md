@@ -19,7 +19,7 @@
 - Add a manifest.json file for the live example to allow installing it as an app
 - Find a way to handle not found routes
 - Rename the go function to changePage instead
-- Add a support & a package for mathml components
+- Add a support & a package for mathml components (`@arachnide/mathml`)
 - Allow the state to either be a state or a state constructor function
 - Allow the state to be omitted
 - Allow the update function to be omitted
@@ -32,3 +32,6 @@
 - Try to find vulnerabilities and document them
 - Lazy load the CSS stylesheet and use a preload link
 - Rename DOMReference to simply Reference as it could be used for non-rendereable state updates as well
+- Create a `@arachnide/accessibility` package that enforces best practice for accessibility in the Web
+- Create a `VirtualNamedElement` in order to unite `VirtualHTMLElement`, `VirtualSVGElement`, etc...
+- Create a `isVirtualNamedElement` helper function
