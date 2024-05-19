@@ -17,13 +17,13 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
    * This is the function that will be used to patch any DOM tree element
    */
   return (element: Element | ChildNode) => {
+    if (!(element instanceof Element)) {
+      throw new Error("Tried to patch an element which is not an instance of the Element class");
+    }
+
     if (isVirtualNullElement(oldVirtualElement) || isVirtualUndefinedElement(oldVirtualElement)) {
       if (isVirtualNullElement(newVirtualElement) || isVirtualUndefinedElement(newVirtualElement)) {
         return;
-      }
-
-      if (element === null) {
-        throw new Error("Invalid DOM node found. Has the DOM been manually updated?");
       }
 
       const newElement = render(newVirtualElement);
@@ -58,10 +58,6 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         return;
       }
 
-      if (element === null) {
-        throw new Error("Invalid DOM node found. Has the DOM been manually updated?");
-      }
-
       const newElement = render(newVirtualElement);
 
       if (newElement === null) {
@@ -94,10 +90,6 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         return;
       }
 
-      if (element === null) {
-        throw new Error("Invalid DOM node found. Has the DOM been manually updated?");
-      }
-
       element.remove();
 
       oldVirtualElement.whenDestroyed();
@@ -117,10 +109,6 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
        */
       if (Object.is(oldVirtualElement, newVirtualElement)) {
         return;
-      }
-
-      if (element === null) {
-        throw new Error("Invalid DOM node found. Has the DOM been manually updated?");
       }
 
       const newElement = render(newVirtualElement);
@@ -160,10 +148,6 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * we can start to compare the names of those two elements
      */
     if (oldVirtualElement.name !== newVirtualElement.name) {
-      if (element === null) {
-        throw new Error("Invalid DOM node found. Has the DOM been manually updated?");
-      }
-
       const newElement = render(newVirtualElement);
 
       if (newElement === null) {
