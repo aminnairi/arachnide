@@ -203,13 +203,18 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
        * We first grab the attribute from the new virtual element based on the
        * name of the old attribute
        */
-      const newVirtualElementAttributeValue = (newVirtualElement?.attributes ?? {})[oldVirtualElementAttributeName];
+      const newVirtualElementAttributeValue = newVirtualElement.attributes[oldVirtualElementAttributeName];
 
       /**
        * If the attribute from the new virtual element is null or undefined, it
        * is considered being removed from the DOM element
        */
       if (newVirtualElementAttributeValue === undefined || newVirtualElementAttributeValue === null) {
+        if (typeof oldVirtualElementAttributeValue !== "function" && typeof oldVirtualElement.attributes["xmlns"] === "string") {
+          element.removeAttribute(oldVirtualElementAttributeName);
+          return;
+        }
+
         // @ts-ignore
         element[oldVirtualElementAttributeName] = null;
 
@@ -224,6 +229,12 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
        */
       if (newVirtualElementAttributeValue === oldVirtualElementAttributeValue) {
         return
+      }
+
+
+      if (typeof newVirtualElementAttributeValue !== "function" && typeof newVirtualElement.attributes["xmlns"] === "string") {
+        element.setAttribute(oldVirtualElementAttributeName, String(newVirtualElementAttributeValue));
+        return;
       }
 
       // @ts-ignore
@@ -253,6 +264,12 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
        * new attribute that we need to add
        */
       if (oldVirtualElementAttributeValue !== undefined && oldVirtualElementAttributeValue !== null || newVirtualElementAttributeValue === null || newVirtualElementAttributeValue === undefined) {
+        return;
+      }
+
+      if (typeof newVirtualElementAttributeValue !== "function" && typeof newVirtualElement.attributes["xmlns"] === "string") {
+        element.setAttribute(newVirtualElementAttributeName, String(newVirtualElementAttributeValue));
+
         return;
       }
 
@@ -296,7 +313,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * re-renders for some of the children and we should account for that case
      * (the key has changed) in here
      */
-    newVirtualElement.content.slice((oldVirtualElement?.content ?? []).length).forEach(newVirtualElementChild => {
+    newVirtualElement.content.slice(oldVirtualElement.content.length).forEach(newVirtualElementChild => {
       const patch = createPatch(null, newVirtualElementChild);
 
       window.queueMicrotask(() => {

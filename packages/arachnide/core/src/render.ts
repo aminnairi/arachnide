@@ -45,7 +45,13 @@ export const render = (virtualElement: VirtualElement): RenderedElement => {
    * force users to use typescript for this framework and this is open to
    * debate
    */
-  const element = document.createElement(virtualElement.name);
+  const element = (() => {
+    if ("xmlns" in virtualElement.attributes && typeof virtualElement.attributes["xmlns"] === "string") {
+      return document.createElementNS(virtualElement.attributes["xmlns"], virtualElement.name);
+    }
+
+    return document.createElement(virtualElement.name);
+  })();
 
   /**
    * We use the Object.entries method in order to turn the object into
@@ -64,6 +70,13 @@ export const render = (virtualElement: VirtualElement): RenderedElement => {
        * attribute in this specific case so its simpler to just return in here
        */
       return;
+    }
+
+    if (typeof virtualElement.attributes["xmlns"] === "string") {
+      if (typeof attributeValue !== "function") {
+        element.setAttribute(attributeName, String(attributeValue));
+        return;
+      }
     }
 
     /**
