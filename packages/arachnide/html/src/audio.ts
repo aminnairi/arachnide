@@ -1,6 +1,6 @@
-import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
+import { CreateElementOptions, element } from "@arachnide/core";
 
-export const audio = (options: Omit<CreateElementOptions<HTMLAudioElement>, "name">): VirtualObjectElement => {
+export const audio = (options: Omit<CreateElementOptions<HTMLAudioElement>, "name">) => {
   return element({
     ...options,
     name: "audio"

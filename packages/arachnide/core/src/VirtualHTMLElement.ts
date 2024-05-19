@@ -1,12 +1,11 @@
-import { VirtualHTMLElement } from "./VirtualHTMLElement";
-import { WhenCreatedCallback, DOMReference, WhenDestroyedCallback, VirtualElement, VirtualHTMLElementAttributes } from "./types";
+import { DOMReference, VirtualElement, VirtualHTMLElementAttributes, WhenCreatedCallback, WhenDestroyedCallback } from "./types";
 
-export type CreateElementOptions<GenericElement extends Element> = {
+export class VirtualHTMLElement<GenericElement extends Element> {
   /**
    * This is the name of an HTML Element that you want to create, for instance
    * "hr" or "img".
    */
-  name: string,
+  public readonly name: string;
 
   /**
    * This is an optional object that will list the attributes that you  might
@@ -16,14 +15,14 @@ export type CreateElementOptions<GenericElement extends Element> = {
    * HTML attribute, you need to use the "className" property (yes, this is
    * also why you need to use these names in React #themoreyouknow).
    */
-  attributes?: VirtualHTMLElementAttributes | undefined,
+  public readonly attributes: VirtualHTMLElementAttributes;
 
   /**
    * This is essentially the content of the element to create. It can be a
    * string, a number, a boolean, null, undefined or an element or even an
    * array of all of these if you need multiple children.
    */
-  content?: Array<VirtualElement> | VirtualElement | undefined,
+  public readonly content: Array<VirtualElement>;
 
   /**
    * This is a reference that you created using the "createDOMReference"
@@ -32,35 +31,35 @@ export type CreateElementOptions<GenericElement extends Element> = {
    * in the "createDOMReference" function, you should really use it in last
    * resort, if there is no solution in the framework for your use-case.
    */
-  reference?: DOMReference<GenericElement> | undefined,
+  public readonly reference: DOMReference<GenericElement>;
 
   /**
    * This is a life cycle method that is handy to to trigger some instructions
    * whenever the element is created. A created elemet is an element that is
    * created and attached to the DOM tree when rendering the page.
    */
-  whenCreated?: WhenCreatedCallback | undefined
+  public readonly whenCreated: WhenCreatedCallback;
 
   /**
    * This is a life cycle method that is handy to to trigger some instructions
    * whenever the element is destroyed. A destroyed elemet is an element that
    * is removed from the DOM tree when changing the page for instance.
    */
-  whenDestroyed?: WhenDestroyedCallback | undefined
-};
+  public readonly whenDestroyed: WhenDestroyedCallback
 
-/**
- * Create a new virtual element based on a tag name, attributes and children.
- * This function is mostly used whenever this library does not expose a
- * function equivalent to a wanted HTML element
- */
-export const element = <GenericElement extends Element>({ name, attributes = {}, content = [], reference = undefined, whenCreated = () => { }, whenDestroyed = () => { } }: CreateElementOptions<GenericElement>): VirtualHTMLElement<GenericElement> => {
-  return new VirtualHTMLElement(
-    name,
-    attributes,
-    Array.isArray(content) ? content : [content],
-    reference ?? { target: null },
-    whenCreated,
-    whenDestroyed
-  );
-};
+  public constructor(
+    name: string,
+    attributes: VirtualHTMLElementAttributes, 
+    content: Array<VirtualElement>, 
+    reference: DOMReference<GenericElement>, 
+    whenCreated: WhenCreatedCallback, 
+    whenDestroyed: WhenDestroyedCallback
+  ) { 
+    this.name = name;
+    this.attributes = attributes;
+    this.content = content;
+    this.reference = reference;
+    this.whenCreated = whenCreated;
+    this.whenDestroyed = whenDestroyed;
+  }
+}

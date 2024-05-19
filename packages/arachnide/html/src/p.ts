@@ -1,6 +1,6 @@
-import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
+import { CreateElementOptions, element } from "@arachnide/core";
 
-export const p = (options: Omit<CreateElementOptions<HTMLParagraphElement>, "name">): VirtualObjectElement => {
+export const p = (options: Omit<CreateElementOptions<HTMLParagraphElement>, "name">) => {
   return element({
     ...options,
     name: "p"

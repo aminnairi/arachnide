@@ -1,3 +1,5 @@
+import { VirtualHTMLElement } from "./VirtualHTMLElement";
+
 /**
  * A function that will be called whenever an element is attached to the DOM
  * tree.
@@ -37,7 +39,7 @@ export type RenderedElement = Element | Text | null;
  * A attribute can be a string, a number, a boolean, the null keyword or the
  * undefined keyword, in summary all scalar data types available in JavaScript
  */
-export type VirtualObjectElementAttributeValue
+export type VirtualHTMLElementAttributeValue
   = string
   | number
   | boolean
@@ -48,63 +50,22 @@ export type VirtualObjectElementAttributeValue
  * An attribute can also be an event listener, this is especially true when
  * dealing with things like attributes that starts with "on" like "onclick"
  */
-export type VirtualObjectElementAttributeListener = (event: Event) => void
+export type VirtualHTMLElementAttributeListener = (event: Event) => void
 
 /**
  * An attribute can either be some scalar value (string, boolean, number, ...)
  * that will be parsed as string Or it can be a function in case of an event
  * listener
  */
-export type VirtualObjectElementAttributes = {
-  [Key in string]: VirtualObjectElementAttributeValue | VirtualObjectElementAttributeListener
-}
-
-/**
- * A virtual element can be an object that will define an HTML tag, which is
- * defined by a tag name, some attributes and children if any
- */
-export type VirtualObjectElement = {
-  /**
-   * The name of the tag to create, like "div" or "img"
-   */
-  name: string,
-
-  /**
-   * The attributes in the form of an object for the tag to create, like
-   * "class", "for" or "onclick" for event listeners
-   */
-  attributes: VirtualObjectElementAttributes,
-
-  /**
-   * Childrens for the tag to create if applicable, for instance for a "ul" tag
-   * that will have "li" children
-   */
-  content: Array<VirtualElement>,
-
-  /**
-   * A reference to a DOM element so that you can use Web API that are not
-   * supported with this framework
-   */
-  reference: DOMReference<Element>,
-
-  /**
-   * A function that will be called whenever an element is attached to the DOM
-   * tree.
-   */
-  whenCreated: WhenCreatedCallback,
-
-  /**
-   * A function thta will be called whenever an element is removed from the DOM
-   * tree.
-   */
-  whenDestroyed: WhenDestroyedCallback
+export type VirtualHTMLElementAttributes = {
+  [Key in string]: VirtualHTMLElementAttributeValue | VirtualHTMLElementAttributeListener
 }
 
 /**
  * Available types for a virtual element
  */
 export type VirtualElement
-  = VirtualObjectElement
+  = VirtualHTMLElement<Element>
   | string
   | number
   | boolean

@@ -1,3 +1,4 @@
+import { VirtualHTMLElement } from "./VirtualHTMLElement";
 import { RenderedElement, VirtualElement } from "./types";
 
 /**
@@ -30,6 +31,10 @@ export const render = (virtualElement: VirtualElement): RenderedElement => {
 
   if (typeof virtualElement === "boolean" || typeof virtualElement === "number") {
     return document.createTextNode(String(virtualElement));
+  }
+
+  if (!(virtualElement instanceof VirtualHTMLElement)) {
+    throw new Error("virtualElement is not an instance of VirtualHTMLElement");
   }
 
   /**

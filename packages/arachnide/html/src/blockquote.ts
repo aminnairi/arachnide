@@ -1,6 +1,6 @@
-import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
+import { CreateElementOptions, element } from "@arachnide/core";
 
-export const blockquote = (options: Omit<CreateElementOptions<HTMLElement>, "name">): VirtualObjectElement => {
+export const blockquote = (options: Omit<CreateElementOptions<HTMLElement>, "name">) => {
   return element({
     ...options,
     name: "blockquote"

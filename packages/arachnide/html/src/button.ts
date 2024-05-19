@@ -1,6 +1,6 @@
-import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
+import { CreateElementOptions, element } from "@arachnide/core";
 
-export const button = (options: Omit<CreateElementOptions<HTMLButtonElement>, "name">): VirtualObjectElement => {
+export const button = (options: Omit<CreateElementOptions<HTMLButtonElement>, "name">) => {
   return element({
     name: "button",
     ...options

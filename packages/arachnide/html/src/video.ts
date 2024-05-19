@@ -1,6 +1,6 @@
-import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
+import { CreateElementOptions, element } from "@arachnide/core";
 
-export const video = (options: Omit<CreateElementOptions<HTMLVideoElement>, "name">): VirtualObjectElement => {
+export const video = (options: Omit<CreateElementOptions<HTMLVideoElement>, "name">) => {
   return element({
     ...options,
     name: "video"

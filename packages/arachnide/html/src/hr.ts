@@ -1,6 +1,6 @@
-import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
+import { CreateElementOptions, element } from "@arachnide/core";
 
-export const hr = (options: Omit<CreateElementOptions<HTMLHRElement>, "name" | "content">): VirtualObjectElement => {
+export const hr = (options: Omit<CreateElementOptions<HTMLHRElement>, "name" | "content">) => {
   return element({
     ...options,
     name: "hr",

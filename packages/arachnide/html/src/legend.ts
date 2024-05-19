@@ -1,6 +1,6 @@
-import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
+import { CreateElementOptions, element } from "@arachnide/core";
 
-export const legend = (options: Omit<CreateElementOptions<HTMLLegendElement>, "name">): VirtualObjectElement => {
+export const legend = (options: Omit<CreateElementOptions<HTMLLegendElement>, "name">) => {
   return element({
     ...options,
     name: "legend"

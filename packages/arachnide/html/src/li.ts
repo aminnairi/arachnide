@@ -1,6 +1,6 @@
-import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
+import { CreateElementOptions, element } from "@arachnide/core";
 
-export const li = (options: Omit<CreateElementOptions<HTMLLIElement>, "name">): VirtualObjectElement => {
+export const li = (options: Omit<CreateElementOptions<HTMLLIElement>, "name">) => {
   return element({
     ...options,
     name: "li"

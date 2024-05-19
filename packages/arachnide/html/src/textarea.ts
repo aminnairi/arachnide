@@ -1,6 +1,6 @@
-import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
+import { CreateElementOptions, element } from "@arachnide/core";
 
-export const textarea = (options: Omit<CreateElementOptions<HTMLTextAreaElement>, "name">): VirtualObjectElement => {
+export const textarea = (options: Omit<CreateElementOptions<HTMLTextAreaElement>, "name">) => {
   return element({
     ...options,
     name: "textarea"

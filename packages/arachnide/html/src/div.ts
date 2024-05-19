@@ -1,6 +1,6 @@
-import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
+import { CreateElementOptions, element } from "@arachnide/core";
 
-export const div = (options: Omit<CreateElementOptions<HTMLDivElement>, "name">): VirtualObjectElement => {
+export const div = (options: Omit<CreateElementOptions<HTMLDivElement>, "name">) => {
   return element({
     ...options,
     name: "div"

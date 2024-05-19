@@ -6,7 +6,7 @@ import { isVirtualBooleanElement } from "./isVirtualBooleanElement";
 import { isVirtualNullElement } from "./isVirtualNullElement";
 import { isVirtualUndefinedElement } from "./isVirtualUndefinedElement";
 import { isElement } from "./isElement";
-import { isVirtualObjectElement } from "./isVirtualObjectElement";
+import { VirtualHTMLElement } from "./VirtualHTMLElement";
 
 /**
  * Create a function that will update the DOM tree based on the differences
@@ -34,10 +34,10 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
 
       element.appendChild(newElement);
 
-      if (isVirtualObjectElement(newVirtualElement)) {
+      if (newVirtualElement instanceof VirtualHTMLElement) {
         newVirtualElement.whenCreated();
 
-        if (isElement(newElement) && isVirtualObjectElement(newVirtualElement)) {
+        if (isElement(newElement)) {
           newVirtualElement.reference.target = newElement;
         }
       }
@@ -74,7 +74,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
        */
       element.replaceWith(newElement);
 
-      if (isVirtualObjectElement(newVirtualElement)) {
+      if (newVirtualElement instanceof VirtualHTMLElement) {
         newVirtualElement.whenCreated();
 
         if (isElement(newElement)) {
@@ -135,7 +135,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
        */
       element.replaceWith(newElement);
 
-      if (isVirtualObjectElement(oldVirtualElement)) {
+      if (oldVirtualElement instanceof VirtualHTMLElement) {
         oldVirtualElement.whenDestroyed();
       }
 
@@ -144,6 +144,14 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
        * attributes nor children
        */
       return;
+    }
+
+    if (!(oldVirtualElement instanceof VirtualHTMLElement)) {
+      throw new Error("old virtual element from previous render is not an instance of VirtualHTMLElement");
+    }
+
+    if (!(newVirtualElement instanceof VirtualHTMLElement)) {
+      throw new Error("old virtual element from previous render is not an instance of VirtualHTMLElement");
     }
 
     /**

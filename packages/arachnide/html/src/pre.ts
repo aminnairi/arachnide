@@ -1,6 +1,6 @@
-import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
+import { CreateElementOptions, element } from "@arachnide/core";
 
-export const pre = (options: Omit<CreateElementOptions<HTMLPreElement>, "name">): VirtualObjectElement => {
+export const pre = (options: Omit<CreateElementOptions<HTMLPreElement>, "name">) => {
   return element({
     ...options,
     name: "pre"

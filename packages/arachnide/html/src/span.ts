@@ -1,6 +1,6 @@
-import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
+import { CreateElementOptions, element } from "@arachnide/core";
 
-export const span = (options: Omit<CreateElementOptions<HTMLSpanElement>, "name">): VirtualObjectElement => {
+export const span = (options: Omit<CreateElementOptions<HTMLSpanElement>, "name">) => {
   return element({
     ...options,
     name: "span"

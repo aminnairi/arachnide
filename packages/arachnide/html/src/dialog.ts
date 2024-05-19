@@ -1,6 +1,6 @@
-import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
+import { CreateElementOptions, element } from "@arachnide/core";
 
-export const dialog = (options: Omit<CreateElementOptions<HTMLDialogElement>, "name">): VirtualObjectElement => {
+export const dialog = (options: Omit<CreateElementOptions<HTMLDialogElement>, "name">) => {
   return element({
     ...options,
     name: "dialog"

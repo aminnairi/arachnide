@@ -1,6 +1,6 @@
-import { CreateElementOptions, VirtualObjectElement, element } from "@arachnide/core";
+import { CreateElementOptions, element } from "@arachnide/core";
 
-export const meter = (options: Omit<CreateElementOptions<HTMLMeterElement>, "name">): VirtualObjectElement => {
+export const meter = (options: Omit<CreateElementOptions<HTMLMeterElement>, "name">) => {
   return element({
     ...options,
     name: "meter"
