@@ -1,40 +1,41 @@
 - Find a solution to prevent event listeners rebind on each render (useCallback?)
 - Add a solution to create a state that does not involve visual re-render (react ref like?)
-- Find a way to type the parameters
-- Ensure the parameters are cleaned in view routes definition (no inconsistent spaces)
+- Find a way to type the parameters in the pages in TypeScript
+- Use curly braces instead of double-dots for defining a route parameter
 - Documentation for @arachnide/css
 - Documentation for @arachnide/html
 - Documentation for @arachnide/event
 - More events for @arachnide/event
-- Support for SVG elements, attributes & events in @arachnide/core 
 - External library for easing the use of SVG elements (@arachnide/svg)
-- Add ESLint for TypeScript & good practice linting as well as code formatting (no prettier)
+- Add ESLint for TypeScript & good practice linting as well as code formatting (no prettier) and run the linter in a GitHub Action
 - Documentation for the whole API
 - Publish the NPM package
 - Add badges (NPM, License, bundle size, ...)
 - Create a cool logo
 - Add a solution to be able to key elements for optimization purpose and figure out what we need to do with keyed elements
-- Use JavaScript DOM styles instead of HTML styles
-- Use JavaScript classList instead of HTML classes
-- Add a manifest.json file for the live example to allow installing it as an app
-- Find a way to handle not found routes
-- Rename the go function to changePage instead
-- Add a support & a package for mathml components (`@arachnide/mathml`)
-- Allow the state to either be a state or a state constructor function
-- Allow the state to be omitted
-- Allow the update function to be omitted
-- Put the example in the `packages` folder
-- Create a `@arachnide/create` package in order to use the command `npm create @arachnide` in order to scafold a new project
-- Figure out how to create batch updates
+- Find a way to handle not found routes (by adding a special `*` character that means anything)
+- Add a package for mathml components (`@arachnide/mathml`)
+- Allow the state to either be a state or a state constructor function in the `createApplication` function only
+- Put the example in the `packages/example` folder
+- Create a `@arachnide/create` package in order to use the command `npm create @arachnide` and scafold a new project
+- Figure out how to create batch updates (might not be necessary and can be userland thanks to the `update` handler)
 - Figure out lazy loading of elements and if this is a good idea to implement in the framework or not (React suspense-like)
-- Add support for the View Transition Web API
+- Add support for the View Transition Web API (provide more options for the `pages` props in this case)
 - Add a section about the security, especially when using the attributes `textContent` and `innerHTML` with untrusted sources
-- Try to find vulnerabilities and document them
+- Try to find vulnerabilities, resolve them & document them if they are part of the standard HTML spec
 - Lazy load the CSS stylesheet and use a preload link
 - Rename DOMReference to simply Reference as it could be used for non-rendereable state updates as well
 - Create a `@arachnide/accessibility` package that enforces best practice for accessibility in the Web
-- Create a `VirtualNamedElement` in order to unite `VirtualHTMLElement`, `VirtualSVGElement`, etc...
-- Create a `isVirtualNamedElement` helper function
-- Find a solution to prevent using `@ts-ignore` in the source-code whenever possible
+- Create a `isVirtualHTMLElement` helper function and use it wherever possible
+- Rename `element` to `createElement`
+- Create a `VirtualSVGElement` class
+- Create a `VirtualMathMLElement` class
+- Create a `createMathMLElement` function
+- Create a `createSVGElement` function
 - Create a `isVirtualSVGElement` helper
 - Create a `isVirtualMathMLElement` helper
+- Rename `VirtualHTMLElement` to `VirtualNamedElement` instead since it serves the `html`, `svg` & `mathml` libraries
+- Add a third generic type for the `startApplication` to allow typing the routes and unlock features like type checked route in the `changePage` function 
+- Add a `isVirtualElementAttributeRemoved` helper function to ease out the reading of the source-code in the `@arachnide/core` package
+- Find a better solution that throwing in the source-code of `@arachnide/core` for errors (warnings? log adapter? error return?)
+- Slice through the attributes that needs to be added in order to prevent looping over attributes again

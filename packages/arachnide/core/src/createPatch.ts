@@ -17,10 +17,6 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
    * This is the function that will be used to patch any DOM tree element
    */
   return (element: Element | ChildNode) => {
-    if (!(element instanceof Element)) {
-      throw new Error("Tried to patch an element which is not an instance of the Element class");
-    }
-
     if (isVirtualNullElement(oldVirtualElement) || isVirtualUndefinedElement(oldVirtualElement)) {
       if (isVirtualNullElement(newVirtualElement) || isVirtualUndefinedElement(newVirtualElement)) {
         return;
@@ -195,7 +191,12 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
        */
       if (newVirtualElementAttributeValue === undefined || newVirtualElementAttributeValue === null) {
         if (typeof oldVirtualElementAttributeValue !== "function" && typeof oldVirtualElement.attributes["xmlns"] === "string") {
+          if (!isElement(element)) {
+            throw new Error("Tried to remove an attribute on an element that is not an instance of the Element class");
+          }
+
           element.removeAttribute(oldVirtualElementAttributeName);
+
           return;
         }
 
@@ -217,7 +218,12 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
 
 
       if (typeof newVirtualElementAttributeValue !== "function" && typeof newVirtualElement.attributes["xmlns"] === "string") {
+        if (!isElement(element)) {
+          throw new Error("Tried to update an attribute on an element that is not an instance of the Element class");
+        }
+
         element.setAttribute(oldVirtualElementAttributeName, String(newVirtualElementAttributeValue));
+
         return;
       }
 
@@ -252,6 +258,10 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
       }
 
       if (typeof newVirtualElementAttributeValue !== "function" && typeof newVirtualElement.attributes["xmlns"] === "string") {
+        if (!isElement(element)) {
+          throw new Error("Tried to add an attribute on an element that is not an instance of the Element class");
+        }
+
         element.setAttribute(newVirtualElementAttributeName, String(newVirtualElementAttributeValue));
 
         return;
