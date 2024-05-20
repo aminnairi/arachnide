@@ -24,16 +24,11 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
 
       const newElement = render(newVirtualElement);
 
-      if (newElement === null) {
-        return;
-      }
+      if (isElement(newElement)) {
+        element.appendChild(newElement);
 
-      element.appendChild(newElement);
-
-      if (newVirtualElement instanceof VirtualHTMLElement) {
-        newVirtualElement.whenCreated();
-
-        if (isElement(newElement)) {
+        if (newVirtualElement instanceof VirtualHTMLElement) {
+          newVirtualElement.whenCreated();
           newVirtualElement.reference.target = newElement;
         }
       }
@@ -56,20 +51,15 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
 
       const newElement = render(newVirtualElement);
 
-      if (newElement === null) {
-        return;
-      }
-
       /**
        * This means that we need to change it in the current DOM, otherwise
        * we do nothing as it means they are identical
        */
-      element.replaceWith(newElement);
+      if (isElement(newElement)) {
+        element.replaceWith(newElement);
 
-      if (newVirtualElement instanceof VirtualHTMLElement) {
-        newVirtualElement.whenCreated();
-
-        if (isElement(newElement)) {
+        if (newVirtualElement instanceof VirtualHTMLElement) {
+          newVirtualElement.whenCreated();
           newVirtualElement.reference.target = newElement;
         }
       }
@@ -109,18 +99,16 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
 
       const newElement = render(newVirtualElement);
 
-      if (newElement === null) {
-        return;
-      }
-
       /**
        * This means that we need to change it in the current DOM, otherwise
        * we do nothing as it means they are identical
        */
-      element.replaceWith(newElement);
+      if (isElement(newElement)) {
+        element.replaceWith(newElement);
 
-      if (oldVirtualElement instanceof VirtualHTMLElement) {
-        oldVirtualElement.whenDestroyed();
+        if (oldVirtualElement instanceof VirtualHTMLElement) {
+          oldVirtualElement.whenDestroyed();
+        }
       }
 
       /**
@@ -146,25 +134,23 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
     if (oldVirtualElement.name !== newVirtualElement.name) {
       const newElement = render(newVirtualElement);
 
-      if (newElement === null) {
-        return;
-      }
-
       /**
        * If the two names are different, this means that for this particular
        * node, the element needs to change and we don't need to do a diff on
        * the attribute since the old element will be completely replaced by the
        * new one
        */
-      element.replaceWith(newElement);
-
       if (isElement(newElement)) {
-        newVirtualElement.reference.target = newElement;
+        element.replaceWith(newElement);
+
+        if (isElement(newElement)) {
+          newVirtualElement.reference.target = newElement;
+        }
+
+        oldVirtualElement.whenDestroyed();
+
+        newVirtualElement.whenCreated();
       }
-
-      oldVirtualElement.whenDestroyed();
-
-      newVirtualElement.whenCreated();
 
       /**
        * Here we can simply return since, again, we don't need to do a diffing
@@ -190,18 +176,21 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
        * is considered being removed from the DOM element
        */
       if (newVirtualElementAttributeValue === undefined || newVirtualElementAttributeValue === null) {
-        if (typeof oldVirtualElementAttributeValue !== "function" && typeof oldVirtualElement.attributes["xmlns"] === "string") {
-          if (!isElement(element)) {
-            throw new Error("Tried to remove an attribute on an element that is not an instance of the Element class");
-          }
+        if (!isElement(element)) {
+          throw new Error("Tried to remove an attribute on an element that is not an instance of the Element class");
+        }
 
-          element.removeAttribute(oldVirtualElementAttributeName);
+        if (oldVirtualElementAttributeName.startsWith("on")) {
+          const eventListenerName = oldVirtualElementAttributeName.slice("on".length);
+
+          if (typeof oldVirtualElementAttributeValue === "function") {
+            element.removeEventListener(eventListenerName, oldVirtualElementAttributeValue);
+          }
 
           return;
         }
 
-        // @ts-ignore
-        element[oldVirtualElementAttributeName] = null;
+        element.removeAttribute(oldVirtualElementAttributeName);
 
         return;
       }
@@ -216,19 +205,27 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         return
       }
 
+      if (!isElement(element)) {
+        throw new Error("Tried to update an attribute on an element that is not an instance of the Element class");
+      }
 
-      if (typeof newVirtualElementAttributeValue !== "function" && typeof newVirtualElement.attributes["xmlns"] === "string") {
-        if (!isElement(element)) {
-          throw new Error("Tried to update an attribute on an element that is not an instance of the Element class");
+      if (oldVirtualElementAttributeName.startsWith("on")) {
+        const eventListenerName = oldVirtualElementAttributeName.slice("on".length);
+
+        if (typeof oldVirtualElementAttributeValue === "function") {
+          element.removeEventListener(eventListenerName, oldVirtualElementAttributeValue);
         }
 
-        element.setAttribute(oldVirtualElementAttributeName, String(newVirtualElementAttributeValue));
+        if (typeof newVirtualElementAttributeValue === "function") {
+          element.addEventListener(eventListenerName, newVirtualElementAttributeValue);
+        }
 
         return;
       }
 
-      // @ts-ignore
-      element[oldVirtualElementAttributeName] = newVirtualElementAttributeValue;
+      element.setAttribute(oldVirtualElementAttributeName, String(newVirtualElementAttributeValue));
+
+      return;
     });
 
     /**
@@ -257,19 +254,23 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         return;
       }
 
-      if (typeof newVirtualElementAttributeValue !== "function" && typeof newVirtualElement.attributes["xmlns"] === "string") {
-        if (!isElement(element)) {
-          throw new Error("Tried to add an attribute on an element that is not an instance of the Element class");
-        }
+      if (!isElement(element)) {
+        throw new Error("Tried to add an attribute on an element that is not an instance of the Element class");
+      }
 
-        element.setAttribute(newVirtualElementAttributeName, String(newVirtualElementAttributeValue));
+      if (newVirtualElementAttributeName.startsWith("on")) {
+        const eventListenerName = newVirtualElementAttributeName.slice("on".length);
+
+        if (typeof newVirtualElementAttributeValue === "function") {
+          element.addEventListener(eventListenerName, newVirtualElementAttributeValue);
+        }
 
         return;
       }
 
-      // temporary solution to see if this can simplify the setting of attributes
-      // @ts-ignore
-      element[newVirtualElementAttributeName] = newVirtualElementAttributeValue;
+      element.setAttribute(newVirtualElementAttributeName, String(newVirtualElementAttributeValue));
+
+      return;
     });
 
     /**
