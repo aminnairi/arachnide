@@ -88,6 +88,24 @@ startApplication<ApplicationState, ApplicationEvent>({
               }),
               onclick: () => {
                 changePage({
+                  path: "/arachnide/about",
+                  parameters: {},
+                  searchParameters: {}
+                });
+              }
+            },
+            content: "Go to about"
+          }),
+          button({
+            attributes: {
+              style: styles({
+                display: "block",
+                "margin-left": "auto",
+                "margin-right": "auto",
+                "margin-bottom": "30px"
+              }),
+              onclick: () => {
+                changePage({
                   path: "/arachnide/summary",
                   parameters: {},
                   searchParameters: {}
@@ -193,6 +211,31 @@ startApplication<ApplicationState, ApplicationEvent>({
               })
             },
             content: `Steps is currently at ${state.steps}`
+          }),
+          button({
+            attributes: {
+              style: styles({
+                display: "block",
+                margin: "0 auto"
+              }),
+              onclick: () => {
+                changePage({
+                  path: "/arachnide",
+                  parameters: {},
+                  searchParameters: {}
+                });
+              }
+            },
+            content: "Go back home"
+          })
+        ]
+      });
+    },
+    "*": ({ changePage }) => {
+      return div({
+        content: [
+          h1({
+            content: "Page not found"
           }),
           button({
             attributes: {
