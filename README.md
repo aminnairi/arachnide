@@ -69,6 +69,8 @@ startApplication<ApplicationState, ApplicationEvent>({
       return button({
         // Attributes are a direct mapping from the DOM Web API
         attributes: {
+          // no need to target the "className" DOM property, just use "class"
+          class: state.counter < 0 ? "text-red-500" : null,
           // onclick, just like with the DOM Web API
           onclick: () => {
             // This is the only way to trigger a new render
