@@ -39,3 +39,4 @@
 - Add a `isVirtualElementAttributeRemoved` helper function to ease out the reading of the source-code in the `@arachnide/core` package
 - Find a better solution that throwing in the source-code of `@arachnide/core` for errors (warnings? log adapter? error return?)
 - Slice through the attributes that needs to be added in order to prevent looping over attributes again
+- Add comments where missing in the source-code of all of the packages
