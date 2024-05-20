@@ -66,12 +66,12 @@ startApplication<ApplicationState, ApplicationEvent>({
     "/arachnide": ({ state, update, changePage }) => {
       return div({
         attributes: {
-          className: "container"
+          class: "container"
         },
         content: [
           h1({
             attributes: {
-              className: "center",
+              class: "center",
               style: styles({
                 "text-align": "center"
               })
@@ -106,12 +106,12 @@ startApplication<ApplicationState, ApplicationEvent>({
           }),
           div({
             attributes: {
-              className: "grid"
+              class: "grid"
             },
             content: [
               button({
                 attributes: {
-                  className: "outline",
+                  class: "outline",
                   onclick: () => {
                     update(() => ({
                       name: "INCREMENT"
@@ -122,7 +122,7 @@ startApplication<ApplicationState, ApplicationEvent>({
               }),
               button({
                 attributes: {
-                  className: "outline",
+                  class: "outline",
                   onclick: () => {
                     update(() => ({
                       name: "DECREMENT"
@@ -135,7 +135,7 @@ startApplication<ApplicationState, ApplicationEvent>({
           }),
           label({
             attributes: {
-              htmlFor: "steps"
+              for: "steps"
             },
             content: " Steps "
           }),
@@ -167,7 +167,7 @@ startApplication<ApplicationState, ApplicationEvent>({
     "/arachnide/summary": ({ state, changePage }) => {
       return div({
         attributes: {
-          className: "container"
+          class: "container"
         },
         content: [
           h1({
