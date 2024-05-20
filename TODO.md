@@ -1,4 +1,4 @@
-- Find a solution to prevent event listeners rebind on each render (useCallback?)
+- Find a solution to prevent event listeners rebind on each render (useCallback?, `actions` property)
 - Add a solution to create a state that does not involve visual re-render (react ref like?)
 - Find a way to type the parameters in the pages in TypeScript
 - Use curly braces instead of double-dots for defining a route parameter
