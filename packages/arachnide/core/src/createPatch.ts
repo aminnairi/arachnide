@@ -201,7 +201,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
        * attribute that may have changed and we need to be sure of that in this
        * condition
        */
-      if (newVirtualElementAttributeValue === oldVirtualElementAttributeValue) {
+      if (Object.is(newVirtualElementAttributeValue, oldVirtualElementAttributeValue)) {
         return
       }
 
