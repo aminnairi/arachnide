@@ -14,7 +14,7 @@
 - Create a cool logo
 - Add a solution to be able to key elements for optimization purpose and figure out what we need to do with keyed elements
 - Add a package for mathml components (`@arachnide/mathml`)
-- Allow the state to either be a state or a state constructor function in the `createApplication` function only
+- Allow the state to either be a state or a state constructor function in the `startApplication` function only
 - Put the example in the `packages/example` folder
 - Create a `@arachnide/create` package in order to use the command `npm create @arachnide` and scafold a new project
 - Figure out how to create batch updates (might not be necessary and can be userland thanks to the `update` handler)
@@ -42,3 +42,6 @@
 - Make the changePage handle better when feeded with dynamic parameters
 - Handle an error where the user cannot go back to the previous page without error if the current page was an unknown page
 - Make the wildcard count on routes that use partial wildcard like /articles/*/details
+- Create a function `createApplication` that returns the `startApplication` function with contexts (logger, DOM, patcher, navigation, ...)
+- Create a `NavigationAdapterInterface` interface that will allow creating interface for the navigation
+- Use the `NavigationAdapterInterface` in the `createApplication` and create the two implementation for the `Navigation` API and `History` API
