@@ -72,20 +72,18 @@ export const render = (virtualElement: VirtualElement): RenderedElement => {
       return;
     }
 
-    if (typeof virtualElement.attributes["xmlns"] === "string") {
-      if (typeof attributeValue !== "function") {
-        element.setAttribute(attributeName, String(attributeValue));
-        return;
+    if (attributeName.startsWith("on")) {
+      const eventListenerName = attributeName.slice("on".length);
+
+      if (typeof attributeValue === "function") {
+        element.addEventListener(eventListenerName, attributeValue);
       }
+
+      return;
     }
 
-    /**
-     * If the attribute is not an event, this means this is a simple attribute
-     * so we might attach it to the element simply by calling the
-     * "setAttribute" method
-     */
-    // @ts-ignore
-    element[attributeName] = attributeValue;
+    element.setAttribute(attributeName, String(attributeValue));
+    return;
   });
 
   /**
