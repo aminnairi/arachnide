@@ -41,3 +41,4 @@
 - Add comments where missing in the source-code of all of the packages
 - Make the changePage handle better when feeded with dynamic parameters
 - Handle an error where the user cannot go back to the previous page without error if the current page was an unknown page
+- Make the wildcard count on routes that use partial wildcard like /articles/*/details
