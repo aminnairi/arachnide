@@ -58,7 +58,7 @@ export const startApplication = <GenericState, GenericEvent extends ApplicationE
 
   const changePage: ChangePage = (options) => {
     const targetPath = Object.entries(options.parameters).reduce((previousPath, [parameterName, parameterValue]) => {
-      return previousPath.replaceAll(`:${parameterName}`, String(parameterValue));
+      return previousPath.replaceAll(`{${parameterName}}`, String(parameterValue));
     }, options.path);
 
     const searchParameters = new URLSearchParams(Object.entries(options.searchParameters).map(([searchParameterKey, searchParameterValue]) => {
@@ -80,9 +80,9 @@ export const startApplication = <GenericState, GenericEvent extends ApplicationE
     const searchParameters = Object.fromEntries(new URLSearchParams(window.location.search));
 
     const newVirtualElement = page({
-      state: state,
+      state,
       update,
-      changePage: changePage,
+      changePage,
       parameters,
       searchParameters
     });

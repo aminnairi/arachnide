@@ -12,6 +12,8 @@ import { removeTrailingLeadingSlashes } from "./removeTrailingLeadingSlashes";
  */
 export const findPageFromPath = <GenericState, GenericEvent extends ApplicationEvent>(path: string, pages: Record<string, Page<GenericState, GenericEvent>>): [string, Page<GenericState, GenericEvent>] => {
   const pagesEntries = Object.entries(pages);
+  const wildcardPattern = /^\s*\*\s*$/;
+  const dynamicParameterPattern = /^\s*{\s*\w+\s*}\s*$/;
 
   const foundPageEntry = pagesEntries.find(([pagePath]) => {
     const normalizedPagePath = removeTrailingLeadingSlashes(pagePath);
@@ -25,7 +27,7 @@ export const findPageFromPath = <GenericState, GenericEvent extends ApplicationE
     }
 
     return normalizedPagePathParts.every((pagePathPart, index) => {
-      if (pagePathPart.startsWith(":")) {
+      if (dynamicParameterPattern.test(pagePathPart)) {
         return true;
       }
 
@@ -39,5 +41,13 @@ export const findPageFromPath = <GenericState, GenericEvent extends ApplicationE
     return foundPageEntry;
   }
 
+  const foundWildcardPageEntry = pagesEntries.find(([pagePath]) => {
+    return wildcardPattern.test(pagePath);
+  });
+
+  if (foundWildcardPageEntry) {
+    return foundWildcardPageEntry;
+  }
+  
   return ["", () => null];
 };

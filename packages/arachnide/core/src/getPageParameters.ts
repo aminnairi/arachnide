@@ -15,12 +15,14 @@ export const getPageParameters = (pagePath: string, path: string) => {
   const normalizedPagePathParts = normalizedPagePath.split(/\/+/);
   const normalizedPathParts = normalizedPath.split(/\/+/);
 
+  const dynamicParameterPattern = /^\s*{\s*\w+\s*}\s*$/;
+
   if (normalizedPathParts.length !== normalizedPagePathParts.length) {
     return {};
   }
 
   const pagePathMatchesPath = normalizedPagePathParts.every((pagePathPart, index) => {
-    if (pagePathPart.startsWith(":")) {
+    if (dynamicParameterPattern.test(pagePathPart)) {
       return true;
     }
 
@@ -34,7 +36,7 @@ export const getPageParameters = (pagePath: string, path: string) => {
   }
 
   return normalizedPagePathParts.reduce((parameters, pagePathPart, index) => {
-    if (!pagePathPart.startsWith(":")) {
+    if (dynamicParameterPattern.test(pagePathPart)) {
       return parameters;
     }
 
