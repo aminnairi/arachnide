@@ -70,8 +70,6 @@ export const startApplication = <GenericState, GenericEvent extends ApplicationE
 
     const targetPathWithQuery = searchParameters.size === 0 ? targetPath : `${targetPath}?${searchParameters.toString()}`;
 
-    console.log({ targetPathWithQuery });
-
     window.history.pushState(null, targetPathWithQuery, targetPathWithQuery);
     window.dispatchEvent(new CustomEvent("popstate"));
   };
