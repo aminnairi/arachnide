@@ -13,7 +13,6 @@
 - Add badges (NPM, License, bundle size, ...)
 - Create a cool logo
 - Add a solution to be able to key elements for optimization purpose and figure out what we need to do with keyed elements
-- Find a way to handle not found routes (by adding a special `*` character that means anything)
 - Add a package for mathml components (`@arachnide/mathml`)
 - Allow the state to either be a state or a state constructor function in the `createApplication` function only
 - Put the example in the `packages/example` folder
@@ -40,3 +39,5 @@
 - Find a better solution that throwing in the source-code of `@arachnide/core` for errors (warnings? log adapter? error return?)
 - Slice through the attributes that needs to be added in order to prevent looping over attributes again
 - Add comments where missing in the source-code of all of the packages
+- Make the changePage handle better when feeded with dynamic parameters
+- Handle an error where the user cannot go back to the previous page without error if the current page was an unknown page
