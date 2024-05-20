@@ -6,6 +6,7 @@ import { isVirtualBooleanElement } from "./isVirtualBooleanElement";
 import { isVirtualNullElement } from "./isVirtualNullElement";
 import { isVirtualUndefinedElement } from "./isVirtualUndefinedElement";
 import { isElement } from "./isElement";
+import { isText } from "./isText";
 import { VirtualHTMLElement } from "./VirtualHTMLElement";
 
 /**
@@ -23,13 +24,18 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
       }
 
       const newElement = render(newVirtualElement);
+      const newElementIsInstanceOfElement = isElement(newElement);
+      const newElementIsInstanceOfText = isText(newElement);
 
-      if (isElement(newElement)) {
+      if (newElementIsInstanceOfElement || newElementIsInstanceOfText) {
         element.appendChild(newElement);
 
         if (newVirtualElement instanceof VirtualHTMLElement) {
           newVirtualElement.whenCreated();
-          newVirtualElement.reference.target = newElement;
+
+          if (newElementIsInstanceOfElement) {
+            newVirtualElement.reference.target = newElement;
+          }
         }
       }
 
@@ -50,17 +56,22 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
       }
 
       const newElement = render(newVirtualElement);
+      const newElementIsInstanceOfElement = isElement(newElement);
+      const newElementIsInstanceOfText = isText(newElement);
 
       /**
        * This means that we need to change it in the current DOM, otherwise
        * we do nothing as it means they are identical
        */
-      if (isElement(newElement)) {
+      if (newElementIsInstanceOfElement || newElementIsInstanceOfText) {
         element.replaceWith(newElement);
 
         if (newVirtualElement instanceof VirtualHTMLElement) {
           newVirtualElement.whenCreated();
-          newVirtualElement.reference.target = newElement;
+
+          if (newElementIsInstanceOfElement) {
+            newVirtualElement.reference.target = newElement;
+          }
         }
       }
 
@@ -103,7 +114,7 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
        * This means that we need to change it in the current DOM, otherwise
        * we do nothing as it means they are identical
        */
-      if (isElement(newElement)) {
+      if (isElement(newElement) || isText(newElement)) {
         element.replaceWith(newElement);
 
         if (oldVirtualElement instanceof VirtualHTMLElement) {
@@ -133,6 +144,8 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      */
     if (oldVirtualElement.name !== newVirtualElement.name) {
       const newElement = render(newVirtualElement);
+      const newElementIsInstanceOfElement = isElement(newElement);
+      const newElementIsInstanceOfText = isText(newElement);
 
       /**
        * If the two names are different, this means that for this particular
@@ -140,10 +153,10 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
        * the attribute since the old element will be completely replaced by the
        * new one
        */
-      if (isElement(newElement)) {
+      if (newElementIsInstanceOfElement || newElementIsInstanceOfText) {
         element.replaceWith(newElement);
 
-        if (isElement(newElement)) {
+        if (newElementIsInstanceOfElement) {
           newVirtualElement.reference.target = newElement;
         }
 

@@ -15,3 +15,4 @@ export * from "./removeTrailingLeadingSlashes";
 export * from "./render";
 export * from "./startApplication";
 export * from "./types";
+export * from "./isText";
