@@ -18,7 +18,7 @@
 - Add many examples like `examples/router`, `examples/styling`, etc...
 - Create a `@arachnide/create` package in order to use the command `npm create @arachnide` and scafold a new project
 - Figure out how to create batch updates (might not be necessary and can be userland thanks to the `update` handler)
-- Figure out lazy loading of elements and if this is a good idea to implement in the framework or not (React suspense-like)
+- Lazy loading should be explicit & expressive and must be userland, examples and types that can help should be added in the docs & sources
 - Add support for the View Transition Web API (provide more options for the `pages` props in this case)
 - Add a section about the security, especially when using the attributes `textContent` and `innerHTML` with untrusted sources
 - Try to find vulnerabilities, resolve them & document them if they are part of the standard HTML spec
