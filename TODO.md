@@ -34,7 +34,7 @@
 - Create a `isVirtualSVGElement` helper
 - Create a `isVirtualMathMLElement` helper
 - Rename `VirtualHTMLElement` to `VirtualNamedElement` instead since it serves the `html`, `svg` & `mathml` libraries
-- Add a third generic type for the `startApplication` to allow typing the routes and unlock features like type checked route in the `changePage` function 
+- Add a third generic type for the `startApplication` to allow typing the routes and unlock features like type checked route in the `changePage` function => Or maybe we can do simpler by using an enumeration and update the `changePage` to compute the parameters from the route provided
 - Add a `isVirtualElementAttributeRemoved` helper function to ease out the reading of the source-code in the `@arachnide/core` package
 - Find a better solution that throwing in the source-code of `@arachnide/core` for errors (warnings? log adapter? error return?)
 - Slice through the attributes that needs to be added in order to prevent looping over attributes again
@@ -45,3 +45,7 @@
 - Create a function `createApplication` that returns the `startApplication` function with contexts (logger, DOM, patcher, navigation, ...)
 - Create a `NavigationAdapterInterface` interface that will allow creating interface for the navigation
 - Use the `NavigationAdapterInterface` in the `createApplication` and create the two implementation for the `Navigation` API and `History` API
+- Better not found page design
+- Create our own custom CSS library with component functions
+- Check if lazy loading of functions or pages can be put in a state?
+- Create an icon of 512x512
