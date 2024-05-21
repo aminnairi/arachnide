@@ -15,7 +15,7 @@
 - Add a solution to be able to key elements for optimization purpose and figure out what we need to do with keyed elements
 - Add a package for mathml components (`@arachnide/mathml`)
 - Allow the state to either be a state or a state constructor function in the `startApplication` function only
-- Put the example in the `packages/example` folder
+- Add many examples like `examples/router`, `examples/styling`, etc...
 - Create a `@arachnide/create` package in order to use the command `npm create @arachnide` and scafold a new project
 - Figure out how to create batch updates (might not be necessary and can be userland thanks to the `update` handler)
 - Figure out lazy loading of elements and if this is a good idea to implement in the framework or not (React suspense-like)
