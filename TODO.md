@@ -49,3 +49,5 @@
 - Create our own custom CSS library with component functions
 - Check if lazy loading of functions or pages can be put in a state?
 - Create an icon of 512x512
+- Add a package for handling meta informations (`@arachnide/meta`?`@arachnide/seo`?`@arachnide/head`?)
+- Should we do server-rendering? Maybe best to keep it simple on the client-side but might be interesting to update the diffing algorithm to account for nodes that have already been added by SSR?
