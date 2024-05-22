@@ -126,6 +126,44 @@ The goal of this library is to allow you to create Web applications. But not onl
 
 As pages are functions, and pages always gets the same arguments, it's easy to test these since they are pure functions. You'll have to provide the arguments for these pages (the state, an update function, etc...) still, but since they are also pure functions, it's easy to mock and easy to run tests against. It is recommended to follow this mindset whenever creating component functions, by keeping things pure, you'll have a easier time debugging and testing them, which can greatly improve the confidence given to any app created using Arachnide!
 
+## Caveats & Known limitations
+
+### Event Listener Unecessary Rebind
+
+Since this library is similar in approach from React, each time a state is updated, the whole application gets rendered (it creates a new virtual DOM).
+
+With this new virtual DOM, a diffing between the old virtual DOM and the new one is done in order to check for differences between the two. For instance, if the value of an attribute has changed, the old attribute value is replaced by the new one.
+
+Pages can also have event listeners in the form of a function. However, functions can be declared directly in the page, and will be part of the new virtual DOM. Since a new virtual DOM is created from the result of calling a page, this means that functions gets re-created each time.
+
+Unfortunately, the comparison for a function is done by comparing its reference. The problem is that even if a function's body has not fundamentally changed, it always yield a new reference, leading to an unecessary event listener removed and added.
+
+This is also a problem in React, which has a solution using a `useCallback` hook to memoize the function call.
+
+We should probably create a similar function, using a similar approach in order to prevent unecessary callback rebinding, but without the Rules of Hooks and their limitations.
+
+### Lazy Loading
+
+Although this library has a very limited footprint on bundle size, it can be interesting in some cases to be able to lazy load pages, or even components.
+
+Actually, this is totally doable at the moment, at the price of the simplicity.
+
+You could use a state that encapsulate the loading of a component, and its resulting function (in the case of a page for instance).
+
+Triggering the loading of a page can simply be done by adding an event listener for the `whenCreated` callback for instance and fetching the page using a dynamic import statement.
+
+However, this can largely improve the size of the code, and will often need a state, some handler in the `onUpdate` function and a few bytes of code for the logic of displaying a loader or the component.
+
+This is a very different from what other frameworks are capable of providing.
+
+However one benefit from having all this is that the loading of a page is very explicit and hides nothing from the user. Plus, it allows for a more fine-grained control over the lazy loading of a page.
+
+Finally, another great advantage is that it relies on known features of the language, such as the dyanmic import statement, and can used for anything: components, functions, virtual DOM, pages, etc... There is no known limitation for using the dynamic import statement and using it in your app.
+
+And the TypeScript support is great, even when lazy loading pages as it prevent silly mistakes like forgetting to grab the `default` export from the dynamic imported file for instance.
+
+We should probably let lazy loading be something that belongs to the userland, and add helpers instead of baking it in the library and risking adding too much complexity for limited results and a degraded developer experience.
+
 ## Prior art & Inspiration
 
 ### Hyperapp
