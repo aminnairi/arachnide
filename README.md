@@ -97,6 +97,8 @@ Name | Description
 `@arachnide/dom` | Utility functions for working with the DOM Web API in Arachnide
 `@arachnide/event` | Utility functions for working with events of the DOM Web API in Arachnide
 `@arachnide/html` | Utility functions for working with elements of the DOM Web API in Arachnide
+`@arachnide/svg` | Utility functions for working with elements of the SVG Web API in Arachnide
+`@arachnide/mathml` | Utility functions for working with elements of the MathML Web API in Arachnide
 
 ## Features
 
