@@ -193,17 +193,8 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
           throw new Error("Tried to remove an attribute on an element that is not an instance of the Element class");
         }
 
-        if (oldVirtualElementAttributeName.startsWith("on")) {
-          const eventListenerName = oldVirtualElementAttributeName.slice("on".length);
-
-          if (typeof oldVirtualElementAttributeValue === "function") {
-            element.removeEventListener(eventListenerName, oldVirtualElementAttributeValue);
-          }
-
-          return;
-        }
-
-        element.removeAttribute(oldVirtualElementAttributeName);
+        // @ts-expect-error
+        element[oldVirtualElementAttributeName] = null;
 
         return;
       }
@@ -222,21 +213,8 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         throw new Error("Tried to update an attribute on an element that is not an instance of the Element class");
       }
 
-      if (oldVirtualElementAttributeName.startsWith("on")) {
-        const eventListenerName = oldVirtualElementAttributeName.slice("on".length);
-
-        if (typeof oldVirtualElementAttributeValue === "function") {
-          element.removeEventListener(eventListenerName, oldVirtualElementAttributeValue);
-        }
-
-        if (typeof newVirtualElementAttributeValue === "function") {
-          element.addEventListener(eventListenerName, newVirtualElementAttributeValue);
-        }
-
-        return;
-      }
-
-      element.setAttribute(oldVirtualElementAttributeName, String(newVirtualElementAttributeValue));
+      // @ts-expect-error
+      element[oldVirtualElementAttributeName] = newVirtualElementAttributeValue;
 
       return;
     });
@@ -271,17 +249,10 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         throw new Error("Tried to add an attribute on an element that is not an instance of the Element class");
       }
 
-      if (newVirtualElementAttributeName.startsWith("on")) {
-        const eventListenerName = newVirtualElementAttributeName.slice("on".length);
+      console.log({ newVirtualElementAttributeName, newVirtualElementAttributeValue });
 
-        if (typeof newVirtualElementAttributeValue === "function") {
-          element.addEventListener(eventListenerName, newVirtualElementAttributeValue);
-        }
-
-        return;
-      }
-
-      element.setAttribute(newVirtualElementAttributeName, String(newVirtualElementAttributeValue));
+      // @ts-expect-error
+      element[newVirtualElementAttributeName] = newVirtualElementAttributeValue;
 
       return;
     });
