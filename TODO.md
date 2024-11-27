@@ -14,7 +14,6 @@
 - Create a cool logo
 - Add a solution to be able to key elements for optimization purpose and figure out what we need to do with keyed elements
 - Add a package for mathml components (`@arachnide/mathml`)
-- Allow the state to either be a state or a state constructor function in the `startApplication` function only
 - Add many examples like `examples/router`, `examples/styling`, etc...
 - Create a `@arachnide/create` package in order to use the command `npm create @arachnide` and scafold a new project
 - Figure out how to create batch updates (might not be necessary and can be userland thanks to the `update` handler)
@@ -22,7 +21,6 @@
 - Add support for the View Transition Web API (provide more options for the `pages` props in this case)
 - Add a section about the security, especially when using the attributes `textContent` and `innerHTML` with untrusted sources
 - Try to find vulnerabilities, resolve them & document them if they are part of the standard HTML spec
-- Lazy load the CSS stylesheet and use a preload link
 - Rename DOMReference to simply Reference as it could be used for non-rendereable state updates as well
 - Create a `@arachnide/accessibility` package that enforces best practice for accessibility in the Web
 - Create a `isVirtualHTMLElement` helper function and use it wherever possible
