@@ -1,5 +1,5 @@
-import { startApplication } from "@arachnide/core";
-import { ul, li, div, button, input, label, p, h1 } from "@arachnide/html";
+import { Update, startApplication } from "@arachnide/core";
+import { ul, li, div, button, input, label, p, h1, span, form } from "@arachnide/html";
 import { styles } from "@arachnide/css";
 import { oninput } from "@arachnide/event";
 
@@ -15,52 +15,84 @@ if (!root) {
 
 export type ApplicationState = {
   counter: number,
-  steps: number
+  steps: number,
+  todo: string,
+  todos: string[]
 }
 
 export type ApplicationEvent
   = { name: "INCREMENT" }
   | { name: "DECREMENT" }
   | { name: "SET_STEPS", data: number }
+  | { name: "ADD_TODO", data: string }
+  | { name: "REMOVE_TODO", data: number }
+  | { name: "SET_TODO", data: string }
 
 startApplication<ApplicationState, ApplicationEvent>({
   root,
   initialState: () => ({
     counter: 10,
-    steps: 10
+    steps: 10,
+    todo: "",
+    todos: [
+      "Do the dishes",
+      "Finish this library",
+      "Buy a new coffee mug"
+    ]
   }),
   onUpdate: ({ state, event }) => {
-    if (event.name === "INCREMENT") {
-      return {
-        ...state,
-        counter: state.counter + state.steps
-      };
-    }
-
-    if (event.name === "DECREMENT") {
-      const newCounter = state.counter - state.steps;
-
-      if (newCounter < 0) {
+    switch (event.name) {
+      case "INCREMENT":
         return {
           ...state,
-          counter: 0
+          counter: state.counter + state.steps
         };
-      }
 
-      return {
-        ...state,
-        counter: state.counter - state.steps
-      };
+      case "DECREMENT":
+        const newCounter = state.counter - state.steps;
+
+        if (newCounter < 0) {
+          return {
+            ...state,
+            counter: 0
+          };
+        }
+
+        return {
+          ...state,
+          counter: state.counter - state.steps
+        };
+
+      case "SET_STEPS":
+        return {
+          ...state,
+          steps: event.data
+        };
+
+      case "ADD_TODO":
+        return {
+          ...state,
+          todo: "",
+          todos: [
+            ...state.todos,
+            event.data
+          ]
+        };
+
+      case "REMOVE_TODO":
+        return {
+          ...state,
+          todos: state.todos.filter((_, index) => {
+            return index !== event.data;
+          })
+        };
+
+      case "SET_TODO":
+        return {
+          ...state,
+          todo: event.data
+        };
     }
-
-    if (event.name === "SET_STEPS") {
-      return {
-        ...state,
-        steps: event.data
-      };
-    }
-
-    return state;
   },
   pages: {
     "/arachnide": ({ state, update, changePage }) => {
@@ -92,6 +124,9 @@ startApplication<ApplicationState, ApplicationEvent>({
                   parameters: {},
                   searchParameters: {}
                 });
+              },
+              onload: () => {
+
               }
             },
             content: "Go to about"
@@ -113,6 +148,27 @@ startApplication<ApplicationState, ApplicationEvent>({
               }
             },
             content: "Go to summary"
+          }),
+          button({
+            attributes: {
+              style: styles({
+                display: "block",
+                "margin-left": "auto",
+                "margin-right": "auto",
+                "margin-bottom": "30px"
+              }),
+              onclick: () => {
+                changePage({
+                  path: "/arachnide/todos",
+                  parameters: {},
+                  searchParameters: {}
+                });
+              },
+              onload: () => {
+
+              }
+            },
+            content: "Todos List"
           }),
           p({
             attributes: {
@@ -227,6 +283,83 @@ startApplication<ApplicationState, ApplicationEvent>({
               }
             },
             content: "Go back home"
+          })
+        ]
+      });
+    },
+    "/arachnide/todos": ({ state, update }) => {
+      return div({
+        content: [
+          h1({
+            content: "Todos List"
+          }),
+          form({
+            attributes: {
+              style: styles({
+                display: "flex",
+                "flex-direction": "row",
+                gap: "20px"
+              }),
+              onsubmit: event => {
+                event.preventDefault();
+
+                update(() => ({
+                  name: "ADD_TODO",
+                  data: state.todo
+                }));
+              }
+            },
+            content: [
+              input({
+                attributes: {
+                  style: styles({
+                    width: "calc(100% - 100px)"
+                  }),
+                  type: "text",
+                  value: state.todo,
+                  oninput: oninput(value => {
+                    update(() => ({
+                      name: "SET_TODO",
+                      data: value
+                    }));
+                  })
+                }
+              }),
+              button({
+                content: "Add",
+                attributes: {
+                  style: styles({
+                    width: "100px"
+                  }),
+                  type: "submit"
+                }
+              })
+            ]
+          }),
+          ul({
+            content: state.todos.map((todo, index) => {
+              return li({
+                content: [
+                  span({
+                    content: `${index + 1}. ${todo}`
+                  }),
+                  button({
+                    attributes: {
+                      onclick: () => {
+                        update(() => ({
+                          name: "REMOVE_TODO",
+                          data: index
+                        }))
+                      },
+                      style: styles({
+                        "margin-left": "10px"
+                      })
+                    },
+                    content: "Remove"
+                  })
+                ]
+              });
+            })
           })
         ]
       });
