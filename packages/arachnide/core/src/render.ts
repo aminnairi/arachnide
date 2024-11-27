@@ -72,17 +72,8 @@ export const render = (virtualElement: VirtualElement): RenderedElement => {
       return;
     }
 
-    if (attributeName.startsWith("on")) {
-      const eventListenerName = attributeName.slice("on".length);
-
-      if (typeof attributeValue === "function") {
-        element.addEventListener(eventListenerName, attributeValue);
-      }
-
-      return;
-    }
-
-    element.setAttribute(attributeName, String(attributeValue));
+    // @ts-expect-error
+    element[attributeName] = attributeValue;
     return;
   });
 
