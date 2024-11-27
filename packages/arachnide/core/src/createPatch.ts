@@ -249,8 +249,6 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         throw new Error("Tried to add an attribute on an element that is not an instance of the Element class");
       }
 
-      console.log({ newVirtualElementAttributeName, newVirtualElementAttributeValue });
-
       // @ts-expect-error
       element[newVirtualElementAttributeName] = newVirtualElementAttributeValue;
 
