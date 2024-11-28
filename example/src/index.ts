@@ -1,4 +1,4 @@
-import { Update, startApplication } from "@arachnide/core";
+import { startApplication } from "@arachnide/core";
 import { ul, li, div, button, input, label, p, h1, span, form } from "@arachnide/html";
 import { styles } from "@arachnide/css";
 import { oninput } from "@arachnide/event";
