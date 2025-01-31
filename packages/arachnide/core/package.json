@@ -1,6 +1,5 @@
 {
   "name": "@arachnide/core",
-  "types": "dist/index.d.ts",
   "description": "Library for building Web applications",
   "version": "0.1.0",
   "homepage": "https://github.com/aminnairi/arachnide",
