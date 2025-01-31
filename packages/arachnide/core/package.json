@@ -1,6 +1,6 @@
 {
   "name": "@arachnide/core",
-  "description": "Library for building Web applications",
+  "description": "Core library for building Web applications using Arachnide",
   "version": "0.1.0",
   "homepage": "https://github.com/aminnairi/arachnide",
   "license": "MTI",
