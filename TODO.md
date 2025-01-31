@@ -49,3 +49,5 @@
 - Create an icon of 512x512
 - Add a package for handling meta informations (`@arachnide/meta`?`@arachnide/seo`?`@arachnide/head`?)
 - Should we do server-rendering? Maybe best to keep it simple on the client-side but might be interesting to update the diffing algorithm to account for nodes that have already been added by SSR?
+- Replace nullish values with a textNode in order to prevent mismatch when diffing the virtual dom and when using conditionals
+- Turn all the libraries into typescript only source-code without build step
