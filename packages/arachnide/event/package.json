@@ -1,11 +1,10 @@
 {
   "name": "@arachnide/event",
-  "types": "dist/index.d.ts",
   "description": "Event library for Arachnide",
   "version": "0.1.0",
   "homepage": "https://github.com/aminnairi/arachnide",
   "license": "MTI",
-  "main": "dist/index.js",
+  "main": "index.ts",
   "bugs": {
     "url": "https://github.com/aminnairi/arachnide/issues"
   },
@@ -17,18 +16,8 @@
     "type": "git",
     "url": "https://github.com/aminnairi/arachnide.git"
   },
-  "scripts": {
-    "lint": "tsc --noEmit --project tsconfig.json",
-    "dev": "rollup --config rollup.config.ts --configPlugin typescript --environment NODE_ENV:development --watch",
-    "build": "rollup --config rollup.config.ts --configPlugin typescript --environment NODE_ENV:production"
-  },
   "devDependencies": {
-    "@rollup/plugin-strip": "3.0.4",
-    "@rollup/plugin-terser": "0.4.4",
-    "@rollup/plugin-typescript": "11.1.6",
     "@types/node": "20.12.7",
-    "rollup": "4.14.3",
-    "tslib": "2.6.2",
     "typescript": "5.4.5"
   }
 }
