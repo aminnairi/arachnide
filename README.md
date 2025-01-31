@@ -99,6 +99,8 @@ Name | Description
 `@arachnide/html` | Utility functions for working with elements of the DOM Web API in Arachnide
 `@arachnide/svg` | Utility functions for working with elements of the SVG Web API in Arachnide
 `@arachnide/mathml` | Utility functions for working with elements of the MathML Web API in Arachnide
+`@arachnide/translate` | Utility functions for working with translations in Arachnide
+`@arachnide/silk` | Utility functions for working with styled elements in Arachnide
 
 ## Features
 
