@@ -1,6 +1,6 @@
 {
   "name": "@arachnide/dom",
-  "description": "DOM library for Arachnide",
+  "description": "Utility functions for working with the DOM Web API in Arachnide",
   "version": "0.1.0",
   "homepage": "https://github.com/aminnairi/arachnide",
   "license": "MTI",
