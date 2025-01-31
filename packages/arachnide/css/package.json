@@ -1,6 +1,6 @@
 {
   "name": "@arachnide/css",
-  "description": "CSS library for Arachnide",
+  "description": "Utility functions for working with CSS in Arachnide",
   "version": "0.1.0",
   "homepage": "https://github.com/aminnairi/arachnide",
   "license": "MTI",
