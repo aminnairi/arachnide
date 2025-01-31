@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "name": "@arachnide/translate",
+  "version": "0.1.0",
+  "description": "Utility functions for working with translations in Arachnide"
+}

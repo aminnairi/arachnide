@@ -1,0 +1,6 @@
+{
+  "name": "@arachnide/silk",
+  "version": "0.1.0",
+  "description": "Utility functions for working with styled elements in Arachnide",
+  "main": "index.ts"
+}
