@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "homepage": "https://github.com/aminnairi/arachnide",
   "license": "MTI",
-  "main": "dist/index.js",
+  "main": "index.ts",
   "bugs": {
     "url": "https://github.com/aminnairi/arachnide/issues"
   },
