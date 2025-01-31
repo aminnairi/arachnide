@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "private": true,
   "workspaces": [
     "packages/arachnide/core",
@@ -6,6 +7,8 @@
     "packages/arachnide/html",
     "packages/arachnide/dom",
     "packages/arachnide/event",
+    "packages/arachnide/translate",
+    "packages/arachnide/silk",
     "example"
   ]
 }
