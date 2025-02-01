@@ -1,6 +1,14 @@
-import { CreateElementOptions, element } from "@arachnide/core";
+import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export const col = (options: Omit<CreateElementOptions<HTMLElement>, "name">) => {
+export interface ColAttributes extends VirtualHTMLElementAttributes {
+  span?: number
+}
+
+export interface ColOptions extends Omit<VirtualHTMLElement<HTMLElement>, "name"> {
+  attributes?: ColAttributes
+}
+
+export const col = (options: ColOptions) => {
   return element({
     ...options,
     name: "col"

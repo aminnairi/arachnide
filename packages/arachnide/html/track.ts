@@ -1,6 +1,18 @@
-import { CreateElementOptions, element } from "@arachnide/core";
+import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export const track = (options: Omit<CreateElementOptions<HTMLTrackElement>, "name">) => {
+export interface TrackAttributes extends VirtualHTMLElementAttributes {
+  default?: boolean,
+  kind?: "subtitles" | "captions" | "chapters" | "metadata",
+  label?: string,
+  src: string,
+  srclang?: string,
+}
+
+export interface TrackOptions extends Omit<VirtualHTMLElement<HTMLTrackElement>, "name"> {
+  attributes?: TrackAttributes
+}
+
+export const track = (options: TrackOptions) => {
   return element({
     ...options,
     name: "track"

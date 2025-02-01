@@ -1,6 +1,19 @@
-import { CreateElementOptions, element } from "@arachnide/core";
+import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export const th = (options: Omit<CreateElementOptions<HTMLTableCellElement>, "name">) => {
+export interface ThAttributes extends VirtualHTMLElementAttributes {
+  abbr?: string,
+  colspan?: number,
+  headers?: string,
+  rowspan?: number,
+  // TODO: list enumerated values for the scope attribute
+  scope?: string,
+}
+
+export interface ThOptions extends Omit<VirtualHTMLElement<HTMLTableColElement>, "name"> {
+  attributes?: ThAttributes,
+}
+
+export const th = (options: ThOptions) => {
   return element({
     ...options,
     name: "th"

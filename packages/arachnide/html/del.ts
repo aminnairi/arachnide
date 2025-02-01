@@ -1,6 +1,15 @@
-import { CreateElementOptions, element } from "@arachnide/core";
+import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export const del = (options: Omit<CreateElementOptions<HTMLElement>, "name">) => {
+export interface DelAttributes extends VirtualHTMLElementAttributes {
+  cite?: string,
+  datatime?: Date
+}
+
+export interface DelOptions extends Omit<VirtualHTMLElement<HTMLElement>, "name"> {
+  attributes?: DelAttributes
+}
+
+export const del = (options: DelOptions) => {
   return element({
     ...options,
     name: "del"

@@ -1,6 +1,14 @@
-import { CreateElementOptions, element } from "@arachnide/core";
+import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export const label = (options: Omit<CreateElementOptions<HTMLLabelElement>, "name">) => {
+export interface LabelAttributes extends VirtualHTMLElementAttributes {
+  htmlFor?: string,
+}
+
+export interface LabelOptions extends Omit<VirtualHTMLElement<HTMLLabelElement>, "name"> {
+  attributes?: LabelAttributes
+}
+
+export const label = (options: LabelOptions) => {
   return element({
     ...options,
     name: "label"
