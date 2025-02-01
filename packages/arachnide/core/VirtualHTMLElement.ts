@@ -45,7 +45,7 @@ export class VirtualHTMLElement<GenericElement extends Element> {
    * whenever the element is destroyed. A destroyed elemet is an element that
    * is removed from the DOM tree when changing the page for instance.
    */
-  public readonly whenDestroyed: WhenDestroyedCallback
+  public readonly whenDestroyed?: WhenDestroyedCallback
 
   public constructor(
     name: string,
