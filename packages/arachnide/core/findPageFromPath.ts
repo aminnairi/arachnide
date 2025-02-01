@@ -10,7 +10,7 @@ import { removeTrailingLeadingSlashes } from "./removeTrailingLeadingSlashes";
  * algorithm for other use-cases as well, hence why this function is exposed
  * for you.
  */
-export const findPageFromPath = <GenericState, GenericEvent extends ApplicationEvent>(path: string, pages: Record<string, Page<GenericState, GenericEvent>>): [string, Page<GenericState, GenericEvent>] => {
+export const findPageFromPath = <GenericState, GenericEvent extends ApplicationEvent, GenericPath extends string>(path: string, pages: Record<string, Page<GenericState, GenericEvent, GenericPath>>): [string, Page<GenericState, GenericEvent, GenericPath>] => {
   const pagesEntries = Object.entries(pages);
   const wildcardPattern = /^\s*\*\s*$/;
   const dynamicParameterPattern = /^\s*{\s*\w+\s*}\s*$/;
@@ -48,6 +48,6 @@ export const findPageFromPath = <GenericState, GenericEvent extends ApplicationE
   if (foundWildcardPageEntry) {
     return foundWildcardPageEntry;
   }
-  
+
   return ["", () => null];
 };
