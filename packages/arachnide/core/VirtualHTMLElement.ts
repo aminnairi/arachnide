@@ -22,7 +22,7 @@ export class VirtualHTMLElement<GenericElement extends Element> {
    * string, a number, a boolean, null, undefined or an element or even an
    * array of all of these if you need multiple children.
    */
-  public readonly content: Array<VirtualElement>;
+  public readonly content?: Array<VirtualElement> | string | undefined;
 
   /**
    * This is a reference that you created using the "createDOMReference"
