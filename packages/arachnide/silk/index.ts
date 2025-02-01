@@ -1,7 +1,8 @@
-import { CreateElementOptions, element } from "@arachnide/core";
+import { element } from "@arachnide/core";
 import { styles } from "@arachnide/css";
+import { ButtonOptions, InputOptions, LabelOptions } from "@arachnide/html";
 
-export const button = ({ content, attributes }: Omit<CreateElementOptions<HTMLButtonElement>, "name">) => {
+export const button = ({ content, attributes }: ButtonOptions) => {
   const buttonStyle = styles({
     backgroundColor: "black",
     padding: "5px 10px",
@@ -23,7 +24,7 @@ export const button = ({ content, attributes }: Omit<CreateElementOptions<HTMLBu
   });
 }
 
-export const input = ({ content, attributes }: Omit<CreateElementOptions<HTMLInputElement>, "name">) => {
+export const input = ({ attributes }: InputOptions) => {
   const inputStyle = styles({
     borderRadius: "5px",
     padding: "5px 10px",
@@ -40,12 +41,11 @@ export const input = ({ content, attributes }: Omit<CreateElementOptions<HTMLInp
     attributes: {
       ...attributes,
       style: inputStyle ?? "" + attributes?.style ?? ""
-    },
-    content
+    }
   });
 }
 
-export const label = ({ content, attributes }: Omit<CreateElementOptions<HTMLLabelElement>, "name">) => {
+export const label = ({ content, attributes }: LabelOptions) => {
   const labelStyle = styles({
     fontFamily: "sans-serif",
     color: "black",
