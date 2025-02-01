@@ -261,7 +261,7 @@ export type Update<GenericState, GenericEvent extends ApplicationEvent> = (callb
 /**
  * The options that can be gathered from the page function.
  */
-export type PageOptions<GenericState, GenericEvent extends ApplicationEvent> = {
+export type PageOptions<GenericState, GenericEvent extends ApplicationEvent, GenericPath extends string> = {
   /**
    * This is the state of the application, and it will be updated each time an
    * event has been sent, meaning the page function will be called again if
@@ -277,7 +277,7 @@ export type PageOptions<GenericState, GenericEvent extends ApplicationEvent> = {
   /**
    * A function that when called will change the current page.
    */
-  changePage: ChangePage,
+  changePage: ChangePage<GenericPath>,
   /**
    * The parameters that are computed from the URL, for instance with the URL
    * "/users/123" and the path "/users/:user" the parameters will contain a
@@ -299,7 +299,7 @@ export type PageOptions<GenericState, GenericEvent extends ApplicationEvent> = {
  * we need to run this function again in order to get the new virtual DOM and
  * compute the changes that needs to be made to the real DOM
  */
-export type Page<GenericState, GenericEvent extends ApplicationEvent> = (options: PageOptions<GenericState, GenericEvent>) => VirtualElement
+export type Page<GenericState, GenericEvent extends ApplicationEvent, GenericPath extends string> = (options: PageOptions<GenericState, GenericEvent, GenericPath>) => VirtualElement
 
 /**
  * The options that can be gathered from the update function, which is the
@@ -330,12 +330,12 @@ export type OnUpdate<GenericEvent, GenericState> = (options: OnUpdateOptions<Gen
 /**
  * The options that might be passed through the "changePage" function.
  */
-export type ChangePageOptions = {
+export type ChangePageOptions<GenericPath extends string> = {
   /**
    * The path of the page to change to, for instance "/users/:user" or
    * "/articles/:article/comments/:comment".
    */
-  path: string,
+  path: GenericPath,
 
   /**
    * The parameters that should be attached to the path. For instance with the
@@ -355,7 +355,7 @@ export type ChangePageOptions = {
 /**
  * A function which, when called, will change the current page.
  */
-export type ChangePage = (options: ChangePageOptions) => void;
+export type ChangePage<GenericPath extends string> = (options: ChangePageOptions<GenericPath>) => void;
 
 /**
  * this is the list of options that you are allowed to pass to the application
@@ -364,14 +364,14 @@ export type ChangePage = (options: ChangePageOptions) => void;
  * arguments if you are using TypeScript in order to properly type the state
  * and the events that your application can send
  */
-export type StartApplicationOptions<GenericState, GenericEvent extends ApplicationEvent> = {
+export type StartApplicationOptions<GenericState, GenericEvent extends ApplicationEvent, GenericPath extends string> = {
   /**
    * This is the function that is responsible for displaying a graphical
    * interface, and you can also grab the state to display useful and dynamic
    * inforamtions along with the event emitter function allowing you to update
    * the state of your application
    */
-  pages: Record<string, Page<GenericState, GenericEvent>>,
+  pages: Record<GenericPath, Page<GenericState, GenericEvent, GenericPath>>,
 
   /**
    * This is the HTML element that needs to be available in your HTML document
