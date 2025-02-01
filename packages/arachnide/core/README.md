@@ -197,3 +197,7 @@ npm run dev
 ## Example
 
 See [`example`](https://github.com/aminnairi/example).
+
+## Changelogs
+
+See [`CHANGELOG.md`](./CHANGELOG.md).
