@@ -30,7 +30,15 @@ export type ApplicationEvent =
   | { name: "TODOS_REMOVE", data: number }
   | { name: "TODO_SET", data: string }
 
-startApplication<ApplicationState, ApplicationEvent>({
+export enum ApplicationPath {
+  NotFound = "*",
+  Home = "/arachnide",
+  Summary = "/arachnide/summary",
+  About = "/arachnide/about",
+  Todos = "/arachnide/todos"
+}
+
+startApplication<ApplicationState, ApplicationEvent, ApplicationPath>({
   root,
   initialState: () => ({
     counter: 10,
@@ -97,7 +105,7 @@ startApplication<ApplicationState, ApplicationEvent>({
     }
   },
   pages: {
-    "/arachnide": ({ state, update, changePage }) => {
+    [ApplicationPath.Home]: ({ state, update, changePage }) => {
       return div({
         attributes: {
           className: "container"
@@ -122,7 +130,7 @@ startApplication<ApplicationState, ApplicationEvent>({
               }),
               onclick: () => {
                 changePage({
-                  path: "/arachnide/about",
+                  path: ApplicationPath.About,
                   parameters: {},
                   searchParameters: {}
                 });
@@ -140,7 +148,7 @@ startApplication<ApplicationState, ApplicationEvent>({
               }),
               onclick: () => {
                 changePage({
-                  path: "/arachnide/summary",
+                  path: ApplicationPath.Summary,
                   parameters: {},
                   searchParameters: {}
                 });
@@ -158,7 +166,7 @@ startApplication<ApplicationState, ApplicationEvent>({
               }),
               onclick: () => {
                 changePage({
-                  path: "/arachnide/todos",
+                  path: ApplicationPath.Todos,
                   parameters: {},
                   searchParameters: {}
                 });
@@ -234,7 +242,7 @@ startApplication<ApplicationState, ApplicationEvent>({
         ]
       });
     },
-    "/arachnide/summary": ({ state, changePage }) => {
+    [ApplicationPath.Summary]: ({ state, changePage }) => {
       return div({
         attributes: {
           className: "container"
@@ -272,7 +280,7 @@ startApplication<ApplicationState, ApplicationEvent>({
               }),
               onclick: () => {
                 changePage({
-                  path: "/arachnide",
+                  path: ApplicationPath.Home,
                   parameters: {},
                   searchParameters: {}
                 });
@@ -283,7 +291,7 @@ startApplication<ApplicationState, ApplicationEvent>({
         ]
       });
     },
-    "/arachnide/todos": ({ state, update }) => {
+    [ApplicationPath.Todos]: ({ state, update }) => {
       return div({
         content: [
           a({
@@ -362,7 +370,16 @@ startApplication<ApplicationState, ApplicationEvent>({
         ]
       });
     },
-    "*": ({ changePage }) => {
+    [ApplicationPath.About]: () => {
+      return div({
+        content: [
+          h1({
+            content: "About this app"
+          })
+        ]
+      });
+    },
+    [ApplicationPath.NotFound]: ({ changePage }) => {
       return div({
         content: [
           h1({
@@ -376,7 +393,7 @@ startApplication<ApplicationState, ApplicationEvent>({
               }),
               onclick: () => {
                 changePage({
-                  path: "/arachnide",
+                  path: ApplicationPath.Home,
                   parameters: {},
                   searchParameters: {}
                 });
