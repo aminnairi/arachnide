@@ -33,6 +33,7 @@ const root = document.getElementById("root");
 if (!root) {
   throw new Error("Root element not found");
 }
+
 export type ApplicationState = {
   counter: number
 }
@@ -42,7 +43,12 @@ export type ApplicationEvent =
   | { name: "DECREMENT" }
   | { name: "SET_STEPS", data: number }
 
-startApplication<ApplicationState, ApplicationEvent>({
+export enum ApplicationPath {
+  NotFound = "*",
+  Home = "/"
+}
+
+startApplication<ApplicationState, ApplicationEvent, ApplicationPath>({
   root,
   initialState: () => ({
     counter: 10,
@@ -78,7 +84,7 @@ startApplication<ApplicationState, ApplicationEvent>({
     }
   },
   pages: {
-    "/": ({ state, update, changePage }) => {
+    [ApplicationPath.Home]: ({ state, update, changePage }) => {
       return div({
         attributes: {
           class: "container"
@@ -153,7 +159,7 @@ startApplication<ApplicationState, ApplicationEvent>({
         ]
       });
     },
-    "*": ({ changePage }) => {
+    [ApplicationPath.NotFound]: ({ changePage }) => {
       return div({
         content: [
           h1({
@@ -167,7 +173,7 @@ startApplication<ApplicationState, ApplicationEvent>({
               }),
               onclick: () => {
                 changePage({
-                  path: "/arachnide",
+                  path: ApplicationPath.Home,
                   parameters: {},
                   searchParameters: {}
                 });
