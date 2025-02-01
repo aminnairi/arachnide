@@ -46,7 +46,7 @@ export const render = (virtualElement: VirtualElement): RenderedElement => {
    * debate
    */
   const element = (() => {
-    if ("xmlns" in virtualElement.attributes && typeof virtualElement.attributes["xmlns"] === "string") {
+    if (virtualElement.attributes !== undefined && "xmlns" in virtualElement.attributes && typeof virtualElement.attributes["xmlns"] === "string") {
       return document.createElementNS(virtualElement.attributes["xmlns"], virtualElement.name);
     }
 
@@ -58,7 +58,7 @@ export const render = (virtualElement: VirtualElement): RenderedElement => {
    * something that can be looped so that we can grab the attribute name &
    * value for each properties/value
    */
-  Object.entries(virtualElement.attributes).forEach(([attributeName, attributeValue]) => {
+  Object.entries(virtualElement.attributes ?? {}).forEach(([attributeName, attributeValue]) => {
     /**
      * If the attribute does not resolve to something visually interesting such
      * as null or undefined
@@ -77,23 +77,34 @@ export const render = (virtualElement: VirtualElement): RenderedElement => {
     return;
   });
 
-  /**
-   * Once we created the element and attached all the attributes necessary, we
-   * can loop through all of the children and repeat the same process again,
-   */
-  virtualElement.content.forEach(child => {
-    const childElement = render(child);
+  if (typeof virtualElement.content === "string") {
+    element.appendChild(document.createTextNode(virtualElement.content));
+  } else if (virtualElement.content === undefined) {
+    element.appendChild(document.createDocumentFragment());
+  } else {
     /**
-     * But since we don't want to rewrite all of the above, and we certainly
-     * don't know how many times we need to do this, we use a recursive algorithm
-     * in order to call the render function again on all of the children
+     * Once we created the element and attached all the attributes necessary, we
+     * can loop through all of the children and repeat the same process again,
      */
-    element.appendChild(childElement);
-  });
+    virtualElement.content.forEach(child => {
+      const childElement = render(child);
+      /**
+       * But since we don't want to rewrite all of the above, and we certainly
+       * don't know how many times we need to do this, we use a recursive algorithm
+       * in order to call the render function again on all of the children
+       */
+      element.appendChild(childElement);
+    });
+  }
 
-  virtualElement.reference.target = element;
 
-  virtualElement.whenCreated();
+  if (virtualElement.reference) {
+    virtualElement.reference.target = element;
+  }
+
+  if (virtualElement.whenCreated) {
+    virtualElement.whenCreated();
+  }
 
   /**
    * Now that everything has been done for this particular virtual element, we
