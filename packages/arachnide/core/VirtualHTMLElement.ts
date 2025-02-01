@@ -49,12 +49,12 @@ export class VirtualHTMLElement<GenericElement extends Element> {
 
   public constructor(
     name: string,
-    attributes: VirtualHTMLElementAttributes, 
-    content: Array<VirtualElement>, 
-    reference: DOMReference<GenericElement>, 
-    whenCreated: WhenCreatedCallback, 
+    attributes: VirtualHTMLElementAttributes,
+    content: Array<VirtualElement>,
+    reference: DOMReference<GenericElement>,
+    whenCreated: WhenCreatedCallback,
     whenDestroyed: WhenDestroyedCallback
-  ) { 
+  ) {
     this.name = name;
     this.attributes = attributes;
     this.content = content;
