@@ -6,15 +6,15 @@ Libraries for building Web applications
 
 Name | Description
 ---|---
-`@arachnide/core` | Core library for building Web applications using Arachnide
-`@arachnide/css` | Utility functions for working with CSS in Arachnide
-`@arachnide/dom` | Utility functions for working with the DOM Web API in Arachnide
-`@arachnide/event` | Utility functions for working with events of the DOM Web API in Arachnide
-`@arachnide/html` | Utility functions for working with elements of the DOM Web API in Arachnide
+[`@arachnide/core`](https://github.com/aminnairi/arachnide/tree/development/packages/arachnide/core) | Core library for building Web applications using Arachnide
+[`@arachnide/css`](https://github.com/aminnairi/arachnide/tree/development/packages/arachnide/css) | Utility functions for working with CSS in Arachnide
+[`@arachnide/dom`](https://github.com/aminnairi/arachnide/tree/development/packages/arachnide/dom) | Utility functions for working with the DOM Web API in Arachnide
+[`@arachnide/event`](https://github.com/aminnairi/arachnide/tree/development/packages/arachnide/event) | Utility functions for working with events of the DOM Web API in Arachnide
+[`@arachnide/html`](https://github.com/aminnairi/arachnide/tree/development/packages/arachnide/html) | Utility functions for working with elements of the DOM Web API in Arachnide
+[`@arachnide/silk`](https://github.com/aminnairi/arachnide/tree/development/packages/arachnide/silk) | Utility functions for working with styled elements in Arachnide
 `@arachnide/svg` | Utility functions for working with elements of the SVG Web API in Arachnide
 `@arachnide/mathml` | Utility functions for working with elements of the MathML Web API in Arachnide
 `@arachnide/translate` | Utility functions for working with translations in Arachnide
-`@arachnide/silk` | Utility functions for working with styled elements in Arachnide
 
 ## Features
 
