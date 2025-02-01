@@ -8,7 +8,7 @@ import { getPageParameters } from "./getPageParameters";
  * Create an application that has a state, can emit events and renders the page
  * each time the state is updated
  */
-export const startApplication = <GenericState, GenericEvent extends ApplicationEvent>({ pages, root, initialState, onUpdate }: StartApplicationOptions<GenericState, GenericEvent>) => {
+export const startApplication = <GenericState, GenericEvent extends ApplicationEvent, GenericPath extends string>({ pages, root, initialState, onUpdate }: StartApplicationOptions<GenericState, GenericEvent, GenericPath>) => {
   let state = initialState();
 
   /**
@@ -56,8 +56,8 @@ export const startApplication = <GenericState, GenericEvent extends ApplicationE
     }));
   };
 
-  const changePage: ChangePage = (options) => {
-    const targetPath = Object.entries(options.parameters).reduce((previousPath, [parameterName, parameterValue]) => {
+  const changePage: ChangePage<GenericPath> = (options) => {
+    const targetPath = Object.entries(options.parameters).reduce((previousPath: string, [parameterName, parameterValue]) => {
       return previousPath.replaceAll(`{${parameterName}}`, String(parameterValue));
     }, options.path);
 
