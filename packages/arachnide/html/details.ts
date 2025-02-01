@@ -1,6 +1,15 @@
-import { CreateElementOptions, element } from "@arachnide/core";
+import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export const details = (options: Omit<CreateElementOptions<HTMLDetailsElement>, "name">) => {
+export interface DetailsAttributes extends VirtualHTMLElementAttributes {
+  open?: boolean,
+  name?: string,
+}
+
+export interface DetailsOptions extends Omit<VirtualHTMLElement<HTMLDetailsElement>, "name"> {
+  attributes?: DetailsAttributes
+}
+
+export const details = (options: DetailsOptions) => {
   return element({
     ...options,
     name: "details"

@@ -1,6 +1,20 @@
-import { CreateElementOptions, element } from "@arachnide/core";
+import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export const source = (options: Omit<CreateElementOptions<HTMLSourceElement>, "name">) => {
+export interface SourceAttributes extends VirtualHTMLElementAttributes {
+  type?: string,
+  src?: string,
+  srcset?: string,
+  sizes?: string,
+  media?: string,
+  height?: number,
+  width?: number,
+}
+
+export interface SourceOptions extends Omit<VirtualHTMLElement<HTMLSourceElement>, "name"> {
+  attributes?: SourceAttributes
+}
+
+export const source = (options: SourceOptions) => {
   return element({
     ...options,
     name: "source"

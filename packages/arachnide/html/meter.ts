@@ -1,6 +1,20 @@
-import { CreateElementOptions, element } from "@arachnide/core";
+import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export const meter = (options: Omit<CreateElementOptions<HTMLMeterElement>, "name">) => {
+export interface MeterAttributes extends VirtualHTMLElementAttributes {
+  value?: number,
+  min?: number,
+  max?: number,
+  low?: number,
+  high?: number,
+  optimum?: number,
+  form?: string,
+}
+
+export interface MeterOptions extends Omit<VirtualHTMLElement<HTMLMeterElement>, "name"> {
+  attributes?: MeterAttributes,
+}
+
+export const meter = (options: MeterOptions) => {
   return element({
     ...options,
     name: "meter"

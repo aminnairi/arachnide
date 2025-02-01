@@ -1,6 +1,27 @@
-import { CreateElementOptions, element } from "@arachnide/core";
+import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export const video = (options: Omit<CreateElementOptions<HTMLVideoElement>, "name">) => {
+export interface VideoAttributes extends VirtualHTMLElementAttributes {
+  autoplay?: boolean,
+  controls?: boolean,
+  controlslist?: string,
+  crossorigin?: "anonymous" | "use-credentials",
+  disablepictureinpicture?: boolean,
+  disableremoteplayback?: boolean,
+  height?: number,
+  loop?: boolean,
+  muted?: boolean,
+  playsinline?: boolean,
+  poster?: string,
+  preload?: "none" | "metadata" | "auto",
+  src?: string,
+  width?: number,
+}
+
+export interface VideoOptions extends Omit<VirtualHTMLElement<HTMLVideoElement>, "name"> {
+  attributes?: VideoAttributes,
+}
+
+export const video = (options: VideoOptions) => {
   return element({
     ...options,
     name: "video"

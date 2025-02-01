@@ -1,6 +1,10 @@
-import { CreateElementOptions, element } from "@arachnide/core";
+import { element, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export const blockquote = (options: Omit<CreateElementOptions<HTMLElement>, "name">) => {
+export interface BlockquoteAttributes extends VirtualHTMLElementAttributes {
+  cite?: string
+}
+
+export const blockquote = (options: BlockquoteAttributes) => {
   return element({
     ...options,
     name: "blockquote"

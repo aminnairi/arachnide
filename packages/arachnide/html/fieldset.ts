@@ -1,6 +1,16 @@
-import { CreateElementOptions, element } from "@arachnide/core";
+import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export const fieldset = (options: Omit<CreateElementOptions<HTMLFieldSetElement>, "name">) => {
+export interface FieldsetAttributes extends VirtualHTMLElementAttributes {
+  disabled?: boolean,
+  form?: string,
+  name?: string,
+}
+
+export interface FieldsetOptions extends Omit<VirtualHTMLElement<HTMLFieldSetElement>, "name"> {
+  attributes?: FieldsetAttributes,
+}
+
+export const fieldset = (options: FieldsetOptions) => {
   return element({
     ...options,
     name: "fieldset"
