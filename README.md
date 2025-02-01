@@ -34,6 +34,10 @@ Arachnide shines best when creating Web applications that manipulate states. If 
 
 Many websites relies on a Web server to request for the next page, making the whole page reload in order to send and receive the next page's informations. Others Web application relies on client-side routing thanks to the Web API History in order to manipulate the pages directly from the browser. This has the benefit to prevent the network overhead that the user might face when changing page, hence enhancing the user-experience on your Web application. Arachnide relies on this Web API in order to provide the ability for your users to change page and its built-in to the library. You simply define what elements you want for a given route, and it handle the rest.
 
+### No JSX, no templating engine, pure TypeScript
+
+Arachnide removes the need for JSX or any templating engine, allowing you to write your UI directly in TypeScript. This simplifies the learning curve by avoiding additional syntax and preprocessing steps, making the framework more accessible and lightweight. By leveraging native TypeScript features, Arachnide keeps your codebase consistent and ensures a seamless developer experience without requiring a build step for templating. This approach also enhances performance by eliminating unnecessary abstractions, keeping everything as close to JavaScript as possible while still maintaining expressiveness.
+
 ### Expressive API and source-code
 
 The goal of this library is to allow you to create Web applications. But not only that, it has also been made so that you can use this as a learning tool to know more about the internals of a JavaScript framework thanks to a declarative source-code. Emphasis has been made to name variables and function in a certain way that speaks to human more than a machine, and loads of comments have been added in order to help you understand the code easily. The API has of course been written in such a way that allow you to easily go back to an Arachnide application and update your application without having to think about its API too much or having to go back to the documentation often.
