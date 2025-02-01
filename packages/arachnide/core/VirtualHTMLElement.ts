@@ -38,7 +38,7 @@ export class VirtualHTMLElement<GenericElement extends Element> {
    * whenever the element is created. A created elemet is an element that is
    * created and attached to the DOM tree when rendering the page.
    */
-  public readonly whenCreated: WhenCreatedCallback;
+  public readonly whenCreated?: WhenCreatedCallback;
 
   /**
    * This is a life cycle method that is handy to to trigger some instructions
