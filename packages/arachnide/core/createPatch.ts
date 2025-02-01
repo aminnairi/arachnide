@@ -31,10 +31,14 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         element.appendChild(newElement);
 
         if (newVirtualElement instanceof VirtualHTMLElement) {
-          newVirtualElement.whenCreated();
+          if (newVirtualElement.whenCreated) {
+            newVirtualElement.whenCreated();
+          }
 
           if (newElementIsInstanceOfElement) {
-            newVirtualElement.reference.target = newElement;
+            if (newVirtualElement.reference) {
+              newVirtualElement.reference.target = newElement;
+            }
           }
         }
       }
@@ -67,10 +71,14 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         element.replaceWith(newElement);
 
         if (newVirtualElement instanceof VirtualHTMLElement) {
-          newVirtualElement.whenCreated();
+          if (newVirtualElement.whenCreated) {
+            newVirtualElement.whenCreated();
+          }
 
           if (newElementIsInstanceOfElement) {
-            newVirtualElement.reference.target = newElement;
+            if (newVirtualElement.reference) {
+              newVirtualElement.reference.target = newElement;
+            }
           }
         }
       }
@@ -89,7 +97,9 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
 
       element.remove();
 
-      oldVirtualElement.whenDestroyed();
+      if (oldVirtualElement.whenDestroyed) {
+        oldVirtualElement.whenDestroyed();
+      }
 
       return;
     }
@@ -118,7 +128,9 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         element.replaceWith(newElement);
 
         if (oldVirtualElement instanceof VirtualHTMLElement) {
-          oldVirtualElement.whenDestroyed();
+          if (oldVirtualElement.whenDestroyed) {
+            oldVirtualElement.whenDestroyed();
+          }
         }
       }
 
@@ -157,12 +169,18 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         element.replaceWith(newElement);
 
         if (newElementIsInstanceOfElement) {
-          newVirtualElement.reference.target = newElement;
+          if (newVirtualElement.reference) {
+            newVirtualElement.reference.target = newElement;
+          }
         }
 
-        oldVirtualElement.whenDestroyed();
+        if (oldVirtualElement.whenDestroyed) {
+          oldVirtualElement.whenDestroyed();
+        }
 
-        newVirtualElement.whenCreated();
+        if (newVirtualElement.whenCreated) {
+          newVirtualElement.whenCreated();
+        }
       }
 
       /**
@@ -177,11 +195,16 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * Once we know for sure that the two elements are the same, this probably
      * means that their attributes have differences
      */
-    Object.entries(oldVirtualElement.attributes).forEach(([oldVirtualElementAttributeName, oldVirtualElementAttributeValue]) => {
+    Object.entries(oldVirtualElement.attributes ?? {}).forEach(([oldVirtualElementAttributeName, oldVirtualElementAttributeValue]) => {
+      if (newVirtualElement.attributes === undefined) {
+        return;
+      }
+
       /**
        * We first grab the attribute from the new virtual element based on the
        * name of the old attribute
        */
+      // @ts-expect-error TODO: find a way to suppress this error
       const newVirtualElementAttributeValue = newVirtualElement.attributes[oldVirtualElementAttributeName];
 
       /**
@@ -225,12 +248,13 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
      * that we need to loop through the attributes of the new virtual element
      * instead of the old one
      */
-    Object.entries(newVirtualElement.attributes).forEach(([newVirtualElementAttributeName, newVirtualElementAttributeValue]) => {
+    Object.entries(newVirtualElement.attributes ?? {}).forEach(([newVirtualElementAttributeName, newVirtualElementAttributeValue]) => {
       /**
        * Same thing as before, but instead we need to grab the value of the old
        * attribute so that we can compare these two and know if we need to add
        * this one or not
        */
+      // @ts-expect-error TODO: find a way to suppress this error
       const oldVirtualElementAttributeValue = oldVirtualElement.attributes[newVirtualElementAttributeName];
 
       /**
@@ -255,6 +279,11 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
       return;
     });
 
+    if (typeof oldVirtualElement.content === "string" || typeof oldVirtualElement.content === "undefined") {
+      // TODO: do something when the old virtual element is a string or undefined
+      return;
+    }
+
     /**
      * Once we have dealt with attributes, we need to update the children so we
      * loop through all of the children that are common between the old and the
@@ -264,6 +293,11 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
     oldVirtualElement.content.forEach((oldVirtualElementChild, oldVirtualElementChildIndex) => {
       if (element === null) {
         throw new Error("Invalid DOM node found. Has the DOM been manually updated?");
+      }
+
+      if (newVirtualElement.content === undefined) {
+        // TODO: check if this is the right thing to do in this case
+        return;
       }
 
       const newVirtualElementChild = newVirtualElement.content[oldVirtualElementChildIndex];
@@ -279,6 +313,11 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
         patch(elementChild);
       });
     });
+
+    if (newVirtualElement.content === undefined || typeof newVirtualElement.content === "string") {
+      // TODO: what to do in this case?
+      return;
+    }
 
     /**
      * Next up, we need to figure out a clever way to deal with all of the
