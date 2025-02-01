@@ -1,6 +1,6 @@
 # arachnide
 
-Library for building Web applications
+Libraries for building Web applications
 
 ## Libraries
 
