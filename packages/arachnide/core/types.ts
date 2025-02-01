@@ -1,5 +1,149 @@
 import { VirtualHTMLElement } from "./VirtualHTMLElement";
 
+export type VirtualHTMLElementAttributeProperties = {
+  accesskey?: string; // A single character or multiple keys (e.g., "a" or "Ctrl+S")
+  autocapitalize?: "off" | "none" | "on" | "sentences" | "words" | "characters";
+  autofocus?: boolean;
+  className?: string; // Space-separated class names
+  contenteditable?: "true" | "false" | "inherit";
+  dir?: "ltr" | "rtl" | "auto";
+  draggable?: "true" | "false" | "auto";
+  enterkeyhint?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
+  hidden?: boolean;
+  id?: string;
+  inert?: boolean;
+  inputmode?: "none" | "text" | "tel" | "email" | "url" | "numeric" | "decimal" | "search";
+  is?: string; // Used for custom elements
+  itemid?: string;
+  itemprop?: string;
+  itemref?: string;
+  itemscope?: boolean;
+  itemtype?: string;
+  lang?: string; // e.g., "en", "fr", "es"
+  nonce?: string; // Cryptographic nonce for Content Security Policy (CSP)
+  part?: string; // Used for styling with Shadow DOM
+  popover?: boolean | "auto"; // New popover API
+  role?: string; // ARIA roles
+  slot?: string;
+  spellcheck?: "true" | "false";
+  style?: string; // Inline CSS styles
+  tabindex?: number;
+  title?: string;
+  translate?: "yes" | "no";
+  virtualkeyboardpolicy?: "auto" | "manual"; // Controls virtual keyboard display
+};
+
+export type VirtualHTMLElementAttributeHandler = {
+  // Clipboard Events
+  oncopy?: (event: ClipboardEvent) => void;
+  oncut?: (event: ClipboardEvent) => void;
+  onpaste?: (event: ClipboardEvent) => void;
+
+  // Composition Events
+  oncompositionend?: (event: CompositionEvent) => void;
+  oncompositionstart?: (event: CompositionEvent) => void;
+  oncompositionupdate?: (event: CompositionEvent) => void;
+
+  // Drag Events
+  ondrag?: (event: DragEvent) => void;
+  ondragend?: (event: DragEvent) => void;
+  ondragenter?: (event: DragEvent) => void;
+  ondragexit?: (event: DragEvent) => void;
+  ondragleave?: (event: DragEvent) => void;
+  ondragover?: (event: DragEvent) => void;
+  ondragstart?: (event: DragEvent) => void;
+  ondrop?: (event: DragEvent) => void;
+
+  // Focus Events
+  onfocus?: (event: FocusEvent) => void;
+  onblur?: (event: FocusEvent) => void;
+
+  // Form Events
+  onchange?: (event: Event) => void;
+  oninput?: (event: InputEvent) => void;
+  oninvalid?: (event: Event) => void;
+  onreset?: (event: Event) => void;
+  onsubmit?: (event: SubmitEvent) => void;
+
+  // Keyboard Events
+  onkeydown?: (event: KeyboardEvent) => void;
+  onkeypress?: (event: KeyboardEvent) => void;
+  onkeyup?: (event: KeyboardEvent) => void;
+
+  // Mouse Events
+  onclick?: (event: MouseEvent) => void;
+  oncontextmenu?: (event: MouseEvent) => void;
+  ondblclick?: (event: MouseEvent) => void;
+  onmousedown?: (event: MouseEvent) => void;
+  onmouseenter?: (event: MouseEvent) => void;
+  onmouseleave?: (event: MouseEvent) => void;
+  onmousemove?: (event: MouseEvent) => void;
+  onmouseover?: (event: MouseEvent) => void;
+  onmouseout?: (event: MouseEvent) => void;
+  onmouseup?: (event: MouseEvent) => void;
+
+  // Pointer Events
+  onpointerdown?: (event: PointerEvent) => void;
+  onpointermove?: (event: PointerEvent) => void;
+  onpointerup?: (event: PointerEvent) => void;
+  onpointercancel?: (event: PointerEvent) => void;
+  onpointerenter?: (event: PointerEvent) => void;
+  onpointerleave?: (event: PointerEvent) => void;
+  onpointerover?: (event: PointerEvent) => void;
+  onpointerout?: (event: PointerEvent) => void;
+  ongotpointercapture?: (event: PointerEvent) => void;
+  onlostpointercapture?: (event: PointerEvent) => void;
+
+  // Touch Events
+  ontouchcancel?: (event: TouchEvent) => void;
+  ontouchend?: (event: TouchEvent) => void;
+  ontouchmove?: (event: TouchEvent) => void;
+  ontouchstart?: (event: TouchEvent) => void;
+
+  // UI Events
+  onscroll?: (event: Event) => void;
+  onresize?: (event: UIEvent) => void;
+
+  // Wheel Events
+  onwheel?: (event: WheelEvent) => void;
+
+  // Animation Events
+  onanimationstart?: (event: AnimationEvent) => void;
+  onanimationend?: (event: AnimationEvent) => void;
+  onanimationiteration?: (event: AnimationEvent) => void;
+
+  // Transition Events
+  ontransitionend?: (event: TransitionEvent) => void;
+
+  // Media Events
+  onabort?: (event: Event) => void;
+  oncanplay?: (event: Event) => void;
+  oncanplaythrough?: (event: Event) => void;
+  ondurationchange?: (event: Event) => void;
+  onemptied?: (event: Event) => void;
+  onended?: (event: Event) => void;
+  onerror?: (event: Event) => void;
+  onloadeddata?: (event: Event) => void;
+  onloadedmetadata?: (event: Event) => void;
+  onloadstart?: (event: Event) => void;
+  onpause?: (event: Event) => void;
+  onplay?: (event: Event) => void;
+  onplaying?: (event: Event) => void;
+  onprogress?: (event: Event) => void;
+  onratechange?: (event: Event) => void;
+  onseeked?: (event: Event) => void;
+  onseeking?: (event: Event) => void;
+  onstalled?: (event: Event) => void;
+  onsuspend?: (event: Event) => void;
+  ontimeupdate?: (event: Event) => void;
+  onvolumechange?: (event: Event) => void;
+  onwaiting?: (event: Event) => void;
+  onbeforeinput?: (event: InputEvent) => void;
+  onfullscreenchange?: (event: Event) => void;
+  onfullscreenerror?: (event: Event) => void;
+};
+
+
 /**
  * A function that will be called whenever an element is attached to the DOM
  * tree.
@@ -47,19 +191,11 @@ export type VirtualHTMLElementAttributeValue
   | undefined;
 
 /**
- * An attribute can also be an event listener, this is especially true when
- * dealing with things like attributes that starts with "on" like "onclick"
- */
-export type VirtualHTMLElementAttributeListener = (event: Event) => void
-
-/**
  * An attribute can either be some scalar value (string, boolean, number, ...)
  * that will be parsed as string Or it can be a function in case of an event
  * listener
  */
-export type VirtualHTMLElementAttributes = {
-  [Key in string]: VirtualHTMLElementAttributeValue | VirtualHTMLElementAttributeListener
-}
+export type VirtualHTMLElementAttributes = VirtualHTMLElementAttributeProperties & VirtualHTMLElementAttributeHandler
 
 /**
  * Available types for a virtual element
@@ -106,7 +242,7 @@ export type EventWithoutData = {
 /**
  * The available types for an event
  */
-export type ApplicationEvent 
+export type ApplicationEvent
   = NoEvent
   | EventWithData
   | EventWithoutData
