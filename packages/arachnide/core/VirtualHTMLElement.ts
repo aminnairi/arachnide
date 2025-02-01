@@ -31,7 +31,7 @@ export class VirtualHTMLElement<GenericElement extends Element> {
    * in the "createDOMReference" function, you should really use it in last
    * resort, if there is no solution in the framework for your use-case.
    */
-  public readonly reference: DOMReference<GenericElement>;
+  public readonly reference?: DOMReference<GenericElement>;
 
   /**
    * This is a life cycle method that is handy to to trigger some instructions
