@@ -1,5 +1,5 @@
 import { startApplication } from "@arachnide/core";
-import { ul, li, div, p, h1, span, form, a } from "@arachnide/html";
+import { ul, li, div, p, h1, span, form } from "@arachnide/html";
 import { styles } from "@arachnide/css";
 import { oninput } from "@arachnide/event";
 import { button, input, label } from "@arachnide/silk"
@@ -213,7 +213,7 @@ startApplication<ApplicationState, ApplicationEvent, ApplicationPath>({
           }),
           label({
             attributes: {
-              htmlFor: "steps"
+              htmlFor: "steps",
             },
             content: " Steps "
           }),
@@ -223,12 +223,12 @@ startApplication<ApplicationState, ApplicationEvent, ApplicationPath>({
               step: 10,
               type: "number",
               value: state.steps,
-              oninput: oninput((value) => {
+              oninput: (event) => {
                 update(() => ({
                   name: "SET_STEPS",
-                  data: Number(value) || 100
+                  data: Number(event.target.value) || 100
                 }));
-              })
+              }
             }
           }),
           ul({
@@ -294,13 +294,6 @@ startApplication<ApplicationState, ApplicationEvent, ApplicationPath>({
     [ApplicationPath.Todos]: ({ state, update }) => {
       return div({
         content: [
-          a({
-            attributes: {
-              download: "index.txt",
-              referrerpolicy: "no-referrer",
-            },
-            content: "Hello"
-          }),
           h1({
             content: "Todos List"
           }),
@@ -312,7 +305,12 @@ startApplication<ApplicationState, ApplicationEvent, ApplicationPath>({
                 gap: "20px"
               }),
               onsubmit: (event) => {
-                event.preventDefault()
+                event.preventDefault();
+
+                update(() => ({
+                  name: "TODOS_ADD",
+                  data: state.todo
+                }));
               }
             },
             content: [
