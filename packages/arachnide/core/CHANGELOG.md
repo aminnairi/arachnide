@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0
+
+- Added typed target in event handlers ([#22](https://github.com/aminnairi/arachnide/pull/22))
+
 ## 1.0.0
 
 ### Major changes
