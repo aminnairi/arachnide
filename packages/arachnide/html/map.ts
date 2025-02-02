@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface MapAttributes extends VirtualHTMLElementAttributes {
+export interface MapAttributes extends VirtualHTMLElementAttributes<HTMLMapElement> {
   name?: string,
 }
 

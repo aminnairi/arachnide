@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface ColGroupAttributes extends VirtualHTMLElementAttributes {
+export interface ColGroupAttributes extends VirtualHTMLElementAttributes<HTMLElement> {
   span?: number
 }
 

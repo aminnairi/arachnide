@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface SelectAttributes extends VirtualHTMLElementAttributes {
+export interface SelectAttributes extends VirtualHTMLElementAttributes<HTMLSelectElement> {
   autocomplete?: string,
   autofocus?: boolean,
   disabled?: boolean,

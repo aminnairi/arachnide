@@ -1,6 +1,6 @@
 import { CreateElementOptions, element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface FormAttributes extends VirtualHTMLElementAttributes {
+export interface FormAttributes extends VirtualHTMLElementAttributes<HTMLFormElement> {
   acceptCharset?: string,
   autocomplete?: "off" | "on",
   name?: string,

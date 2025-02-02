@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface LiAttributes extends VirtualHTMLElementAttributes {
+export interface LiAttributes extends VirtualHTMLElementAttributes<HTMLLIElement> {
   value?: number,
 }
 

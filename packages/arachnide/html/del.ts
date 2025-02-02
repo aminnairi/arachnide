@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface DelAttributes extends VirtualHTMLElementAttributes {
+export interface DelAttributes extends VirtualHTMLElementAttributes<HTMLElement> {
   cite?: string,
   datatime?: Date
 }

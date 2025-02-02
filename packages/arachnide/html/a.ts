@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface AnchorAttributes extends VirtualHTMLElementAttributes {
+export interface AnchorAttributes extends VirtualHTMLElementAttributes<HTMLAnchorElement> {
   download?: string,
   href?: string,
   hreflang?: string,

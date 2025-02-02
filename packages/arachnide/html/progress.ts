@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface ProgressAttributes extends VirtualHTMLElementAttributes {
+export interface ProgressAttributes extends VirtualHTMLElementAttributes<HTMLProgressElement> {
   max?: number,
   value?: number,
 }

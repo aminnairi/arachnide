@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface IframeAttributes extends VirtualHTMLElementAttributes {
+export interface IframeAttributes extends VirtualHTMLElementAttributes<HTMLIFrameElement> {
   allow?: string,
   allowfullscreen?: boolean,
   height?: number,

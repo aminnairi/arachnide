@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface AreaAttributes extends VirtualHTMLElementAttributes {
+export interface AreaAttributes extends VirtualHTMLElementAttributes<HTMLAreaElement> {
   alt?: string,
   coords?: string,
   download?: string,

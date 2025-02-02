@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface TimeAttributes extends VirtualHTMLElementAttributes {
+export interface TimeAttributes extends VirtualHTMLElementAttributes<HTMLElement> {
   datetime?: string,
 }
 

@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface FieldsetAttributes extends VirtualHTMLElementAttributes {
+export interface FieldsetAttributes extends VirtualHTMLElementAttributes<HTMLFieldSetElement> {
   disabled?: boolean,
   form?: string,
   name?: string,

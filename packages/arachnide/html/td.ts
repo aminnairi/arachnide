@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface TdAttributes extends VirtualHTMLElementAttributes {
+export interface TdAttributes extends VirtualHTMLElementAttributes<HTMLTableCellElement> {
   colspan?: number,
   headers?: string,
   rowspan?: number,

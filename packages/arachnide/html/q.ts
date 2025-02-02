@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface QAttributes extends VirtualHTMLElementAttributes {
+export interface QAttributes extends VirtualHTMLElementAttributes<HTMLQuoteElement> {
   cite?: string,
 }
 

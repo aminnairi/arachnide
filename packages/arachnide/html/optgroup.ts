@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface OptgroupAttributes extends VirtualHTMLElementAttributes {
+export interface OptgroupAttributes extends VirtualHTMLElementAttributes<HTMLOptGroupElement> {
   disabled?: boolean,
   label?: string,
 }

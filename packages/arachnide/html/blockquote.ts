@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface BlockquoteAttributes extends VirtualHTMLElementAttributes {
+export interface BlockquoteAttributes extends VirtualHTMLElementAttributes<HTMLElement> {
   cite?: string
 }
 

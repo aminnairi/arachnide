@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface OutputAttributes extends VirtualHTMLElementAttributes {
+export interface OutputAttributes extends VirtualHTMLElementAttributes<HTMLOutputElement> {
   htmlFor?: string,
   form?: string,
   name?: string,
