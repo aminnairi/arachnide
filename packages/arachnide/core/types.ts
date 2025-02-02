@@ -33,114 +33,174 @@ export type VirtualHTMLElementAttributeProperties = {
   virtualkeyboardpolicy?: "auto" | "manual"; // Controls virtual keyboard display
 };
 
-export type VirtualHTMLElementAttributeHandler = {
+export interface VirtualClipboardEvent<GenericTarget extends Element> extends ClipboardEvent {
+  target: GenericTarget
+}
+
+export interface VirtualInputEvent<GenericTarget extends Element> extends InputEvent {
+  target: GenericTarget
+}
+
+export interface VirtualCompositionEvent<GenericTarget extends Element> extends CompositionEvent {
+  target: GenericTarget
+}
+
+export interface VirtualDragEvent<GenericTarget extends Element> extends DragEvent {
+  target: GenericTarget
+}
+
+export interface VirtualFocusEvent<GenericTarget extends Element> extends FocusEvent {
+  target: GenericTarget
+}
+
+export interface VirtualEvent<GenericTarget extends Element> extends Event {
+  target: GenericTarget
+}
+
+export interface VirtualSubmitEvent<GenericTarget extends Element> extends SubmitEvent {
+  target: GenericTarget
+}
+
+export interface VirtualKeyboardEvent<GenericTarget extends Element> extends KeyboardEvent {
+  target: GenericTarget
+}
+
+export interface VirtualMouseEvent<GenericTarget extends Element> extends MouseEvent {
+  target: GenericTarget
+}
+
+export interface VirtualPointerEvent<GenericTarget extends Element> extends PointerEvent {
+  target: GenericTarget
+}
+
+export interface VirtualTouchEvent<GenericTarget extends Element> extends TouchEvent {
+  target: GenericTarget
+}
+
+export interface VirtualUIEvent<GenericTarget extends Element> extends UIEvent {
+  target: GenericTarget
+}
+
+export interface VirtualWheelEvent<GenericTarget extends Element> extends WheelEvent {
+  target: GenericTarget
+}
+
+export interface VirtualTransitionEvent<GenericTarget extends Element> extends TransitionEvent {
+  target: GenericTarget
+}
+
+export interface VirtualAnimationEvent<GenericTarget extends Element> extends AnimationEvent {
+  target: GenericTarget
+}
+
+export type VirtualHTMLElementAttributeHandler<GenericTarget extends Element> = {
   // Clipboard Events
-  oncopy?: (event: ClipboardEvent) => void;
-  oncut?: (event: ClipboardEvent) => void;
-  onpaste?: (event: ClipboardEvent) => void;
+  oncopy?: (event: VirtualClipboardEvent<GenericTarget>) => void;
+  oncut?: (event: VirtualClipboardEvent<GenericTarget>) => void;
+  onpaste?: (event: VirtualClipboardEvent<GenericTarget>) => void;
 
   // Composition Events
-  oncompositionend?: (event: CompositionEvent) => void;
-  oncompositionstart?: (event: CompositionEvent) => void;
-  oncompositionupdate?: (event: CompositionEvent) => void;
+  oncompositionend?: (event: VirtualCompositionEvent<GenericTarget>) => void;
+  oncompositionstart?: (event: VirtualCompositionEvent<GenericTarget>) => void;
+  oncompositionupdate?: (event: VirtualCompositionEvent<GenericTarget>) => void;
 
   // Drag Events
-  ondrag?: (event: DragEvent) => void;
-  ondragend?: (event: DragEvent) => void;
-  ondragenter?: (event: DragEvent) => void;
-  ondragexit?: (event: DragEvent) => void;
-  ondragleave?: (event: DragEvent) => void;
-  ondragover?: (event: DragEvent) => void;
-  ondragstart?: (event: DragEvent) => void;
-  ondrop?: (event: DragEvent) => void;
+  ondrag?: (event: VirtualDragEvent<GenericTarget>) => void;
+  ondragend?: (event: VirtualDragEvent<GenericTarget>) => void;
+  ondragenter?: (event: VirtualDragEvent<GenericTarget>) => void;
+  ondragexit?: (event: VirtualDragEvent<GenericTarget>) => void;
+  ondragleave?: (event: VirtualDragEvent<GenericTarget>) => void;
+  ondragover?: (event: VirtualDragEvent<GenericTarget>) => void;
+  ondragstart?: (event: VirtualDragEvent<GenericTarget>) => void;
+  ondrop?: (event: VirtualDragEvent<GenericTarget>) => void;
 
   // Focus Events
-  onfocus?: (event: FocusEvent) => void;
-  onblur?: (event: FocusEvent) => void;
+  onfocus?: (event: VirtualFocusEvent<GenericTarget>) => void;
+  onblur?: (event: VirtualFocusEvent<GenericTarget>) => void;
 
   // Form Events
-  onchange?: (event: Event) => void;
-  oninput?: (event: InputEvent) => void;
-  oninvalid?: (event: Event) => void;
-  onreset?: (event: Event) => void;
-  onsubmit?: (event: SubmitEvent) => void;
+  onchange?: (event: VirtualEvent<GenericTarget>) => void;
+  oninput?: (event: VirtualInputEvent<GenericTarget>) => void;
+  oninvalid?: (event: VirtualEvent<GenericTarget>) => void;
+  onreset?: (event: VirtualEvent<GenericTarget>) => void;
+  onsubmit?: (event: VirtualSubmitEvent<GenericTarget>) => void;
 
   // Keyboard Events
-  onkeydown?: (event: KeyboardEvent) => void;
-  onkeypress?: (event: KeyboardEvent) => void;
-  onkeyup?: (event: KeyboardEvent) => void;
+  onkeydown?: (event: VirtualKeyboardEvent<GenericTarget>) => void;
+  onkeypress?: (event: VirtualKeyboardEvent<GenericTarget>) => void;
+  onkeyup?: (event: VirtualKeyboardEvent<GenericTarget>) => void;
 
   // Mouse Events
-  onclick?: (event: MouseEvent) => void;
-  oncontextmenu?: (event: MouseEvent) => void;
-  ondblclick?: (event: MouseEvent) => void;
-  onmousedown?: (event: MouseEvent) => void;
-  onmouseenter?: (event: MouseEvent) => void;
-  onmouseleave?: (event: MouseEvent) => void;
-  onmousemove?: (event: MouseEvent) => void;
-  onmouseover?: (event: MouseEvent) => void;
-  onmouseout?: (event: MouseEvent) => void;
-  onmouseup?: (event: MouseEvent) => void;
+  onclick?: (event: VirtualMouseEvent<GenericTarget>) => void;
+  oncontextmenu?: (event: VirtualMouseEvent<GenericTarget>) => void;
+  ondblclick?: (event: VirtualMouseEvent<GenericTarget>) => void;
+  onmousedown?: (event: VirtualMouseEvent<GenericTarget>) => void;
+  onmouseenter?: (event: VirtualMouseEvent<GenericTarget>) => void;
+  onmouseleave?: (event: VirtualMouseEvent<GenericTarget>) => void;
+  onmousemove?: (event: VirtualMouseEvent<GenericTarget>) => void;
+  onmouseover?: (event: VirtualMouseEvent<GenericTarget>) => void;
+  onmouseout?: (event: VirtualMouseEvent<GenericTarget>) => void;
+  onmouseup?: (event: VirtualMouseEvent<GenericTarget>) => void;
 
   // Pointer Events
-  onpointerdown?: (event: PointerEvent) => void;
-  onpointermove?: (event: PointerEvent) => void;
-  onpointerup?: (event: PointerEvent) => void;
-  onpointercancel?: (event: PointerEvent) => void;
-  onpointerenter?: (event: PointerEvent) => void;
-  onpointerleave?: (event: PointerEvent) => void;
-  onpointerover?: (event: PointerEvent) => void;
-  onpointerout?: (event: PointerEvent) => void;
-  ongotpointercapture?: (event: PointerEvent) => void;
-  onlostpointercapture?: (event: PointerEvent) => void;
+  onpointerdown?: (event: VirtualPointerEvent<GenericTarget>) => void;
+  onpointermove?: (event: VirtualPointerEvent<GenericTarget>) => void;
+  onpointerup?: (event: VirtualPointerEvent<GenericTarget>) => void;
+  onpointercancel?: (event: VirtualPointerEvent<GenericTarget>) => void;
+  onpointerenter?: (event: VirtualPointerEvent<GenericTarget>) => void;
+  onpointerleave?: (event: VirtualPointerEvent<GenericTarget>) => void;
+  onpointerover?: (event: VirtualPointerEvent<GenericTarget>) => void;
+  onpointerout?: (event: VirtualPointerEvent<GenericTarget>) => void;
+  ongotpointercapture?: (event: VirtualPointerEvent<GenericTarget>) => void;
+  onlostpointercapture?: (event: VirtualPointerEvent<GenericTarget>) => void;
 
   // Touch Events
-  ontouchcancel?: (event: TouchEvent) => void;
-  ontouchend?: (event: TouchEvent) => void;
-  ontouchmove?: (event: TouchEvent) => void;
-  ontouchstart?: (event: TouchEvent) => void;
+  ontouchcancel?: (event: VirtualTouchEvent<GenericTarget>) => void;
+  ontouchend?: (event: VirtualTouchEvent<GenericTarget>) => void;
+  ontouchmove?: (event: VirtualTouchEvent<GenericTarget>) => void;
+  ontouchstart?: (event: VirtualTouchEvent<GenericTarget>) => void;
 
   // UI Events
-  onscroll?: (event: Event) => void;
-  onresize?: (event: UIEvent) => void;
+  onscroll?: (event: VirtualEvent<GenericTarget>) => void;
+  onresize?: (event: VirtualUIEvent<GenericTarget>) => void;
 
   // Wheel Events
-  onwheel?: (event: WheelEvent) => void;
+  onwheel?: (event: VirtualWheelEvent<GenericTarget>) => void;
 
   // Animation Events
-  onanimationstart?: (event: AnimationEvent) => void;
-  onanimationend?: (event: AnimationEvent) => void;
-  onanimationiteration?: (event: AnimationEvent) => void;
+  onanimationstart?: (event: VirtualAnimationEvent<GenericTarget>) => void;
+  onanimationend?: (event: VirtualAnimationEvent<GenericTarget>) => void;
+  onanimationiteration?: (event: VirtualAnimationEvent<GenericTarget>) => void;
 
   // Transition Events
-  ontransitionend?: (event: TransitionEvent) => void;
+  ontransitionend?: (event: VirtualTransitionEvent<GenericTarget>) => void;
 
   // Media Events
-  onabort?: (event: Event) => void;
-  oncanplay?: (event: Event) => void;
-  oncanplaythrough?: (event: Event) => void;
-  ondurationchange?: (event: Event) => void;
-  onemptied?: (event: Event) => void;
-  onended?: (event: Event) => void;
-  onerror?: (event: Event) => void;
-  onloadeddata?: (event: Event) => void;
-  onloadedmetadata?: (event: Event) => void;
-  onloadstart?: (event: Event) => void;
-  onpause?: (event: Event) => void;
-  onplay?: (event: Event) => void;
-  onplaying?: (event: Event) => void;
-  onprogress?: (event: Event) => void;
-  onratechange?: (event: Event) => void;
-  onseeked?: (event: Event) => void;
-  onseeking?: (event: Event) => void;
-  onstalled?: (event: Event) => void;
-  onsuspend?: (event: Event) => void;
-  ontimeupdate?: (event: Event) => void;
-  onvolumechange?: (event: Event) => void;
-  onwaiting?: (event: Event) => void;
-  onbeforeinput?: (event: InputEvent) => void;
-  onfullscreenchange?: (event: Event) => void;
-  onfullscreenerror?: (event: Event) => void;
+  onabort?: (event: VirtualEvent<GenericTarget>) => void;
+  oncanplay?: (event: VirtualEvent<GenericTarget>) => void;
+  oncanplaythrough?: (event: VirtualEvent<GenericTarget>) => void;
+  ondurationchange?: (event: VirtualEvent<GenericTarget>) => void;
+  onemptied?: (event: VirtualEvent<GenericTarget>) => void;
+  onended?: (event: VirtualEvent<GenericTarget>) => void;
+  onerror?: (event: VirtualEvent<GenericTarget>) => void;
+  onloadeddata?: (event: VirtualEvent<GenericTarget>) => void;
+  onloadedmetadata?: (event: VirtualEvent<GenericTarget>) => void;
+  onloadstart?: (event: VirtualEvent<GenericTarget>) => void;
+  onpause?: (event: VirtualEvent<GenericTarget>) => void;
+  onplay?: (event: VirtualEvent<GenericTarget>) => void;
+  onplaying?: (event: VirtualEvent<GenericTarget>) => void;
+  onprogress?: (event: VirtualEvent<GenericTarget>) => void;
+  onratechange?: (event: VirtualEvent<GenericTarget>) => void;
+  onseeked?: (event: VirtualEvent<GenericTarget>) => void;
+  onseeking?: (event: VirtualEvent<GenericTarget>) => void;
+  onstalled?: (event: VirtualEvent<GenericTarget>) => void;
+  onsuspend?: (event: VirtualEvent<GenericTarget>) => void;
+  ontimeupdate?: (event: VirtualEvent<GenericTarget>) => void;
+  onvolumechange?: (event: VirtualEvent<GenericTarget>) => void;
+  onwaiting?: (event: VirtualEvent<GenericTarget>) => void;
+  onbeforeinput?: (event: VirtualInputEvent<GenericTarget>) => void;
+  onfullscreenchange?: (event: VirtualEvent<GenericTarget>) => void;
+  onfullscreenerror?: (event: VirtualEvent<GenericTarget>) => void;
 };
 
 
@@ -195,13 +255,13 @@ export type VirtualHTMLElementAttributeValue
  * that will be parsed as string Or it can be a function in case of an event
  * listener
  */
-export type VirtualHTMLElementAttributes = VirtualHTMLElementAttributeProperties & VirtualHTMLElementAttributeHandler
+export type VirtualHTMLElementAttributes<GenericTarget extends Element> = VirtualHTMLElementAttributeProperties & VirtualHTMLElementAttributeHandler<GenericTarget>
 
 /**
  * Available types for a virtual element
  */
 export type VirtualElement
-  = VirtualHTMLElement<Element>
+  = VirtualHTMLElement<any>
   | string
   | number
   | boolean

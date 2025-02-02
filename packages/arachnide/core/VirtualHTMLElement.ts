@@ -15,7 +15,7 @@ export class VirtualHTMLElement<GenericElement extends Element> {
    * HTML attribute, you need to use the "className" property (yes, this is
    * also why you need to use these names in React #themoreyouknow).
    */
-  public readonly attributes?: VirtualHTMLElementAttributes;
+  public readonly attributes?: VirtualHTMLElementAttributes<GenericElement>;
 
   /**
    * This is essentially the content of the element to create. It can be a
@@ -49,7 +49,7 @@ export class VirtualHTMLElement<GenericElement extends Element> {
 
   public constructor(
     name: string,
-    attributes: VirtualHTMLElementAttributes,
+    attributes: VirtualHTMLElementAttributes<GenericElement>,
     content: Array<VirtualElement>,
     reference: DOMReference<GenericElement>,
     whenCreated: WhenCreatedCallback,
