@@ -2,7 +2,7 @@ import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arac
 
 // TODO: Fence for some types of inputs but not all using a union
 
-export interface InputAttributes extends VirtualHTMLElementAttributes {
+export interface InputAttributes extends VirtualHTMLElementAttributes<HTMLInputElement> {
   accept?: string,
   alt?: string,
   autocomplete?: boolean,

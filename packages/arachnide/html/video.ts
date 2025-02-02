@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface VideoAttributes extends VirtualHTMLElementAttributes {
+export interface VideoAttributes extends VirtualHTMLElementAttributes<HTMLVideoElement> {
   autoplay?: boolean,
   controls?: boolean,
   controlslist?: string,

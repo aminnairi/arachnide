@@ -1,6 +1,6 @@
 import { CreateElementOptions, element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface DialogAttributes extends VirtualHTMLElementAttributes {
+export interface DialogAttributes extends VirtualHTMLElementAttributes<HTMLDialogElement> {
   open?: boolean,
 }
 

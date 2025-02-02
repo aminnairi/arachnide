@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface OlAttributes extends VirtualHTMLElementAttributes {
+export interface OlAttributes extends VirtualHTMLElementAttributes<HTMLOListElement> {
   reversed?: boolean,
   start?: number,
   type?: "a" | "A" | "i" | "I" | "1",

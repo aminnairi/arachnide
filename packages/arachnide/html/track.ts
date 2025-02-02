@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface TrackAttributes extends VirtualHTMLElementAttributes {
+export interface TrackAttributes extends VirtualHTMLElementAttributes<HTMLTrackElement> {
   default?: boolean,
   kind?: "subtitles" | "captions" | "chapters" | "metadata",
   label?: string,

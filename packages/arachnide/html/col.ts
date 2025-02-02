@@ -1,10 +1,10 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface ColAttributes extends VirtualHTMLElementAttributes {
+export interface ColAttributes extends VirtualHTMLElementAttributes<HTMLTableColElement> {
   span?: number
 }
 
-export interface ColOptions extends Omit<VirtualHTMLElement<HTMLElement>, "name"> {
+export interface ColOptions extends Omit<VirtualHTMLElement<HTMLTableColElement>, "name"> {
   attributes?: ColAttributes
 }
 

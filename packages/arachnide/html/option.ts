@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface OptionAttributes extends VirtualHTMLElementAttributes {
+export interface OptionAttributes extends VirtualHTMLElementAttributes<HTMLOptionElement> {
   disabled?: boolean,
   label?: string,
   selected?: boolean,

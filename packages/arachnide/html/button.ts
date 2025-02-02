@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface ButtonAttributes extends VirtualHTMLElementAttributes {
+export interface ButtonAttributes extends VirtualHTMLElementAttributes<HTMLButtonElement> {
   type?: string
 }
 

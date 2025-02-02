@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface LabelAttributes extends VirtualHTMLElementAttributes {
+export interface LabelAttributes extends VirtualHTMLElementAttributes<HTMLLabelElement> {
   htmlFor?: string,
 }
 

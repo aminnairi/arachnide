@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface AudioAttributes extends VirtualHTMLElementAttributes {
+export interface AudioAttributes extends VirtualHTMLElementAttributes<HTMLAudioElement> {
   autoplay?: boolean,
   controls?: boolean,
   // TODO: provide an array and turn this array into an HTML enumerated list

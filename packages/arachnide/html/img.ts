@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface ImgAttributes extends VirtualHTMLElementAttributes {
+export interface ImgAttributes extends VirtualHTMLElementAttributes<HTMLImageElement> {
   alt?: string,
   crossorigin?: "anonymous" | "use-credentials",
   decoding?: "sync" | "async" | "auto",

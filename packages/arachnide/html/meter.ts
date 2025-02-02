@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface MeterAttributes extends VirtualHTMLElementAttributes {
+export interface MeterAttributes extends VirtualHTMLElementAttributes<HTMLMeterElement> {
   value?: number,
   min?: number,
   max?: number,

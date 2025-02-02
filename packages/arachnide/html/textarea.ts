@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface TextareaAttributes extends VirtualHTMLElementAttributes {
+export interface TextareaAttributes extends VirtualHTMLElementAttributes<HTMLTextAreaElement> {
   autocomplete?: string,
   autocorrect?: "on" | "off",
   autofocus?: boolean,

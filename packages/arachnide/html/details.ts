@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface DetailsAttributes extends VirtualHTMLElementAttributes {
+export interface DetailsAttributes extends VirtualHTMLElementAttributes<HTMLDetailsElement> {
   open?: boolean,
   name?: string,
 }

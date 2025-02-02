@@ -1,6 +1,6 @@
 import { element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface EmbedAttributes extends VirtualHTMLElementAttributes {
+export interface EmbedAttributes extends VirtualHTMLElementAttributes<HTMLEmbedElement> {
   height?: number,
   src?: string,
   type?: string,

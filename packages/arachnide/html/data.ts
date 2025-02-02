@@ -1,6 +1,6 @@
 import { CreateElementOptions, element, VirtualHTMLElement, VirtualHTMLElementAttributes } from "@arachnide/core";
 
-export interface DataAttributes extends VirtualHTMLElementAttributes {
+export interface DataAttributes extends VirtualHTMLElementAttributes<HTMLDataElement> {
   value?: string | number
 }
 
