@@ -258,17 +258,23 @@ startApplication<ApplicationState, ApplicationEvent, ApplicationPath>({
   pages: {
     [ApplicationPath.Home]: ({ state, update, changePage }) => {
       if (state.game.type === "GAME_STARTED") {
+        const keyboard = [
+          ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "BACK"],
+          ["A", "S", "D", "F", "G", "H", "J", "K", "L", "ENTR"],
+          ["Z", "X", "C", "V", "B", "N", "M", "N"],
+        ];
+
         const onKeyDown = (event: KeyboardEvent) => {
           const alphabet: string[] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
           const letter = event.key.toUpperCase();
 
-          if (letter === "BACKSPACE") {
+          if (letter === "BACKSPACE" || letter === "BACK") {
             return update(() => ({
               name: "REMOVE_LETTER"
             }));
           }
 
-          if (letter === "ENTER") {
+          if (letter === "ENTER" || letter === "ENTR") {
             return update(() => ({
               name: "NEXT_ROW"
             }));
@@ -356,6 +362,57 @@ startApplication<ApplicationState, ApplicationEvent, ApplicationPath>({
                 }
               },
               content: "Generate New Word"
+            }),
+            div({
+              attributes: {
+                style: styles({
+                  paddingTop: "20px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "5px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%"
+                }),
+              },
+              content: keyboard.map(row => {
+                return div({
+                  attributes: {
+                    style: styles({
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: "5px",
+                      maxWidth: "min(100vw, 400px)"
+                    }),
+                  },
+                  content: row.map(key => {
+                    return div({
+                      attributes: {
+                        style: styles({
+                          height: "30px",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          border: "1px solid lightgrey",
+                          cursor: "pointer",
+                          fontFamily: "sans-serif",
+                          padding: "5px",
+                        }),
+                        onclick: () => {
+                          window.dispatchEvent(new KeyboardEvent("keydown", {
+                            key
+                          }));
+
+                          if (typeof window.navigator.vibrate === "function") {
+                            window.navigator.vibrate(50);
+                          }
+                        }
+                      },
+                      content: key,
+                    });
+                  })
+                });
+              })
             }),
           ]
         });
