@@ -484,7 +484,7 @@ startApplication<ApplicationState, ApplicationEvent, ApplicationPath>({
       return div({
         content: [
           p({
-            content: "Won!"
+            content: `Won! You made it in ${state.game.attempts} attempts.`
           }),
           button({
             attributes: {
