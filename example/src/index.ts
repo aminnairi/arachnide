@@ -1,9 +1,7 @@
 import { startApplication } from "@arachnide/core";
-import { ul, li, div, p, h1, span, form } from "@arachnide/html";
+import { div, h1, p } from "@arachnide/html";
 import { styles } from "@arachnide/css";
-import { oninput } from "@arachnide/event";
-import { button, input, label } from "@arachnide/silk"
-// import yaml from "yaml"
+import { button } from "@arachnide/silk"
 
 window.addEventListener("error", (event) => {
   alert(`Error: ${event.message}`);
@@ -15,364 +13,388 @@ if (!root) {
   throw new Error("Root element not found");
 }
 
-export type ApplicationState = {
-  counter: number,
-  steps: number,
-  todo: string,
-  todos: string[],
+// STATE
+
+type Started = {
+  type: "GAME_STARTED",
+  word: string,
+  matrix: string[][]
+  row: number,
+  column: number,
+}
+
+type Won = {
+  type: "GAME_WON"
+}
+
+type Lost = {
+  type: "GAME_LOST"
+}
+
+type ApplicationState = {
+  game: Started | Won | Lost
+}
+
+// EVENTS
+
+type AddLetter = {
+  name: "ADD_LETTER",
+  data: {
+    letter: string,
+  },
+}
+
+type RemoveLetter = {
+  name: "REMOVE_LETTER"
+}
+
+type NextRow = {
+  name: "NEXT_ROW"
+}
+
+type Restart = {
+  name: "RESTART"
 }
 
 export type ApplicationEvent =
-  | { name: "INCREMENT" }
-  | { name: "DECREMENT" }
-  | { name: "SET_STEPS", data: number }
-  | { name: "TODOS_ADD", data: string }
-  | { name: "TODOS_REMOVE", data: number }
-  | { name: "TODO_SET", data: string }
+  | AddLetter
+  | RemoveLetter
+  | NextRow
+  | Restart
+
+// ROUTING
 
 export enum ApplicationPath {
   NotFound = "*",
   Home = "/arachnide",
-  Summary = "/arachnide/summary",
-  About = "/arachnide/about",
-  Todos = "/arachnide/todos"
+}
+
+// UTILITIES
+
+const getBorderColor = (word: string, gameRow: number, gameColumn: number, row: number, column: number, letter: string) => {
+  if (row >= gameRow) {
+    if (gameRow === row && gameColumn === column) {
+      return "3px solid black";
+    }
+
+    return "3px solid lightgrey";
+  }
+
+  const letterAtSimilarWordIndex = word.at(column) ?? "";
+
+  if (letterAtSimilarWordIndex === letter) {
+    return "3px solid green";
+  }
+
+  const letterIsInWord = word.split("").some(character => {
+    return character === letter;
+  });
+
+  if (letterIsInWord) {
+    return "3px solid orange";
+  }
+
+  return "3px solid lightgrey";
+}
+
+// APPLICATION
+
+const availableWords = [
+  "APPLE",
+  "BREAD",
+  "CLOUD",
+  "DREAM",
+  "FLAME",
+  "GRACE",
+  "HOUSE",
+  "KNIFE",
+  "LIGHT",
+  "MUSIC",
+];
+
+const getInitialState = (): ApplicationState => {
+  const word = [...availableWords].sort(() => Math.random() - 0.5).at(0) ?? "apple";
+
+  return {
+    game: {
+      type: "GAME_STARTED",
+      word,
+      row: 0,
+      column: 0,
+      matrix: [
+        ["", "", "", "", ""],
+        ["", "", "", "", ""],
+        ["", "", "", "", ""],
+        ["", "", "", "", ""],
+        ["", "", "", "", ""],
+        ["", "", "", "", ""],
+      ]
+    }
+  }
 }
 
 startApplication<ApplicationState, ApplicationEvent, ApplicationPath>({
   root,
-  initialState: () => ({
-    counter: 10,
-    steps: 10,
-    todo: "",
-    todos: [
-      "Do the dishes",
-      "Finish this library",
-      "Buy a new coffee mug"
-    ],
-  }),
+  initialState: getInitialState,
   onUpdate: ({ state, event }): ApplicationState => {
-    switch (event.name) {
-      case "INCREMENT":
-        return {
-          ...state,
-          counter: state.counter + state.steps
-        };
+    if (event.name === "ADD_LETTER") {
+      if (state.game.type !== "GAME_STARTED") {
+        return state;
+      }
 
-      case "DECREMENT":
-        const newCounter = state.counter - state.steps;
+      const gameRow = state.game.row;
+      const gameColumn = state.game.column;
+      const gameMatrix = state.game.matrix;
 
-        if (newCounter < 0) {
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          column: gameColumn >= 4 ? 4 : gameColumn + 1,
+          matrix: gameMatrix.map((row, rowIndex) => {
+            if (rowIndex !== gameRow) {
+              return row;
+            }
+
+            return row.map((column, columnIndex) => {
+              if (gameColumn !== columnIndex) {
+                return column;
+              }
+
+              return event.data.letter;
+            });
+          }),
+        }
+      }
+    }
+
+    if (event.name === "REMOVE_LETTER") {
+      if (state.game.type !== "GAME_STARTED") {
+        return state;
+      }
+
+      const columnIndexToEmpty = state.game.matrix[state.game.row][state.game.column] === "" ? state.game.column - 1 : state.game.column;
+      const rowIndexToEmpty = state.game.row;
+
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          column: state.game.column <= 0 ? 0 : state.game.column - 1,
+          matrix: state.game.matrix.map((row, rowIndex) => {
+            if (rowIndex !== rowIndexToEmpty) {
+              return row;
+            }
+
+            return row.map((column, columnIndex) => {
+              if (columnIndex !== columnIndexToEmpty) {
+                return column;
+              }
+
+              return "";
+            });
+          }),
+        },
+      }
+    }
+
+    if (event.name === "NEXT_ROW") {
+      if (state.game.type !== "GAME_STARTED") {
+        return state;
+      }
+
+      const row = state.game.matrix[state.game.row];
+
+      const rowFilled = row.every(column => {
+        return column !== ""
+      });
+
+      if (rowFilled) {
+        const wordAttempted = row.join("");
+
+        if (wordAttempted === state.game.word) {
           return {
             ...state,
-            counter: 0
-          };
+            game: {
+              type: "GAME_WON"
+            }
+          }
         }
+      }
 
+      const allRowsFilled = state.game.matrix.every(row => {
+        return row.every(column => {
+          return column !== "";
+        });
+      });
+
+      if (allRowsFilled) {
         return {
           ...state,
-          counter: state.counter - state.steps
+          game: {
+            type: "GAME_LOST"
+          }
         };
+      }
 
-      case "SET_STEPS":
-        return {
-          ...state,
-          steps: event.data
-        };
+      const shouldGoToNextRow = state.game.row < 5 && state.game.matrix[state.game.row].every(column => column !== "");
 
-      case "TODOS_ADD":
-        return {
-          ...state,
-          todo: "",
-          todos: [
-            ...state.todos,
-            event.data
-          ]
-        };
-
-      case "TODOS_REMOVE":
-        return {
-          ...state,
-          todos: state.todos.filter((_, index) => {
-            return index !== event.data;
-          })
-        };
-
-      case "TODO_SET":
-        return {
-          ...state,
-          todo: event.data
-        };
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          row: shouldGoToNextRow ? state.game.row + 1 : state.game.row,
+          column: shouldGoToNextRow ? 0 : state.game.column,
+        }
+      }
     }
+
+    if (event.name === "RESTART") {
+      return getInitialState();
+    }
+
+    return state;
   },
   pages: {
     [ApplicationPath.Home]: ({ state, update, changePage }) => {
-      return div({
-        attributes: {
-          className: "container"
-        },
-        content: [
-          h1({
-            attributes: {
-              className: "center",
-              style: styles({
-                textAlign: "center"
-              })
-            },
-            content: "Home"
-          }),
-          button({
-            attributes: {
-              style: styles({
-                display: "block",
-                marginLeft: "auto",
-                marginRight: "auto",
-                marginBottom: "30px"
-              }),
-              onclick: () => {
-                changePage({
-                  path: ApplicationPath.About,
-                  parameters: {},
-                  searchParameters: {}
-                });
-              },
-            },
-            content: "Go to about"
-          }),
-          button({
-            attributes: {
-              style: styles({
-                display: "block",
-                marginLeft: "auto",
-                marginRight: "auto",
-                marginBottom: "30px"
-              }),
-              onclick: () => {
-                changePage({
-                  path: ApplicationPath.Summary,
-                  parameters: {},
-                  searchParameters: {}
-                });
-              }
-            },
-            content: "Go to summary"
-          }),
-          button({
-            attributes: {
-              style: styles({
-                display: "block",
-                marginLeft: "auto",
-                marginRight: "auto",
-                marginBottom: "30px"
-              }),
-              onclick: () => {
-                changePage({
-                  path: ApplicationPath.Todos,
-                  parameters: {},
-                  searchParameters: {}
-                });
-              },
-            },
-            content: "Todos List"
-          }),
-          p({
-            attributes: {
-              style: styles({
-                textAlign: "center"
-              })
-            },
-            content: "Get a summary of all of the below informations"
-          }),
-          div({
-            attributes: {
-              className: "grid"
-            },
-            content: [
-              button({
-                attributes: {
-                  className: "outline",
-                  onclick: () => {
-                    update(() => ({
-                      name: "INCREMENT"
-                    }));
-                  }
-                },
-                content: "Increment"
-              }),
-              button({
-                attributes: {
-                  className: "outline",
-                  onclick: () => {
-                    update(() => ({
-                      name: "DECREMENT"
-                    }));
-                  }
-                },
-                content: "Decrement"
-              }),
-            ]
-          }),
-          label({
-            attributes: {
-              htmlFor: "steps",
-            },
-            content: " Steps "
-          }),
-          input({
-            attributes: {
-              id: "steps",
-              step: 10,
-              type: "number",
-              value: state.steps,
-              oninput: (event) => {
-                update(() => ({
-                  name: "SET_STEPS",
-                  data: Number(event.target.value) || 100
-                }));
-              }
-            }
-          }),
-          ul({
-            content: Array.from(Array(state.counter)).map((_, index) => {
-              return li({
-                attributes: {},
-                content: `Index #${index}`
-              });
-            })
-          })
-        ]
-      });
-    },
-    [ApplicationPath.Summary]: ({ state, changePage }) => {
-      return div({
-        attributes: {
-          className: "container"
-        },
-        content: [
-          h1({
-            attributes: {
-              style: styles({
-                textAlgin: "center"
-              })
-            },
-            content: "Summary"
-          }),
-          p({
-            attributes: {
-              style: styles({
-                textAlign: "center"
-              })
-            },
-            content: `Counter is currently at ${state.counter}`
-          }),
-          p({
-            attributes: {
-              style: styles({
-                textAlign: "center"
-              })
-            },
-            content: `Steps is currently at ${state.steps}`
-          }),
-          button({
-            attributes: {
-              style: styles({
-                display: "block",
-                margin: "0 auto"
-              }),
-              onclick: () => {
-                changePage({
-                  path: ApplicationPath.Home,
-                  parameters: {},
-                  searchParameters: {}
-                });
-              }
-            },
-            content: "Go back home"
-          })
-        ]
-      });
-    },
-    [ApplicationPath.Todos]: ({ state, update }) => {
-      return div({
-        content: [
-          h1({
-            content: "Todos List"
-          }),
-          form({
-            attributes: {
-              style: styles({
-                display: "flex",
-                flexDirection: "row",
-                gap: "20px"
-              }),
-              onsubmit: (event) => {
-                event.preventDefault();
+      if (state.game.type === "GAME_STARTED") {
+        const onKeyDown = (event: KeyboardEvent) => {
+          const alphabet: string[] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+          const letter = event.key.toUpperCase();
 
-                update(() => ({
-                  name: "TODOS_ADD",
-                  data: state.todo
-                }));
-              }
-            },
-            content: [
-              input({
+          if (letter === "BACKSPACE") {
+            return update(() => ({
+              name: "REMOVE_LETTER"
+            }));
+          }
+
+          if (letter === "ENTER") {
+            return update(() => ({
+              name: "NEXT_ROW"
+            }));
+          }
+
+          if (!alphabet.includes(letter)) {
+            return;
+          }
+
+          update(() => ({
+            name: "ADD_LETTER",
+            data: {
+              letter,
+            }
+          }));
+        };
+
+        const gameRow = state.game.row;
+        const gameColumn = state.game.column;
+        const gameMatrix = state.game.matrix;
+        const gameWord = state.game.word;
+
+        return div({
+          whenCreated: () => {
+            window.addEventListener("keydown", onKeyDown);
+          },
+          whenDestroyed: () => {
+            window.removeEventListener("keydown", onKeyDown);
+          },
+          attributes: {
+            style: styles({
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              gap: "5px",
+            }),
+          },
+          content: [
+            h1({
+              attributes: {
+                style: styles({
+                  textAlign: "center"
+                }),
+              },
+              content: "WORDLE"
+            }),
+            ...gameMatrix.map((row, rowIndex) => {
+              return div({
                 attributes: {
                   style: styles({
-                    width: "calc(100% - 100px)"
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "5px",
+                    flex: "1 0 50px"
                   }),
-                  type: "text",
-                  value: state.todo,
-                  oninput: oninput(value => {
-                    update(() => ({
-                      name: "TODO_SET",
-                      data: value
-                    }));
-                  })
-                }
-              }),
-              button({
-                content: "Add",
-                attributes: {
-                  style: styles({
-                    width: "100px"
-                  }),
-                  type: "submit"
-                }
-              })
-            ]
-          }),
-          ul({
-            content: state.todos.map((todo, index) => {
-              return li({
-                content: [
-                  span({
-                    content: `${index + 1}. ${todo}`
-                  }),
-                  button({
+                },
+                content: row.map((letter, columnIndex) => {
+                  return div({
                     attributes: {
-                      onclick: () => {
-                        update(() => ({
-                          name: "TODOS_REMOVE",
-                          data: index
-                        }))
-                      },
                       style: styles({
-                        marginLeft: "10px"
+                        display: "inline-flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textAlign: "center",
+                        height: "50px",
+                        width: "50px",
+                        border: getBorderColor(gameWord, gameRow, gameColumn, rowIndex, columnIndex, letter),
+                        fontFamily: "sans-serif"
                       })
                     },
-                    content: "Remove"
+                    content: letter
                   })
-                ]
+                })
               });
+            }),
+            button({
+              attributes: {
+                onclick: () => {
+                  changePage({
+                    parameters: {},
+                    path: ApplicationPath.Home,
+                    searchParameters: {}
+                  })
+                }
+              },
+              content: "Generate New Word"
+            }),
+          ]
+        });
+      }
+
+      if (state.game.type === "GAME_LOST") {
+        return div({
+          content: [
+            p({
+              content: "Lost"
+            }),
+            button({
+              attributes: {
+                onclick: () => {
+                  update(() => ({
+                    name: "RESTART"
+                  }));
+                },
+              },
+              content: "Retry?"
             })
-          })
-        ]
-      });
-    },
-    [ApplicationPath.About]: () => {
+          ]
+        });
+      }
+
       return div({
         content: [
-          h1({
-            content: "About this app"
+          p({
+            content: "Won!"
+          }),
+          button({
+            attributes: {
+              onclick: () => {
+                update(() => ({
+                  name: "RESTART"
+                }));
+              },
+            },
+            content: "Retry?"
           })
         ]
       });
