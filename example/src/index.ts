@@ -24,7 +24,8 @@ type Started = {
 }
 
 type Won = {
-  type: "GAME_WON"
+  type: "GAME_WON",
+  attempts: number
 }
 
 type Lost = {
@@ -216,7 +217,8 @@ startApplication<ApplicationState, ApplicationEvent, ApplicationPath>({
           return {
             ...state,
             game: {
-              type: "GAME_WON"
+              type: "GAME_WON",
+              attempts: state.game.row
             }
           }
         }
