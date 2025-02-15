@@ -465,7 +465,7 @@ startApplication<ApplicationState, ApplicationEvent, ApplicationPath>({
         return div({
           content: [
             p({
-              content: "Lost"
+              content: `Lost, word was: ${state.game.word}.`
             }),
             button({
               attributes: {
