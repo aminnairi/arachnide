@@ -29,7 +29,8 @@ type Won = {
 }
 
 type Lost = {
-  type: "GAME_LOST"
+  type: "GAME_LOST",
+  word: string
 }
 
 type ApplicationState = {
@@ -234,7 +235,8 @@ startApplication<ApplicationState, ApplicationEvent, ApplicationPath>({
         return {
           ...state,
           game: {
-            type: "GAME_LOST"
+            type: "GAME_LOST",
+            word: state.game.word
           }
         };
       }
