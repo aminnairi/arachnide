@@ -356,30 +356,12 @@ export type PageOptions<GenericState, GenericEvent extends ApplicationEvent, Gen
 export type Page<GenericState, GenericEvent extends ApplicationEvent, GenericPath extends string> = (options: PageOptions<GenericState, GenericEvent, GenericPath>) => VirtualElement
 
 /**
- * The options that can be gathered from the update function, which is the
- * function responsible for updating your state following your own algorithms,
- * and each time an event is triggered, this function is re-executed
  */
-export type OnUpdateOptions<GenericEvent, GenericState> = {
-  /**
-   * Each time the emitter is called, you pass an event, and this is the event
-   * that you receive in the update function, allowing you to compute the next
-   * state based on the event emitted
-   */
-  event: GenericEvent,
-  /**
-   * Besides receiving the event being triggered by the emitter, you also get
-   * the previous state, so that you can compute the next state in a functional
-   * fashion, without being reliant on a global state variable
-   */
-  state: GenericState
-}
 
 /**
  * The update function allow you to update the state of your application each
  * time an event is triggered
  */
-export type OnUpdate<GenericEvent, GenericState> = (options: OnUpdateOptions<GenericEvent, GenericState>) => GenericState
 
 /**
  * The options that might be passed through the "changePage" function.
