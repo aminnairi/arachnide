@@ -356,12 +356,18 @@ export type PageOptions<GenericState, GenericEvent extends ApplicationEvent, Gen
 export type Page<GenericState, GenericEvent extends ApplicationEvent, GenericPath extends string> = (options: PageOptions<GenericState, GenericEvent, GenericPath>) => VirtualElement
 
 /**
+ * Callback function called whenever a matching event is triggered using the
+ * `update` function inside a page.
  */
+export type OnUpdateCallback<GenericState, GenericEvent extends ApplicationEvent, GenericEventName extends string> = (options: { state: GenericState, event: Extract<GenericEvent, { name: GenericEventName }> }) => void;
 
 /**
  * The update function allow you to update the state of your application each
  * time an event is triggered
  */
+export type OnUpdate<GenericEvent extends ApplicationEvent, GenericState> = {
+  [GenericEventName in GenericEvent["name"]]: OnUpdateCallback<GenericState, GenericEvent, GenericEventName>
+}
 
 /**
  * The options that might be passed through the "changePage" function.
