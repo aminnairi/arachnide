@@ -1,4 +1,4 @@
-import { ApplicationEvent, StartApplicationOptions, ChangePage, VirtualElement, UpdateCallback } from "./types";
+import { ApplicationEvent, StartApplicationOptions, ChangePage, VirtualElement, UpdateCallback, OnUpdate } from "./types";
 import { createPatch } from "./createPatch";
 import { render } from "./render";
 import { findPageFromPath } from "./findPageFromPath";
@@ -99,11 +99,21 @@ export const startApplication = <GenericState, GenericEvent extends ApplicationE
    * whenever we need to trigger a state update
    */
   window.addEventListener(updateIdentifier, ({ detail }: CustomEventInit) => {
+    const eventName = detail.name as GenericEvent["name"];
+
+    if (typeof eventName !== "string") {
+      return;
+    }
+
+    if (!(eventName in onUpdate)) {
+      return;
+    }
+
     /**
      * We store the new state that is derived from the update function defined
      * in the application
      */
-    state = onUpdate({
+    state = onUpdate[eventName]({
       event: detail,
       state
     });
