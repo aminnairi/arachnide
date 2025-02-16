@@ -269,11 +269,6 @@ export type VirtualElement
   | undefined;
 
 /**
- * An application does not necessarily emit events, so it can be nullable
- */
-export type NoEvent = null;
-
-/**
  * An application that can emit events must abide to this type in order to send
  * ones
  */
@@ -302,8 +297,7 @@ export type EventWithoutData = {
 /**
  * The available types for an event
  */
-export type ApplicationEvent
-  = NoEvent
+export type ApplicationEvent =
   | EventWithData
   | EventWithoutData
 
