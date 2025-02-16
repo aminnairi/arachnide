@@ -177,8 +177,8 @@ const getInitialState = (): ApplicationState => {
 startApplication<ApplicationState, ApplicationEvent, ApplicationPath>({
   root,
   initialState: getInitialState,
-  onUpdate: ({ state, event }): ApplicationState => {
-    if (event.name === "ADD_LETTER") {
+  onUpdate: {
+    ADD_LETTER: ({ state, event }) => {
       if (state.game.type !== "GAME_STARTED") {
         return state;
       }
@@ -207,39 +207,8 @@ startApplication<ApplicationState, ApplicationEvent, ApplicationPath>({
           }),
         }
       }
-    }
-
-    if (event.name === "REMOVE_LETTER") {
-      if (state.game.type !== "GAME_STARTED") {
-        return state;
-      }
-
-      const columnIndexToEmpty = state.game.matrix[state.game.row][state.game.column] === "" ? state.game.column - 1 : state.game.column;
-      const rowIndexToEmpty = state.game.row;
-
-      return {
-        ...state,
-        game: {
-          ...state.game,
-          column: state.game.column <= 0 ? 0 : state.game.column - 1,
-          matrix: state.game.matrix.map((row, rowIndex) => {
-            if (rowIndex !== rowIndexToEmpty) {
-              return row;
-            }
-
-            return row.map((column, columnIndex) => {
-              if (columnIndex !== columnIndexToEmpty) {
-                return column;
-              }
-
-              return "";
-            });
-          }),
-        },
-      }
-    }
-
-    if (event.name === "NEXT_ROW") {
+    },
+    NEXT_ROW: ({ state }) => {
       if (state.game.type !== "GAME_STARTED") {
         return state;
       }
@@ -290,13 +259,39 @@ startApplication<ApplicationState, ApplicationEvent, ApplicationPath>({
           column: shouldGoToNextRow ? 0 : state.game.column,
         }
       }
-    }
+    },
+    REMOVE_LETTER: ({ state }) => {
+      if (state.game.type !== "GAME_STARTED") {
+        return state;
+      }
 
-    if (event.name === "RESTART") {
+      const columnIndexToEmpty = state.game.matrix[state.game.row][state.game.column] === "" ? state.game.column - 1 : state.game.column;
+      const rowIndexToEmpty = state.game.row;
+
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          column: state.game.column <= 0 ? 0 : state.game.column - 1,
+          matrix: state.game.matrix.map((row, rowIndex) => {
+            if (rowIndex !== rowIndexToEmpty) {
+              return row;
+            }
+
+            return row.map((column, columnIndex) => {
+              if (columnIndex !== columnIndexToEmpty) {
+                return column;
+              }
+
+              return "";
+            });
+          }),
+        },
+      }
+    },
+    RESTART: () => {
       return getInitialState();
     }
-
-    return state;
   },
   pages: {
     [ApplicationPath.Home]: ({ state, update, changePage }) => {
