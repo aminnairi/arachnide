@@ -16,7 +16,17 @@ None.
 
 ## 1.1.0
 
+### Major changes
+
+None.
+
+### Minor changes
+
 - Added typed target in event handlers ([#22](https://github.com/aminnairi/arachnide/pull/22))
+
+### Bug & security fixes
+
+None.
 
 ## 1.0.0
 
