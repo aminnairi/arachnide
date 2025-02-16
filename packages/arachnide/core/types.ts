@@ -359,7 +359,7 @@ export type Page<GenericState, GenericEvent extends ApplicationEvent, GenericPat
  * Callback function called whenever a matching event is triggered using the
  * `update` function inside a page.
  */
-export type OnUpdateCallback<GenericState, GenericEvent extends ApplicationEvent, GenericEventName extends string> = (options: { state: GenericState, event: Extract<GenericEvent, { name: GenericEventName }> }) => void;
+export type OnUpdateCallback<GenericState, GenericEvent extends ApplicationEvent, GenericEventName extends string> = (options: { state: GenericState, event: Extract<GenericEvent, { name: GenericEventName }> }) => GenericState;
 
 /**
  * The update function allow you to update the state of your application each
