@@ -192,6 +192,37 @@ export const createPatch = (oldVirtualElement: VirtualElement, newVirtualElement
     }
 
     /**
+     * We now check to see if the reference of the whenCreated function has
+     * changed, since this could be a page wrapper, for instance a div, that is
+     * the same between two pages, but the whenCreated function is the one that
+     * is different, so we need to do checks for that
+     */
+    if (oldVirtualElement.whenCreated !== newVirtualElement.whenCreated) {
+      /**
+       * If the old virtual element's whenCreated function reference is
+       * different than the new virtual element, we need to call the new
+       * whenCreated function, but we also need to make sure the whenDestroyed
+       * from the old one has been called. This is something that may need a
+       * more thorough inspection, to see if this is necessary, especially if we
+       * introduce a keyed element in the future, but I guess this is the right
+       * thing to do in order to prevent memory leaks, keyed elements could
+       * serve as an optimization to prevent too much recalls of the whenCreated
+       * and whenDestroyed functions.
+       */
+      if (oldVirtualElement.whenDestroyed) {
+        oldVirtualElement.whenDestroyed();
+      }
+
+      /**
+       * We only call the whenCreated function if it ever exists, there might be
+       * a better algorithmic way to prevent this check, but for now it will do.
+       */
+      if (newVirtualElement.whenCreated) {
+        newVirtualElement.whenCreated();
+      }
+    }
+
+    /**
      * Once we know for sure that the two elements are the same, this probably
      * means that their attributes have differences
      */
