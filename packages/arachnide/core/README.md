@@ -194,6 +194,122 @@ startApplication<ApplicationState, ApplicationEvent, ApplicationPath>({
 npm run dev
 ```
 
+## Usage
+
+### Component
+
+A component is just a function in Arachnide. As simple as that.
+
+```typescript
+import { header, navigation, ul, li, h1 } from "@arachnide/html";
+
+const topNavigationBar = () => {
+  return header({
+    content: [
+      h1({
+        content: "App"
+      }),
+      navigation({
+        content: [
+          ul({
+            content: [
+              li({
+                content: "Home"
+              })
+            ]
+          })
+        ]
+      })
+    ]
+  });
+};
+```
+
+Note that component do not need to start with an upper case letter contrary to some frameworks. However, you can if you want to.
+
+```typescript
+import { header, navigation, ul, li, h1 } from "@arachnide/html";
+
+const TopNavigationBar = () => {
+  return header({
+    content: [
+      h1({
+        content: "App"
+      }),
+      navigation({
+        content: [
+          ul({
+            content: [
+              li({
+                content: "Home"
+              })
+            ]
+          })
+        ]
+      })
+    ]
+  });
+};
+```
+
+Just like components in other frameworks, they can take any number of arguments.
+
+```typescript
+import { header, navigation, ul, li, h1 } from "@arachnide/html";
+
+export interface TopNavigationBarProps {
+  title: string
+}
+
+const topNavigationBar = ({ title }) => {
+  return header({
+    content: [
+      h1({
+        content: title
+      }),
+      navigation({
+        content: [
+          ul({
+            content: [
+              li({
+                content: "Home"
+              })
+            ]
+          })
+        ]
+      })
+    ]
+  });
+};
+```
+
+And contrary to some framework that impose you to use an object as the definition for your props, you can really use anything, even plain arguments, useful for declaring just a few arguments taken by a component.
+
+```typescript
+import { header, navigation, ul, li, h1 } from "@arachnide/html";
+
+const topNavigationBar = (title: string) => {
+  return header({
+    content: [
+      h1({
+        content: title
+      }),
+      navigation({
+        content: [
+          ul({
+            content: [
+              li({
+                content: "Home"
+              })
+            ]
+          })
+        ]
+      })
+    ]
+  });
+};
+```
+
 ## Example
 
 See [`example`](https://github.com/aminnairi/example).
