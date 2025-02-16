@@ -21,6 +21,10 @@ npm install --save --save-exact @arachnide/core
 
 ## Initialization
 
+```bash
+touch src/index.ts
+```
+
 ```typescript
 import { startApplication } from "@arachnide/core";
 import { ul, li, div, p, h1 } from "@arachnide/html";
