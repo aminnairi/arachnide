@@ -201,3 +201,7 @@ See [`example`](https://github.com/aminnairi/example).
 ## Changelogs
 
 See [`CHANGELOG.md`](./CHANGELOG.md).
+
+## License
+
+See [`LICENSE`](./LICENSE).
