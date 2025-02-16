@@ -3,7 +3,7 @@
   "description": "Core library for building Web applications using Arachnide",
   "version": "1.1.1",
   "homepage": "https://github.com/aminnairi/arachnide",
-  "license": "MTI",
+  "license": "MIT",
   "main": "index.ts",
   "bugs": {
     "url": "https://github.com/aminnairi/arachnide/issues"
